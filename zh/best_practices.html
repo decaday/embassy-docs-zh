@@ -156,8 +156,8 @@
 <h2 id="_通过引用传递缓冲区"><a class="anchor" href="#_通过引用传递缓冲区"></a>通过引用传递缓冲区</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>有时候，我们会想要将数组或包装器（例如 <a href="https://docs.rs/heapless/latest/heapless/"><code>heapless::Vec</code></a>,
-传递给函数，或者想用 <code>std::Vec</code> 。 然而，在大多数嵌入式应用中，您不希望在allocator上浪费资源，也不希望将缓冲区（buffer）放在栈（stack）上，因为如果不小心翼翼地处理，就会导致栈溢出。</p>
+<p>有时候，我们会想把数组或包装器（例如 <a href="https://docs.rs/heapless/latest/heapless/"><code>heapless::Vec</code></a>,
+传递给函数，或者想用 <code>std::Vec</code> 。 然而，在大多数嵌入式应用中，您可能不希望在allocator上浪费资源，也不希望将缓冲区（buffer）放在栈（stack）上，因为如果不小心翼翼地处理，就会导致栈溢出。</p>
 </div>
 <div class="paragraph">
 <p>请看以下示例：</p>
@@ -187,7 +187,7 @@ pub fn main() -&gt; () {
 <p><strong>可能的解决方案：</strong></p>
 </div>
 <div class="paragraph">
-<p>在进入和退出时都通过引用而不是值传递数据。例如，你可以将输入缓冲区的slice（切片）作为输出返回。同时要求输入slice和输出slice的生命周期相同，这样编译器将强制检查内存安全性。</p>
+<p>在进入和退出时都传递引用而不是传递值。例如，你可以将输入缓冲区的slice（切片）作为输出返回。同时要求输入slice和输出slice的生命周期相同，这样编译器将强制检查内存安全性。</p>
 </div>
 <div class="listingblock">
 <div class="content">
