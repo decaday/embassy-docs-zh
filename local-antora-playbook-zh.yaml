@@ -1,0 +1,33 @@
+#
+# This is a copy of the `antora-playbook.yaml`, but customized to use a local source. This serves as an example,
+# tweak this as you need, but only commit and push what is required to stay in sync with the main file.
+#
+site:
+  title: Embassy Docs
+  start_page: ROOT::index.adoc
+
+content:
+  sources:
+    - url: .
+      branches: HEAD
+      #start_paths:
+      #  - docs/en
+      #  - docs/zh
+      start_path: docs/zh
+
+ui: 
+  bundle:
+    #url: antora-ui-i18n.zip
+    url: https://github.com/embassy-rs/embassy-antora-ui/releases/download/0.2.2/ui-bundle.zip
+    snapshot: true
+
+# antora:
+#   extensions:
+#   - '@antora/collector-extension'
+#   - require: '@antora/lunr-extension'
+#     languages: [en, zh]
+
+output:
+  clean: true
+runtime:
+  fetch: true
