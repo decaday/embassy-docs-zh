@@ -1,12 +1,12 @@
-= Developer Documentation: STM32
+= 开发者文档：STM32
 
-== Understanding metapac
+== 理解 metapac
 
-When a project that imports `embassy-stm32` is compiled, that project selects the feature corresponding to the chip that project is using. Based on that feature, `embassy-stm32` selects supported link:https://anysilicon.com/ip-intellectual-property-core-semiconductors/[IP] for the chip, and enables the corresponding HAL implementations. But how does `embassy-stm32` know what IP the chip contains, out of the hundreds of chips that we support? It's a long story that starts with `stm32-data-sources`.
+当一个项目引入 `embassy-stm32` 并进行编译时，该项目会选择与其使用的芯片相对应的feature。基于这个feature，`embassy-stm32`  会选择该芯片支持的 link:https://anysilicon.com/ip-intellectual-property-core-semiconductors/[IP] ，并启用相应的HAL实现。但是 `embassy-stm32` 如何知道芯片包含哪些IP呢？这是一个很长的故事，让我们从 `stm32-data-sources`  开始讲起。
 
 == `stm32-data-sources`
 
-link:https://github.com/embassy-rs/stm32-data-sources[`stm32-data-sources`] is as mostly barren repository. It has no README, no documentation, and few watchers. But it's the core of what makes `embassy-stm32` possible. The data for every chip that we support is taken in part from a corresponding XML file like link:https://github.com/embassy-rs/stm32-data-sources/blob/b8b85202e22a954d6c59d4a43d9795d34cff05cf/cubedb/mcu/STM32F051K4Ux.xml[`STM32F051K4Ux.xml`]. In that file, you'll see lines like the following:
+link:https://github.com/embassy-rs/stm32-data-sources[`stm32-data-sources`] 是一个几乎空白的仓库。它没有README，没有文档，watcher也很少。但它使 `embassy-stm32`  成为可能。我们支持的每个芯片的数据部分来自于相应的XML文件，例如 link:https://github.com/embassy-rs/stm32-data-sources/blob/b8b85202e22a954d6c59d4a43d9795d34cff05cf/cubedb/mcu/STM32F051K4Ux.xml[`STM32F051K4Ux.xml`] 。在该文件中，您会看到如下行：
 
 [source,xml]
 ----
@@ -15,12 +15,12 @@ link:https://github.com/embassy-rs/stm32-data-sources[`stm32-data-sources`] is a
     <IP ConfigFile="TIM-STM32F0xx" InstanceName="TIM1" Name="TIM1_8F0" Version="gptimer2_v2_x_Cube"/>
 ----
 
-These lines indicate that this chip has an i2c, and that it's version is "v1_1". It also indicates that it has a general purpose timer that with a version of "v2_x". From this data, it's possible to determine which implementations should be included in `embassy-stm32`. But actually doing that is another matter.
+这些行表明这个芯片有一个i2c，其版本为 “v1_1”。它还表明它有一个版本为 “v2_x” 的通用定时器。根据这些数据，我们可以确定那些实现可以被包含在 `embassy-stm32` 中。但实际上，做到这一点又是另外一回事。
 
 
 == `stm32-data`
 
-While all users of this project are familiar with `embassy-stm32`, fewer are familiar with the project that powers it: `stm32-data`. This project doesn't just aim to generate data for `embassy-stm32`, but for machine consumption in general. To acheive this, information from multiple files from the `stm32-data-sources` project are combined and parsed to assign register block implementations for each supported IP. The core of this matching resides in `chips.rs`:
+虽然所有使用这个项目的用户都熟悉 `embassy-stm32` ，但较少人熟悉驱动它的项目：`stm32-data` 。这个项目的目标不仅是为 `embassy-stm32` 生成数据，而且是为了能机器处理。为了实现这一点，`stm32-data-sources` 项目中的多个文件的信息被合并和解析，以给每个支持的IP分配寄存器块实现。这种匹配的核心位于 `chips.rs`：
 
 [source,rust]
 ----
@@ -29,7 +29,7 @@ While all users of this project are familiar with `embassy-stm32`, fewer are fam
     (r".*TIM\d.*:gptimer.*", ("timer", "v1", "TIM_GP16")),
 ----
 
-In this case, the i2c version corresponds to our "v2" and the general purpose timer version corresponds to our "v1". Therefore, the `i2c_v2.yaml` and `timer_v1.yaml` register block implementations are assigned to those IP, respectively. The result is that these lines arr generated in `STM32F051K4.json`:
+在这种情况下，i2c的版本对应我们的 “v2”，通用定时器的版本对应我们的 “v1”。因此， `i2c_v2.yaml` 和 `timer_v1.yaml` 寄存器块实现分别被分配给这些IP。结果是，在 `STM32F051K4.json` 中生成了这些行：
 
 [source,json]
 ----
@@ -56,12 +56,12 @@ In this case, the i2c version corresponds to our "v2" and the general purpose ti
     }
 ----
 
-In addition to register blocks, data for pin and RCC mapping is also generated and consumed by `embassy-stm32`. `stm32-metapac-gen` is used to package and publish the data as a crate.
+除了寄存器块，它还生成了引脚和RCC映射的数据，并被 `embassy-stm32` 使用。`stm32-metapac-gen` 打包和发布数据作为一个crate。
 
 
 == `embassy-stm32`
 
-In the `lib.rs` file located in the root of `embassy-stm32`, you'll see this line:
+在 `embassy-stm32` 根目录中的 `lib.rs` 文件中，您会看到这样一行：
 
 [source,rust]
 ----
@@ -69,11 +69,11 @@ In the `lib.rs` file located in the root of `embassy-stm32`, you'll see this lin
 pub mod i2c;
 ----
 
-And in the `mod.rs` of the i2c mod, you'll see this:
+在i2c模块的 `mod.rs` 您会看到这样一行：
 
 [source,rust]
 ----
 #[cfg_attr(i2c_v2, path = "v2.rs")]
 ----
 
-Because i2c is supported for STM32F051K4 and its version corresponds to our "v2", the `i2c` and `i2c_v2`, configuration directives will be present, and `embassy-stm32` will include these files, respectively. This and other configuration directives and tables are generated from the data for chip, allowing `embassy-stm32` to expressively and clearly adapt logic and implementations to what is required for each chip. Compared to other projects across the embedded ecosystem, `embassy-stm32` is the only project that can re-use code across the entire stm32 lineup and remove difficult-to-implement unsafe logic to the HAL.
+因为STM32F051K4支持i2c，其版本对应我们的 “v2”，所以 i2c 和 i2c_v2 配置指令将会出现， `embassy-stm32` 将分别包含这些文件。这些和其他配置指令及表格是根据芯片数据生成的，因此 `embassy-stm32` 可以清晰地适应每个芯片所需的逻辑和实现。与嵌入式生态中的其他项目相比， `embassy-stm32` 是唯一一个能够在整个stm32系列中复用代码，并移除HAL中难以实现的不安全逻辑。

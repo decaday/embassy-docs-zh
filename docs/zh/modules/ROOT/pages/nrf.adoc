@@ -1,14 +1,14 @@
 = Embassy nRF HAL
 
-The link:https://github.com/embassy-rs/embassy/tree/master/embassy-nrf[Embassy nRF HAL] is based on the PACs (Peripheral Access Crate) from link:https://github.com/nrf-rs/[nrf-rs].
+link:https://github.com/embassy-rs/embassy/tree/master/embassy-nrf[Embassy nRF HAL] 基于来自 link:https://github.com/nrf-rs/[nrf-rs] 的PAC。
 
 == Timer driver
 
-The nRF timer driver operates at 32768 Hz by default.
+nRF timer driver 默认使用32768Hz。
 
-== Peripherals
+== 外设
 
-The following peripherals have a HAL implementation at present
+现在下列外设已经实现。
 
 * PWM
 * SPIM
@@ -26,4 +26,4 @@ The following peripherals have a HAL implementation at present
 
 == Bluetooth
 
-For bluetooth, you can use the link:https://github.com/embassy-rs/nrf-softdevice[nrf-softdevice] crate.
+对于蓝牙，请参看 link:https://github.com/embassy-rs/nrf-softdevice[nrf-softdevice] 。
