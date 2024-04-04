@@ -71,7 +71,7 @@
     <a class="nav-link" href="hal.html">硬件抽象层（HAL）</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="layer_by_layer.html">解剖async HAL</a>
+    <a class="nav-link" href="layer_by_layer.html">解剖Async HAL</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="nrf.html">nRF</a>
@@ -82,17 +82,17 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="bootloader.html">Bootloader</a>
+    <a class="nav-link" href="bootloader.html">引导程序（Bootloader）</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="examples.html">Examples</a>
+    <a class="nav-link" href="examples.html">示例</a>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="developer.html">Developer Docs</a>
+    <a class="nav-link" href="developer.html">开发文档</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="developer_stm32.html">Developer Docs: STM32</a>
+    <a class="nav-link" href="developer_stm32.html">开发文档：STM32</a>
   </li>
 </ul>
   </li>
@@ -100,7 +100,7 @@
     <a class="nav-link" href="embassy_in_the_wild.html">Embassy in the wild</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="faq.html">Frequently Asked Questions</a>
+    <a class="nav-link" href="faq.html">常见问题</a>
   </li>
 </ul>
   </li>
@@ -147,7 +147,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Embassy executor是一个为嵌入式使用而设计的async/await executor执行器，它支持中断和定时器功能。</p>
+<p>Embassy executor是一个为嵌入式使用而设计的async/await执行器，它支持中断和定时器功能。</p>
 </div>
 </div>
 </div>
@@ -160,7 +160,7 @@
 <p>No <code>alloc</code>, 不需要堆，任务静态分配。</p>
 </li>
 <li>
-<p>No "固定容量" 的数据结构，执行器可以处理1个或1000个任务，无需设置/tuning。</p>
+<p>没有“固定容量”的数据结构，执行器可以处理1个或1000个任务，无需设置/tuning。</p>
 </li>
 <li>
 <p>集成的定时器队列：sleep很简单，只需执行 <code>Timer::after_secs(1).await;</code> 。</p>
@@ -210,7 +210,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_中断interrupts"><a class="anchor" href="#_中断interrupts"></a>中断（Interrupts）</h2>
+<h2 id="_中断"><a class="anchor" href="#_中断"></a>中断</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>中断是外设用来标志某些操作完成的常见方式，这与异步执行模型非常契合。下面的图表描述了一个典型的应用流程，其中（1）一个任务被轮询并尝试取得进展。然后任务（2）指示外设执行某项操作，并等待（await）。一段时间过后，（3）中断被触发，标志着操作的完成。</p>

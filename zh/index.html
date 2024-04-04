@@ -71,7 +71,7 @@
     <a class="nav-link" href="hal.html">硬件抽象层（HAL）</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="layer_by_layer.html">解剖async HAL</a>
+    <a class="nav-link" href="layer_by_layer.html">解剖Async HAL</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="nrf.html">nRF</a>
@@ -82,17 +82,17 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="bootloader.html">Bootloader</a>
+    <a class="nav-link" href="bootloader.html">引导程序（Bootloader）</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="examples.html">Examples</a>
+    <a class="nav-link" href="examples.html">示例</a>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="developer.html">Developer Docs</a>
+    <a class="nav-link" href="developer.html">开发文档</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="developer_stm32.html">Developer Docs: STM32</a>
+    <a class="nav-link" href="developer_stm32.html">开发文档：STM32</a>
   </li>
 </ul>
   </li>
@@ -100,7 +100,7 @@
     <a class="nav-link" href="embassy_in_the_wild.html">Embassy in the wild</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="faq.html">Frequently Asked Questions</a>
+    <a class="nav-link" href="faq.html">常见问题</a>
   </li>
 </ul>
   </li>
@@ -147,7 +147,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Embassy旨在将异步/等待（async/await）作为嵌入式开发的一等选择。</p>
+<p>Embassy旨在将async/await作为嵌入式开发的一等选择。</p>
 </div>
 </div>
 </div>
@@ -155,7 +155,7 @@
 <h2 id="_what_is_async"><a class="anchor" href="#_what_is_async"></a>What is async?</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>什么是异步（async）？</p>
+<p>什么是async？</p>
 </div>
 <div class="paragraph">
 <p>在处理I/O时，软件必须调用阻塞程序执行的函数，直到I/O操作完成。在像Linux这样的操作系统中运行时，这些函数通常将控制权转交给内核，以便执行可执行的其它任务（称为“线程”）。若没有任务准备就绪，就在这之前先让CPU休眠。</p>
