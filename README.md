@@ -1,3 +1,10 @@
+# Embassy 中文文档
+
+可能每月或者每半个月更新到官方进度。
+目前还没翻译完，不是机翻、AI翻。
+
+
+
 # The Book of Embassy
 
 To build the book, you need `npm` to install the Antora doc system. 

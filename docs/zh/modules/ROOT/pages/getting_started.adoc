@@ -1,6 +1,6 @@
 = 快速开始
 
-所以，你想尝试一下 Embassy，太棒了！首先，你需要安装一些工具：
+所以，你想尝试一下Embassy诶，这太棒了！那，首先，你需要安装一些工具：
 
 * link:https://rustup.rs/[rustup] - Rust工具链，用于编译 Rust 代码
 * link:https://probe.rs/[probe-rs] - 用于在设备上烧录固件。如果你已经安装了其他工具，比如  `OpenOCD` ，你也可以使用它。
@@ -13,12 +13,12 @@ Embassy 支持许多系列的MCU，但最快的入门方式是使用已有示例
 
 以下列表并非详尽无遗。如果你的开发板不在此列，请查看 link:https://github.com/embassy-rs/embassy/tree/main/examples[examples folder] 是否有针对它编写的示例代码。
 
-=== nRF kits
+=== nRF开发板
 
 * link:https://www.nordicsemi.com/Products/Development-hardware/nrf52-dk[nRF52 DK]
 * link:https://www.nordicsemi.com/Products/Development-hardware/nRF9160-DK[nRF9160 DK]
 
-=== STM32 kits
+=== STM32开发板
 
 * link:https://www.st.com/en/evaluation-tools/nucleo-h743zi.html[STM32 Nucleo-144 development board with STM32H743ZI MCU]
 * link:https://www.st.com/en/evaluation-tools/nucleo-f429zi.html[STM32 Nucleo-144 development board with STM32F429ZI MCU]
@@ -28,11 +28,11 @@ Embassy 支持许多系列的MCU，但最快的入门方式是使用已有示例
 * link:https://www.st.com/en/evaluation-tools/b-u585i-iot02a.html[Discovery kit for IoT node with STM32U5 series]
 
 
-=== RP2040 kits
+=== RP2040开发板
 
 * link:https://www.raspberrypi.com/products/raspberry-pi-pico/[Raspberry Pi Pico]
 
-=== ESP32
+=== ESP32开发板
 
 * link:https://github.com/esp-rs/esp-rust-board[ESP32C3]
 
@@ -46,7 +46,7 @@ git clone https://github.com/embassy-rs/embassy.git
 cd embassy
 ----
 
-克隆仓库后，找到适用于你的开发板的示例文件夹，并构建一个示例程序。`blinky`是一个不错的选择，因为它只是让 LED 闪烁，相当于嵌入式世界的“Hello World”。
+克隆仓库后，找到适用于你的开发板的示例文件夹，并构建一个示例程序。`blinky` 是一个不错的选择，因为它只是让 LED 闪烁，相当于嵌入式世界的“Hello World”。
 
 [source, bash]
 ----
@@ -54,7 +54,7 @@ cd examples/nrf52840
 cargo build --bin blinky --release
 ----
 
-成功构建构建示例后，将你的开发板使用一个调试器链接到你的电脑上，然后在硬件上运行它：
+成功构建构建示例后，将你的开发板使用调试器链接到你的电脑上，然后在硬件上运行它：
 
 [source, bash]
 ----
@@ -86,11 +86,11 @@ NOTE: `+cargo run+` 命令是怎么知道如何去连接和编程你的开发板
 
 === 运行出错！
 
-如果你在运行 `+cargo run --release+` 时遇到问题，请检查以下内容：
+如果你在运行 `+cargo run --release+` 时遇到问题，请检查：
 
-* 你在命令行中指定了正确的 `+--chip+` ，或者
-* 你已经将 `+.cargo/config.toml+` 的运行行设置为正确的芯片, 而且
-* 你已经更改了 `+examples/Cargo.toml+` 的 HAL（例如 embassy-stm32）依赖项的特性，以使用正确的芯片（替换默认的的 stm32xxxx feature）
+* 在命令行中指定了正确的 `+--chip+` ，或者
+* 已将 `+.cargo/config.toml+` 的运行设置为正确的芯片, 而且
+* 已更改了 `+examples/Cargo.toml+` 的 HAL（例如 embassy-stm32）依赖项的特性，以使用正确的芯片（替换默认的 stm32xxxx feature）
 
 此时，项目应该可以运行。如果你在 blinky 示例中没有看到闪烁的LED，请确保代码正在翻转你开发板的LED引脚。
 
@@ -125,11 +125,11 @@ error[E0463]: can't find crate for `std`
   = note: `std` is required by `stable_deref_trait` because it does not declare `#![no_std]`
 ----
 
-检查你是否错误地运行了 `+cargo add probe-rs+` （这会将其作为依赖项添加）而不是 link:https://probe.rs/docs/getting-started/installation/[正确地安装 probe-rs].
+检查你是否错误地运行了 `+cargo add probe-rs+` （这会将其作为依赖项添加）而不是 link:https://probe.rs/docs/getting-started/installation/[正确地安装 probe-rs] 。
 
-I如果你使用的是 Raspberry Pi Pico-W，请确保你运行的是  `+cargo run --bin wifi_blinky --release+` ，而不是普通的 blinky 示例。Pico-W 的板载LED连接到WiFi芯片，需要在LED可以闪烁之前进行初始化。
+如果你使用的是 Raspberry Pi Pico-W，请确保你运行的是  `+cargo run --bin wifi_blinky --release+` ，而不是普通的 blinky 示例。Pico-W 的板载LED连接到WiFi芯片，需要在LED可以闪烁之前进行初始化。
 
-如果你使用的是rp2040调试器 (比如 pico probe) 并且在运行 `probe-rs info` 之后出现问题，重新连接调试器让它重新上电。link:https://github.com/probe-rs/probe-rs/issues/1849[已知运行 `probe-rs info` 会使pico调试器进入不可用状态].
+如果你使用的是rp2040调试器（比如 pico probe）并且在运行 `probe-rs info` 之后出现问题，重新连接调试器让它重新上电。link:https://github.com/probe-rs/probe-rs/issues/1849[已知运行 `probe-rs info` 会使pico调试器进入不可用状态].
 
 如果你仍然遇到问题，请查看常见问题解答： link:https://embassy.dev/book/dev/faq.html[FAQ], 或者在聊天室寻求帮助： link:https://matrix.to/#/#embassy-rs:matrix.org[Embassy Chat Room].
 

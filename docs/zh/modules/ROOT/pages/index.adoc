@@ -2,9 +2,7 @@
 
 Embassy旨在将async/await作为嵌入式开发的一等选择。
 
-== What is async?
-
-什么是async？
+== 什么是async？
 
 在处理I/O时，软件必须调用阻塞程序执行的函数，直到I/O操作完成。在像Linux这样的操作系统中运行时，这些函数通常将控制权转交给内核，以便执行可执行的其它任务（称为“线程”）。若没有任务准备就绪，就在这之前先让CPU休眠。
 
@@ -56,9 +54,9 @@ DMA，Direct Memory Access，即直接内存访问 。对于大多的嵌入式�
 
 Embassy支持的MCU（比如stm32和nrf）中就有DMA。DMA允许MCU设置传输任务，可以是发送或是接收。一旦启动DMA，在传输完成之前，MCU无需进行任何干预，这意味着MCU可以在传输进行时执行其他计算任务或设置其他I/O操作。对于高速I/O传输，DMA可以将MCU处理I/O的时间减少一半以上。然而，由于DMA的设置更为复杂，它在嵌入式社区中的使用并不广泛。Embassy的目标是通过使DMA成为首选而不是最后的选择来改变这一现状。使用Embassy，一旦I/O速率增加，就无需额外调整，因为您的应用程序为处理它们而已经设置好了。
 
-== Resources
+== 资源
 
-阅读更多有关 async Rust 和 Embassy:
+阅读更多有关 Async Rust 和 Embassy:
 
 * link:https://tweedegolf.nl/en/blog/65/async-rust-vs-rtos-showdown[FreeRTOS与Embassy的比较]
 * link:https://dev.to/apollolabsbin/series/20707[教程系列]

@@ -2,7 +2,7 @@
 
 成功 xref:getting_started.adoc[运行一些示例项目] 后，下一步就是创建一个独立的Embassy项目。
 
-生成Embassy项目，有一些工具（正在开发中，WIP）：
+生成Embassy项目，有一些工具（正在开发中）：
 
 ==== 命令行（CLI）
 - link:https://github.com/adinack/cargo-embassy[cargo-embassy] (STM32 和 NRF)
