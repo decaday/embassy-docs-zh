@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Developer Documentation: STM32 :: Embassy中文文档</title>
+    <link rel="canonical" href="https://embassy.dev/book/zh/developer_stm32.html">
+    <meta name="generator" content="Antora 3.1.7">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <script>var uiRootPath = '../_'</script>
+    <link rel="icon" href="../_/img/favicon.svg" type="image/svg+xml">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <h1>Embassy Documentation</h1>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/embassy-rs/embassy" target="_blank">GitHub</a>
+        <a class="navbar-item" href="https://matrix.to/#/#embassy-rs:matrix.org" target="_blank">Chat</a>
+        <a class="navbar-item" href="https://embassy.dev">Documentation</a>
+      </div>
+    </div>
+  </nav>
+</header><div class="body">
+<div class="nav-container" data-component="ROOT" data-version="zh">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Embassy中文文档</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="getting_started.html">快速开始</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="basic_application.html">基础应用</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="project_structure.html">项目结构</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="new_project.html">新建一个Embassy工程</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="best_practices.html">最佳实践</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="runtime.html">执行器（Executor）</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="time_keeping.html">Time-keeping</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="sharing_peripherals.html">共享外设</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="hal.html">硬件抽象层（HAL）</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="layer_by_layer.html">解剖async HAL</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="nrf.html">nRF</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="stm32.html">STM32</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="bootloader.html">Bootloader</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="examples.html">Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="developer.html">Developer Docs</a>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="developer_stm32.html">Developer Docs: STM32</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="embassy_in_the_wild.html">Embassy in the wild</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="faq.html">Frequently Asked Questions</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Embassy中文文档</span>
+    <span class="version">中文</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="index.html">Embassy中文文档</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">中文</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Embassy中文文档</a></li>
+    <li><a href="developer.html">Developer Docs</a></li>
+    <li><a href="developer_stm32.html">Developer Docs: STM32</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/decaday/embassy-docs-zh/edit/main/docs/zh/modules/ROOT/pages/developer_stm32.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Developer Documentation: STM32</h1>
+<div class="sect1">
+<h2 id="_understanding_metapac"><a class="anchor" href="#_understanding_metapac"></a>Understanding metapac</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When a project that imports <code>embassy-stm32</code> is compiled, that project selects the feature corresponding to the chip that project is using. Based on that feature, <code>embassy-stm32</code> selects supported <a href="https://anysilicon.com/ip-intellectual-property-core-semiconductors/">IP</a> for the chip, and enables the corresponding HAL implementations. But how does <code>embassy-stm32</code> know what IP the chip contains, out of the hundreds of chips that we support? It&#8217;s a long story that starts with <code>stm32-data-sources</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_stm32_data_sources"><a class="anchor" href="#_stm32_data_sources"></a><code>stm32-data-sources</code></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://github.com/embassy-rs/stm32-data-sources"><code>stm32-data-sources</code></a> is as mostly barren repository. It has no README, no documentation, and few watchers. But it&#8217;s the core of what makes <code>embassy-stm32</code> possible. The data for every chip that we support is taken in part from a corresponding XML file like <a href="https://github.com/embassy-rs/stm32-data-sources/blob/b8b85202e22a954d6c59d4a43d9795d34cff05cf/cubedb/mcu/STM32F051K4Ux.xml"><code>STM32F051K4Ux.xml</code></a>. In that file, you&#8217;ll see lines like the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">    &lt;IP InstanceName="I2C1" Name="I2C" Version="i2c2_v1_1_Cube"/&gt;
+    &lt;!-- snip  --&gt;
+    &lt;IP ConfigFile="TIM-STM32F0xx" InstanceName="TIM1" Name="TIM1_8F0" Version="gptimer2_v2_x_Cube"/&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>These lines indicate that this chip has an i2c, and that it&#8217;s version is "v1_1". It also indicates that it has a general purpose timer that with a version of "v2_x". From this data, it&#8217;s possible to determine which implementations should be included in <code>embassy-stm32</code>. But actually doing that is another matter.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_stm32_data"><a class="anchor" href="#_stm32_data"></a><code>stm32-data</code></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>While all users of this project are familiar with <code>embassy-stm32</code>, fewer are familiar with the project that powers it: <code>stm32-data</code>. This project doesn&#8217;t just aim to generate data for <code>embassy-stm32</code>, but for machine consumption in general. To acheive this, information from multiple files from the <code>stm32-data-sources</code> project are combined and parsed to assign register block implementations for each supported IP. The core of this matching resides in <code>chips.rs</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-rust hljs" data-lang="rust">    (".*:I2C:i2c2_v1_1", ("i2c", "v2", "I2C")),
+    // snip
+    (r".*TIM\d.*:gptimer.*", ("timer", "v1", "TIM_GP16")),</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this case, the i2c version corresponds to our "v2" and the general purpose timer version corresponds to our "v1". Therefore, the <code>i2c_v2.yaml</code> and <code>timer_v1.yaml</code> register block implementations are assigned to those IP, respectively. The result is that these lines arr generated in <code>STM32F051K4.json</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">    {
+        "name": "I2C1",
+        "address": 1073763328,
+        "registers": {
+            "kind": "i2c",
+            "version": "v2",
+            "block": "I2C"
+        },
+        // snip
+    }
+    // snip
+    {
+        "name": "TIM1",
+        "address": 1073818624,
+        "registers": {
+            "kind": "timer",
+            "version": "v1",
+            "block": "TIM_ADV"
+        },
+        // snip
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In addition to register blocks, data for pin and RCC mapping is also generated and consumed by <code>embassy-stm32</code>. <code>stm32-metapac-gen</code> is used to package and publish the data as a crate.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_embassy_stm32"><a class="anchor" href="#_embassy_stm32"></a><code>embassy-stm32</code></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the <code>lib.rs</code> file located in the root of <code>embassy-stm32</code>, you&#8217;ll see this line:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-rust hljs" data-lang="rust">#[cfg(i2c)]
+pub mod i2c;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And in the <code>mod.rs</code> of the i2c mod, you&#8217;ll see this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-rust hljs" data-lang="rust">#[cfg_attr(i2c_v2, path = "v2.rs")]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Because i2c is supported for STM32F051K4 and its version corresponds to our "v2", the <code>i2c</code> and <code>i2c_v2</code>, configuration directives will be present, and <code>embassy-stm32</code> will include these files, respectively. This and other configuration directives and tables are generated from the data for chip, allowing <code>embassy-stm32</code> to expressively and clearly adapt logic and implementations to what is required for each chip. Compared to other projects across the embedded ecosystem, <code>embassy-stm32</code> is the only project that can re-use code across the entire stm32 lineup and remove difficult-to-implement unsafe logic to the HAL.</p>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using a modified version of the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>快速开始 :: Embassy中文文档</title>
+    <link rel="canonical" href="https://embassy.dev/book/zh/getting_started.html">
+    <meta name="generator" content="Antora 3.1.7">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <script>var uiRootPath = '../_'</script>
+    <link rel="icon" href="../_/img/favicon.svg" type="image/svg+xml">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <h1>Embassy Documentation</h1>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/embassy-rs/embassy" target="_blank">GitHub</a>
+        <a class="navbar-item" href="https://matrix.to/#/#embassy-rs:matrix.org" target="_blank">Chat</a>
+        <a class="navbar-item" href="https://embassy.dev">Documentation</a>
+      </div>
+    </div>
+  </nav>
+</header><div class="body">
+<div class="nav-container" data-component="ROOT" data-version="zh">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Embassy中文文档</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="getting_started.html">快速开始</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="basic_application.html">基础应用</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="project_structure.html">项目结构</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="new_project.html">新建一个Embassy工程</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="best_practices.html">最佳实践</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="runtime.html">执行器（Executor）</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="time_keeping.html">Time-keeping</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="sharing_peripherals.html">共享外设</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="hal.html">硬件抽象层（HAL）</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="layer_by_layer.html">解剖async HAL</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="nrf.html">nRF</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="stm32.html">STM32</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="bootloader.html">Bootloader</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="examples.html">Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="developer.html">Developer Docs</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="developer_stm32.html">Developer Docs: STM32</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="embassy_in_the_wild.html">Embassy in the wild</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="faq.html">Frequently Asked Questions</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Embassy中文文档</span>
+    <span class="version">中文</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="index.html">Embassy中文文档</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">中文</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Embassy中文文档</a></li>
+    <li><a href="getting_started.html">快速开始</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/decaday/embassy-docs-zh/edit/main/docs/zh/modules/ROOT/pages/getting_started.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">快速开始</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>所以，你想尝试一下 Embassy，太棒了！首先，你需要安装一些工具：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://rustup.rs/">rustup</a> - Rust工具链，用于编译 Rust 代码</p>
+</li>
+<li>
+<p><a href="https://probe.rs/">probe-rs</a> - 用于在设备上烧录固件。如果你已经安装了其他工具，比如  <code>OpenOCD</code> ，你也可以使用它。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>如果你没有受支持的开发板，别担心，你也可以在你的PC上使用 <code>std</code> 示例来运行 Embassy。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_获取一个已有示例代码的开发板"><a class="anchor" href="#_获取一个已有示例代码的开发板"></a>获取一个已有示例代码的开发板</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Embassy 支持许多系列的MCU，但最快的入门方式是使用已有示例代码的开发板。</p>
+</div>
+<div class="paragraph">
+<p>以下列表并非详尽无遗。如果你的开发板不在此列，请查看 <a href="https://github.com/embassy-rs/embassy/tree/main/examples">examples folder</a> 是否有针对它编写的示例代码。</p>
+</div>
+<div class="sect2">
+<h3 id="_nrf_kits"><a class="anchor" href="#_nrf_kits"></a>nRF kits</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://www.nordicsemi.com/Products/Development-hardware/nrf52-dk">nRF52 DK</a></p>
+</li>
+<li>
+<p><a href="https://www.nordicsemi.com/Products/Development-hardware/nRF9160-DK">nRF9160 DK</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_stm32_kits"><a class="anchor" href="#_stm32_kits"></a>STM32 kits</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://www.st.com/en/evaluation-tools/nucleo-h743zi.html">STM32 Nucleo-144 development board with STM32H743ZI MCU</a></p>
+</li>
+<li>
+<p><a href="https://www.st.com/en/evaluation-tools/nucleo-f429zi.html">STM32 Nucleo-144 development board with STM32F429ZI MCU</a></p>
+</li>
+<li>
+<p><a href="https://www.st.com/en/evaluation-tools/b-l4s5i-iot01a.html">STM32L4+ Discovery kit IoT node, low-power wireless, BLE, NFC, WiFi</a></p>
+</li>
+<li>
+<p><a href="https://www.st.com/en/evaluation-tools/b-l072z-lrwan1.html">STM32L0 Discovery kit LoRa, Sigfox, low-power wireless</a></p>
+</li>
+<li>
+<p><a href="https://www.st.com/en/evaluation-tools/nucleo-wl55jc.html">STM32 Nucleo-64 development board with STM32WL55JCI MCU</a></p>
+</li>
+<li>
+<p><a href="https://www.st.com/en/evaluation-tools/b-u585i-iot02a.html">Discovery kit for IoT node with STM32U5 series</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rp2040_kits"><a class="anchor" href="#_rp2040_kits"></a>RP2040 kits</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://www.raspberrypi.com/products/raspberry-pi-pico/">Raspberry Pi Pico</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_esp32"><a class="anchor" href="#_esp32"></a>ESP32</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/esp-rs/esp-rust-board">ESP32C3</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_运行示例"><a class="anchor" href="#_运行示例"></a>运行示例</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>首先，你需要克隆 <a href="https://github.com/embassy-rs/embassy">github 仓库</a>;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git clone https://github.com/embassy-rs/embassy.git
+cd embassy</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>克隆仓库后，找到适用于你的开发板的示例文件夹，并构建一个示例程序。`blinky`是一个不错的选择，因为它只是让 LED 闪烁，相当于嵌入式世界的“Hello World”。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cd examples/nrf52840
+cargo build --bin blinky --release</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>成功构建构建示例后，将你的开发板使用一个调试器链接到你的电脑上，然后在硬件上运行它：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cargo run --bin blinky --release</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果一切正常，你应该在开发板上看到一个闪烁的 LED，并在你的计算机上看到类似于以下的调试输出：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">    Finished dev [unoptimized + debuginfo] target(s) in 1m 56s
+     Running `probe-run --chip STM32F407VGTx target/thumbv7em-none-eabi/debug/blinky`
+(HOST) INFO  flashing program (71.36 KiB)
+(HOST) INFO  success!
+────────────────────────────────────────────────────────────────────────────────
+0 INFO  Hello World!
+└─ blinky::__embassy_main::task::{generator#0} @ src/bin/blinky.rs:18
+1 INFO  high
+└─ blinky::__embassy_main::task::{generator#0} @ src/bin/blinky.rs:23
+2 INFO  low
+└─ blinky::__embassy_main::task::{generator#0} @ src/bin/blinky.rs:27
+3 INFO  high
+└─ blinky::__embassy_main::task::{generator#0} @ src/bin/blinky.rs:23
+4 INFO  low
+└─ blinky::__embassy_main::task::{generator#0} @ src/bin/blinky.rs:27</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>cargo run</code> 命令是怎么知道如何去连接和编程你的开发板？在每个 <code>examples</code> 文件夹中，有一个 <code>.cargo/config.toml</code> 文件，它告诉cargo使用 <a href="https://probe.rs/">probe-rs</a> 作为ARM二进制文件的运行器。 probe-rs 处理与调试器和MCU的通信。为了使其正常工作，probe-rs 需要知道它正在编程的芯片，因此如果你想在其他芯片上运行示例，你需要编辑这个文件。
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_运行出错"><a class="anchor" href="#_运行出错"></a>运行出错！</h3>
+<div class="paragraph">
+<p>如果你在运行 <code>cargo run --release</code> 时遇到问题，请检查以下内容：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>你在命令行中指定了正确的 <code>--chip</code> ，或者</p>
+</li>
+<li>
+<p>你已经将 <code>.cargo/config.toml</code> 的运行行设置为正确的芯片, 而且</p>
+</li>
+<li>
+<p>你已经更改了 <code>examples/Cargo.toml</code> 的 HAL（例如 embassy-stm32）依赖项的特性，以使用正确的芯片（替换默认的的 stm32xxxx feature）</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>此时，项目应该可以运行。如果你在 blinky 示例中没有看到闪烁的LED，请确保代码正在翻转你开发板的LED引脚。</p>
+</div>
+<div class="paragraph">
+<p>如果你尝试 <code>cargo run --release</code> 运行示例，并且看到以下输出：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">0.000000 INFO Hello World!
+└─ &lt;invalid location: defmt frame-index: 14&gt;
+0.000000 DEBUG rcc: Clocks { sys: Hertz(80000000), apb1: Hertz(80000000), apb1_tim: Hertz(80000000), apb2: Hertz(80000000), apb2_tim: Hertz(80000000), ahb1: Hertz(80000000), ahb2: Hertz(80000000), ahb3: Hertz(80000000) }
+└─ &lt;invalid location: defmt frame-index: 124&gt;
+0.000061 TRACE allocating type=Interrupt mps=8 interval_ms=255, dir=In
+└─ &lt;invalid location: defmt frame-index: 68&gt;
+0.000091 TRACE   index=1
+└─ &lt;invalid location: defmt frame-index: 72&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>为了解决 frame-index 错误，请在你的 <code>Cargo.toml</code> 中添加以下内容：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[profile.release]
+debug = 2</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果你遇到一个包含类似以下内容的极长错误消息：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">error[E0463]: can't find crate for `std`
+  |
+  = note: the `thumbv6m-none-eabi` target may not support the standard library
+  = note: `std` is required by `stable_deref_trait` because it does not declare `#![no_std]`</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>检查你是否错误地运行了 <code>cargo add probe-rs</code> （这会将其作为依赖项添加）而不是 <a href="https://probe.rs/docs/getting-started/installation/">正确地安装 probe-rs</a>.</p>
+</div>
+<div class="paragraph">
+<p>I如果你使用的是 Raspberry Pi Pico-W，请确保你运行的是  <code>cargo run --bin wifi_blinky --release</code> ，而不是普通的 blinky 示例。Pico-W 的板载LED连接到WiFi芯片，需要在LED可以闪烁之前进行初始化。</p>
+</div>
+<div class="paragraph">
+<p>如果你使用的是rp2040调试器 (比如 pico probe) 并且在运行 <code>probe-rs info</code> 之后出现问题，重新连接调试器让它重新上电。<a href="https://github.com/probe-rs/probe-rs/issues/1849">已知运行 <code>probe-rs info</code> 会使pico调试器进入不可用状态</a>.</p>
+</div>
+<div class="paragraph">
+<p>如果你仍然遇到问题，请查看常见问题解答： <a href="https://embassy.dev/book/dev/faq.html">FAQ</a>, 或者在聊天室寻求帮助： <a href="https://matrix.to/#/#embassy-rs:matrix.org">Embassy Chat Room</a>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_接下来干啥"><a class="anchor" href="#_接下来干啥"></a>接下来干啥？</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>恭喜，你已经成功运行了你的第一个 Embassy 应用程序！下面是一些建议，帮助你继续前进：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>阅读更多关于 <a href="runtime.html" class="xref page">executor</a> 的内容.</p>
+</li>
+<li>
+<p>阅读更多关于硬件抽象层 <a href="hal.html" class="xref page">HAL(硬件抽象层)</a> 的内容。</p>
+</li>
+<li>
+<p>开始 <a href="basic_application.html" class="xref page">编写你的应用程序</a>。</p>
+</li>
+<li>
+<p>学习如何 <a href="new_project.html" class="xref page">通过改编示例来开始一个新项目</a>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using a modified version of the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

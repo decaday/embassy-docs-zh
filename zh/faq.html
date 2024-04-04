@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Frequently Asked Questions :: Embassy中文文档</title>
+    <link rel="canonical" href="https://embassy.dev/book/zh/faq.html">
+    <meta name="generator" content="Antora 3.1.7">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <script>var uiRootPath = '../_'</script>
+    <link rel="icon" href="../_/img/favicon.svg" type="image/svg+xml">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <h1>Embassy Documentation</h1>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/embassy-rs/embassy" target="_blank">GitHub</a>
+        <a class="navbar-item" href="https://matrix.to/#/#embassy-rs:matrix.org" target="_blank">Chat</a>
+        <a class="navbar-item" href="https://embassy.dev">Documentation</a>
+      </div>
+    </div>
+  </nav>
+</header><div class="body">
+<div class="nav-container" data-component="ROOT" data-version="zh">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Embassy中文文档</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="getting_started.html">快速开始</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="basic_application.html">基础应用</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="project_structure.html">项目结构</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="new_project.html">新建一个Embassy工程</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="best_practices.html">最佳实践</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="runtime.html">执行器（Executor）</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="time_keeping.html">Time-keeping</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="sharing_peripherals.html">共享外设</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="hal.html">硬件抽象层（HAL）</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="layer_by_layer.html">解剖async HAL</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="nrf.html">nRF</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="stm32.html">STM32</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="bootloader.html">Bootloader</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="examples.html">Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="developer.html">Developer Docs</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="developer_stm32.html">Developer Docs: STM32</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="embassy_in_the_wild.html">Embassy in the wild</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="faq.html">Frequently Asked Questions</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Embassy中文文档</span>
+    <span class="version">中文</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="index.html">Embassy中文文档</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">中文</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Embassy中文文档</a></li>
+    <li><a href="faq.html">Frequently Asked Questions</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/decaday/embassy-docs-zh/edit/main/docs/zh/modules/ROOT/pages/faq.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Frequently Asked Questions</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>These are a list of unsorted, commonly asked questions and answers.</p>
+</div>
+<div class="paragraph">
+<p>Please feel free to add items to <a href="https://github.com/embassy-rs/embassy/edit/main/docs/modules/ROOT/pages/faq.adoc">this page</a>, especially if someone in the chat answered a question for you!</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_to_deploy_to_rp2040_without_a_debugging_probe"><a class="anchor" href="#_how_to_deploy_to_rp2040_without_a_debugging_probe"></a>How to deploy to RP2040 without a debugging probe.</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Install <a href="https://github.com/JoNil/elf2uf2-rs">elf2uf2-rs</a> for converting the generated elf binary into a uf2 file.</p>
+</div>
+<div class="paragraph">
+<p>Configure the runner to use this tool, add this to <code>.cargo/config.toml</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[target.'cfg(all(target_arch = "arm", target_os = "none"))']
+runner = "elf2uf2-rs --deploy --serial --verbose"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The command-line parameters <code>--deploy</code> will detect your device and upload the binary, <code>--serial</code> starts a serial connection. See the documentation for more info.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_missing_main_macro"><a class="anchor" href="#_missing_main_macro"></a>Missing main macro</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you see an error like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-rust hljs" data-lang="rust">#[embassy_executor::main]
+|                   ^^^^ could not find `main` in `embassy_executor`</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You are likely missing some features of the <code>embassy-executor</code> crate.</p>
+</div>
+<div class="paragraph">
+<p>For Cortex-M targets, check whether ALL of the following features are enabled in your <code>Cargo.toml</code> for the <code>embassy-executor</code> crate:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>arch-cortex-m</code></p>
+</li>
+<li>
+<p><code>executor-thread</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For ESP32, consider using the executors and <code>#[main]</code> macro provided by your appropriate <a href="https://crates.io/crates/esp-hal-common">HAL crate</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_why_is_my_binary_so_big"><a class="anchor" href="#_why_is_my_binary_so_big"></a>Why is my binary so big?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The first step to managing your binary size is to set up your <a href="https://doc.rust-lang.org/cargo/reference/profiles.html">profiles</a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[profile.release]
+lto = true
+opt-level = "s"
+incremental = false
+codegen-units = 1
+# note: debug = true is okay - debuginfo isn't flashed to the device!
+debug = true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>All of these flags are elaborated on in the Rust Book page linked above.</p>
+</div>
+<div class="sect2">
+<h3 id="_my_binary_is_still_big_filled_with_stdfmt_stuff"><a class="anchor" href="#_my_binary_is_still_big_filled_with_stdfmt_stuff"></a>My binary is still big&#8230;&#8203; filled with <code>std::fmt</code> stuff!</h3>
+<div class="paragraph">
+<p>This means your code is sufficiently complex that <code>panic!</code> invocation&#8217;s formatting requirements could not be optimized out, despite your usage of <code>panic-halt</code> or <code>panic-reset</code>.</p>
+</div>
+<div class="paragraph">
+<p>You can remedy this by adding the following to your <code>.cargo/config.toml</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[unstable]
+build-std = ["core"]
+build-std-features = ["panic_immediate_abort"]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This replaces all panics with a <code>UDF</code> (undefined) instruction.</p>
+</div>
+<div class="paragraph">
+<p>Depending on your chipset, this will exhibit different behavior.</p>
+</div>
+<div class="paragraph">
+<p>Refer to the spec for your chipset, but for <code>thumbv6m</code>, it results in a hardfault. Which can be configured like so:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-rust hljs" data-lang="rust">#[exception]
+unsafe fn HardFault(_frame: &amp;ExceptionFrame) -&gt; ! {
+    SCB::sys_reset() // &lt;- you could do something other than reset
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Refer to cortex-m&#8217;s <a href="https://docs.rs/cortex-m-rt/latest/cortex_m_rt/attr.exception.html">exception handling</a> for more info.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_embassy_time_throws_linker_errors"><a class="anchor" href="#_embassy_time_throws_linker_errors"></a><code>embassy-time</code> throws linker errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you see linker error like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">  = note: rust-lld: error: undefined symbol: _embassy_time_now
+          &gt;&gt;&gt; referenced by driver.rs:127 (src/driver.rs:127)
+          &gt;&gt;&gt;               embassy_time-846f66f1620ad42c.embassy_time.4f6a638abb75dd4c-cgu.0.rcgu.o:(embassy_time::driver::now::hefb1f99d6e069842) in archive Devel/Embedded/pogodyna/target/thumbv7em-none-eabihf/debug/deps/libembassy_time-846f66f1620ad42c.rlib
+
+          rust-lld: error: undefined symbol: _embassy_time_allocate_alarm
+          &gt;&gt;&gt; referenced by driver.rs:134 (src/driver.rs:134)
+          &gt;&gt;&gt;               embassy_time-846f66f1620ad42c.embassy_time.4f6a638abb75dd4c-cgu.0.rcgu.o:(embassy_time::driver::allocate_alarm::hf5145b6bd46706b2) in archive Devel/Embedded/pogodyna/target/thumbv7em-none-eabihf/debug/deps/libembassy_time-846f66f1620ad42c.rlib
+
+          rust-lld: error: undefined symbol: _embassy_time_set_alarm_callback
+          &gt;&gt;&gt; referenced by driver.rs:139 (src/driver.rs:139)
+          &gt;&gt;&gt;               embassy_time-846f66f1620ad42c.embassy_time.4f6a638abb75dd4c-cgu.0.rcgu.o:(embassy_time::driver::set_alarm_callback::h24f92388d96eafd2) in archive Devel/Embedded/pogodyna/target/thumbv7em-none-eabihf/debug/deps/libembassy_time-846f66f1620ad42c.rlib
+
+          rust-lld: error: undefined symbol: _embassy_time_set_alarm
+          &gt;&gt;&gt; referenced by driver.rs:144 (src/driver.rs:144)
+          &gt;&gt;&gt;               embassy_time-846f66f1620ad42c.embassy_time.4f6a638abb75dd4c-cgu.0.rcgu.o:(embassy_time::driver::set_alarm::h530a5b1f444a6d5b) in archive Devel/Embedded/pogodyna/target/thumbv7em-none-eabihf/debug/deps/libembassy_time-846f66f1620ad42c.rlib</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You probably need to enable a time driver for your HAL (not in <code>embassy-time</code>!). For example with <code>embassy-stm32</code>, you might need to enable <code>time-driver-any</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[dependencies.embassy-stm32]
+version = "0.1.0"
+features = [
+    # ...
+    "time-driver-any", # Add this line!
+    # ...
+]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you are in the early project setup phase and not using anything from the HAL, make sure the HAL is explicitly used to prevent the linker removing it as dead code by adding this line to your source:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-rust hljs" data-lang="rust">use embassy_stm32 as _;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_error_only_one_package_in_the_dependency_graph_may_specify_the_same_links_value"><a class="anchor" href="#_error_only_one_package_in_the_dependency_graph_may_specify_the_same_links_value"></a>Error: <code>Only one package in the dependency graph may specify the same links value.</code></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You have multiple versions of the same crate in your dependency tree. This means that some of your
+embassy crates are coming from crates.io, and some from git, each of them pulling in a different set
+of dependencies.</p>
+</div>
+<div class="paragraph">
+<p>To resolve this issue, make sure to only use a single source for all your embassy crates!
+To do this, you should patch your dependencies to use git sources using <code>[patch.crates.io]</code>
+and maybe <code>[patch.'https://github.com/embassy-rs/embassy.git']</code>.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[patch.crates-io]
+embassy-time-queue-driver = { git = "https://github.com/embassy-rs/embassy.git", rev = "e5fdd35" }
+embassy-time-driver = { git = "https://github.com/embassy-rs/embassy.git", rev = "e5fdd35" }
+# embassy-time = { git = "https://github.com/embassy-rs/embassy.git", rev = "e5fdd35" }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that the git revision should match any other embassy patches or git dependencies that you are using!</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_optimize_the_speed_of_my_embassy_stm32_program"><a class="anchor" href="#_how_can_i_optimize_the_speed_of_my_embassy_stm32_program"></a>How can I optimize the speed of my embassy-stm32 program?</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Make sure RCC is set up to go as fast as possible</p>
+</li>
+<li>
+<p>Make sure <a href="https://docs.rs/cortex-m/latest/cortex_m/peripheral/struct.SCB.html">flash cache</a> is enabled</p>
+</li>
+<li>
+<p>build with <code>--release</code></p>
+</li>
+<li>
+<p>Set the following keys for the release profile in your <code>Cargo.toml</code>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>opt-level = "s"</code></p>
+</li>
+<li>
+<p><code>lto = "fat"</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Set the following keys in the <code>[unstable]</code> section of your <code>.cargo/config.toml</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>build-std = ["core"]</code></p>
+</li>
+<li>
+<p><code>build-std-features = ["panic_immediate_abort"]</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Enable feature <code>embassy-time/generic-queue</code>, disable feature <code>embassy-executor/integrated-timers</code></p>
+</li>
+<li>
+<p>When using <code>InterruptExecutor</code>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>disable <code>executor-thread</code></p>
+</li>
+<li>
+<p>make <code>main`</code> spawn everything, then enable <a href="https://docs.rs/cortex-m/latest/cortex_m/peripheral/struct.SCB.html#method.set_sleeponexit">SCB.SLEEPONEXIT</a> and <code>loop { cortex_m::asm::wfi() }</code></p>
+</li>
+<li>
+<p><strong>Note:</strong>  If you need 2 priority levels, using 2 interrupt executors is better than 1 thread executor + 1 interrupt executor.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_do_i_set_up_the_task_arenas_on_stable"><a class="anchor" href="#_how_do_i_set_up_the_task_arenas_on_stable"></a>How do I set up the task arenas on stable?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When you aren&#8217;t using the <code>nightly</code> feature of <code>embassy-executor</code>, the executor uses a bump allocator, which may require configuration.</p>
+</div>
+<div class="paragraph">
+<p>Something like this error will occur at <strong>compile time</strong> if the task arena is <strong>too large</strong> for the target&#8217;s RAM:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-plain hljs" data-lang="plain">rust-lld: error: section '.bss' will not fit in region 'RAM': overflowed by _ bytes
+rust-lld: error: section '.uninit' will not fit in region 'RAM': overflowed by _ bytes</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And this message will appear at <strong>runtime</strong> if the task arena is <strong>too small</strong> for the tasks running:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-plain hljs" data-lang="plain">ERROR panicked at 'embassy-executor: task arena is full. You must increase the arena size, see the documentation for details: https://docs.embassy.dev/embassy-executor/'</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If all tasks are spawned at startup, this panic will occur immediately.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Check out <a href="https://docs.embassy.dev/embassy-executor/git/cortex-m/index.html#task-arena">Task Arena Documentation</a> for more details.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_can_i_use_manual_isrs_alongside_embassy"><a class="anchor" href="#_can_i_use_manual_isrs_alongside_embassy"></a>Can I use manual ISRs alongside Embassy?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Yes! This can be useful if you need to respond to an event as fast as possible, and the latency caused by the usual “ISR, wake, return from ISR, context switch to woken task” flow is too much for your application. Simply define a <code>#[interrupt] fn INTERRUPT_NAME() {}</code> handler as you would <a href="https://docs.rust-embedded.org/book/start/interrupts.html">in any other embedded rust project</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_measure_resource_usage_cpu_ram_etc"><a class="anchor" href="#_how_can_i_measure_resource_usage_cpu_ram_etc"></a>How can I measure resource usage (CPU, RAM, etc.)?</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_for_cpu_usage"><a class="anchor" href="#_for_cpu_usage"></a>For CPU Usage:</h3>
+<div class="paragraph">
+<p>There are a couple techniques that have been documented, generally you want to measure how long you are spending in the idle or low priority loop.</p>
+</div>
+<div class="paragraph">
+<p>We need to document specifically how to do this in embassy, but <a href="https://blog.japaric.io/cpu-monitor/">this older post</a> describes the general process.</p>
+</div>
+<div class="paragraph">
+<p>If you end up doing this, please update this section with more specific examples!</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_for_static_memory_usage"><a class="anchor" href="#_for_static_memory_usage"></a>For Static Memory Usage</h3>
+<div class="paragraph">
+<p>Tools like <code>cargo size</code> and <code>cargo nm</code> can tell you the size of any globals or other static usage. Specifically you will want to see the size of the <code>.data</code> and <code>.bss</code> sections, which together make up the total global/static memory usage.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_for_max_stack_usage"><a class="anchor" href="#_for_max_stack_usage"></a>For Max Stack Usage</h3>
+<div class="paragraph">
+<p>Check out <a href="https://github.com/Dirbaio/cargo-call-stack/"><code>cargo-call-stack</code></a> for statically calculating worst-case stack usage. There are some caveats and inaccuracies possible with this, but this is a good way to get the general idea. See <a href="https://github.com/dirbaio/cargo-call-stack#known-limitations">the README</a> for more details.</p>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using a modified version of the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

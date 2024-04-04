@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>在不同任务间共享外设 :: Embassy中文文档</title>
+    <link rel="canonical" href="https://embassy.dev/book/zh/sharing_peripherals.html">
+    <meta name="generator" content="Antora 3.1.7">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <script>var uiRootPath = '../_'</script>
+    <link rel="icon" href="../_/img/favicon.svg" type="image/svg+xml">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <h1>Embassy Documentation</h1>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/embassy-rs/embassy" target="_blank">GitHub</a>
+        <a class="navbar-item" href="https://matrix.to/#/#embassy-rs:matrix.org" target="_blank">Chat</a>
+        <a class="navbar-item" href="https://embassy.dev">Documentation</a>
+      </div>
+    </div>
+  </nav>
+</header><div class="body">
+<div class="nav-container" data-component="ROOT" data-version="zh">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Embassy中文文档</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="getting_started.html">快速开始</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="basic_application.html">基础应用</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="project_structure.html">项目结构</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="new_project.html">新建一个Embassy工程</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="best_practices.html">最佳实践</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="runtime.html">执行器（Executor）</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="time_keeping.html">Time-keeping</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="sharing_peripherals.html">共享外设</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="hal.html">硬件抽象层（HAL）</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="layer_by_layer.html">解剖async HAL</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="nrf.html">nRF</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="stm32.html">STM32</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="bootloader.html">Bootloader</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="examples.html">Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="developer.html">Developer Docs</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="developer_stm32.html">Developer Docs: STM32</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="embassy_in_the_wild.html">Embassy in the wild</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="faq.html">Frequently Asked Questions</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Embassy中文文档</span>
+    <span class="version">中文</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="index.html">Embassy中文文档</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">中文</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Embassy中文文档</a></li>
+    <li><a href="sharing_peripherals.html">共享外设</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/decaday/embassy-docs-zh/edit/main/docs/zh/modules/ROOT/pages/sharing_peripherals.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">在不同任务间共享外设</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>在多任务环境中，经常会有多个任务需要访问同一资源（如引脚、通信接口等）。Embassy在 <a href="https://crates.io/crates/embassy-sync">embassy-sync</a> crate中提供了多种同步原语（primitive）。</p>
+</div>
+<div class="paragraph">
+<p>以下示例展示了在树莓派Pico板上，两个任务同时使用板载LED。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_使用互斥锁mutex共享"><a class="anchor" href="#_使用互斥锁mutex共享"></a>使用互斥锁（MuteX）共享</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>互斥锁是共享外设最简单的方式。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-rust hljs" data-lang="rust">use defmt::*;
+use embassy_executor::Spawner;
+use embassy_rp::gpio;
+use embassy_sync::blocking_mutex::raw::ThreadModeRawMutex;
+use embassy_sync::mutex::Mutex;
+use embassy_time::{Duration, Ticker};
+use gpio::{AnyPin, Level, Output};
+use {defmt_rtt as _, panic_probe as _};
+
+type LedType = Mutex&lt;ThreadModeRawMutex, Option&lt;Output&lt;'static, AnyPin&gt;&gt;&gt;;
+static LED: LedType = Mutex::new(None);
+
+#[embassy_executor::main]
+async fn main(spawner: Spawner) {
+    let p = embassy_rp::init(Default::default());
+    // set the content of the global LED reference to the real LED pin
+    let led = Output::new(AnyPin::from(p.PIN_25), Level::High);
+    // 内部作用域是这样的:一旦互斥锁被写入，MutexGuard就会被删除，
+    // 从而释放互斥锁
+    {
+        *(LED.lock().await) = Some(led);
+    }
+    let dt = 100 * 1_000_000;
+    let k = 1.003;
+
+    unwrap!(spawner.spawn(toggle_led(&amp;LED, Duration::from_nanos(dt))));
+    unwrap!(spawner.spawn(toggle_led(&amp;LED, Duration::from_nanos((dt as f64 * k) as u64))));
+}
+
+// 这个任务的池（Pool）大小是2意味着你可以创建两个实例。
+#[embassy_executor::task(pool_size = 2)]
+async fn toggle_led(led: &amp;'static LedType, delay: Duration) {
+    let mut ticker = Ticker::every(delay);
+    loop {
+        {
+            let mut led_unlocked = led.lock().await;
+            if let Some(pin_ref) = led_unlocked.as_mut() {
+                pin_ref.toggle();
+            }
+        }
+        ticker.next().await;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>便于访问资源的结构体被定义为 <code>LedType</code> 。</p>
+</div>
+<div class="sect2">
+<h3 id="_为什么这么复杂"><a class="anchor" href="#_为什么这么复杂"></a>为什么这么复杂</h3>
+<div class="paragraph">
+<p>咱们展开每一层，看看为什么每一层都是必需的。</p>
+</div>
+<div class="sect3">
+<h4 id="_mutexrawmutextype_t"><a class="anchor" href="#_mutexrawmutextype_t"></a><code>Mutex&lt;RawMutexType, T&gt;</code></h4>
+<div class="paragraph">
+<p>互斥锁的存在是为了确保当一个任务首先获取资源并开始修改时，其他想要写入的任务必须等待（如果没有任务锁定互斥锁， <code>led.lock().await</code> 会立即返回；如果在别处被访问，则会阻塞）。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_optiont"><a class="anchor" href="#_optiont"></a><code>Option&lt;T&gt;</code></h4>
+<div class="paragraph">
+<p><code>LED</code> 变量需要在主任务外部定义，因为任务接受的引用需要 <code>'static</code> 生命周期。但是，如果它在主任务外部，它不能初始化为指向任何引脚，因为引脚本身尚未初始化。因此，它被设置为 <code>None</code> 。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_outputanypin"><a class="anchor" href="#_outputanypin"></a><code>Output&lt;AnyPin&gt;</code></h4>
+<div class="paragraph">
+<p>这表示引脚将被设置为输出。 <code>AnyPin</code> 本可以是`embassy_rp::peripherals::PIN_25`，但这样做使得 <code>toggle_led</code> 函数更通用。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_使用通道channel共享"><a class="anchor" href="#_使用通道channel共享"></a>使用通道（Channel）共享</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>通道是另一种确保对资源独占访问的方式。在可以不立即访问的情况下使用通道非常好，因为可以在排队时做其他事情。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-rust hljs" data-lang="rust">use defmt::*;
+use embassy_executor::Spawner;
+use embassy_rp::gpio;
+use embassy_sync::blocking_mutex::raw::ThreadModeRawMutex;
+use embassy_sync::channel::{Channel, Sender};
+use embassy_time::{Duration, Ticker};
+use gpio::{AnyPin, Level, Output};
+use {defmt_rtt as _, panic_probe as _};
+
+enum LedState {
+     Toggle,
+}
+static CHANNEL: Channel&lt;ThreadModeRawMutex, LedState, 64&gt; = Channel::new();
+
+#[embassy_executor::main]
+async fn main(spawner: Spawner) {
+    let p = embassy_rp::init(Default::default());
+    let mut led = Output::new(AnyPin::from(p.PIN_25), Level::High);
+
+    let dt = 100 * 1_000_000;
+    let k = 1.003;
+
+    unwrap!(spawner.spawn(toggle_led(CHANNEL.sender(), Duration::from_nanos(dt))));
+    unwrap!(spawner.spawn(toggle_led(CHANNEL.sender(), Duration::from_nanos((dt as f64 * k) as u64))));
+
+    loop {
+        match CHANNEL.receive().await {
+            LedState::Toggle =&gt; led.toggle(),
+        }
+    }
+}
+
+// 这个任务的池（Pool）大小是2意味着你可以创建两个实例。
+#[embassy_executor::task(pool_size = 2)]
+async fn toggle_led(control: Sender&lt;'static, ThreadModeRawMutex, LedState, 64&gt;, delay: Duration) {
+    let mut ticker = Ticker::every(delay);
+    loop {
+        control.send(LedState::Toggle).await;
+        ticker.next().await;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这个示例用通道替换了互斥锁，并使用另一个任务（主循环，main loop）来控制LED。这种方法的优势在于只有一个任务引用外设，分离了关注点。然而，使用互斥锁的开销更小，如果你需要确保该操作在继续执行任务中的其他工作之前完成，那么可能需要使用互斥锁。</p>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using a modified version of the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

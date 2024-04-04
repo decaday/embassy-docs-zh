@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Bootloader :: Embassy中文文档</title>
+    <link rel="canonical" href="https://embassy.dev/book/zh/bootloader.html">
+    <meta name="generator" content="Antora 3.1.7">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <script>var uiRootPath = '../_'</script>
+    <link rel="icon" href="../_/img/favicon.svg" type="image/svg+xml">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <h1>Embassy Documentation</h1>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/embassy-rs/embassy" target="_blank">GitHub</a>
+        <a class="navbar-item" href="https://matrix.to/#/#embassy-rs:matrix.org" target="_blank">Chat</a>
+        <a class="navbar-item" href="https://embassy.dev">Documentation</a>
+      </div>
+    </div>
+  </nav>
+</header><div class="body">
+<div class="nav-container" data-component="ROOT" data-version="zh">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Embassy中文文档</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="getting_started.html">快速开始</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="basic_application.html">基础应用</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="project_structure.html">项目结构</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="new_project.html">新建一个Embassy工程</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="best_practices.html">最佳实践</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="runtime.html">执行器（Executor）</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="time_keeping.html">Time-keeping</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="sharing_peripherals.html">共享外设</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="hal.html">硬件抽象层（HAL）</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="layer_by_layer.html">解剖async HAL</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="nrf.html">nRF</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="stm32.html">STM32</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="bootloader.html">Bootloader</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="examples.html">Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="developer.html">Developer Docs</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="developer_stm32.html">Developer Docs: STM32</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="embassy_in_the_wild.html">Embassy in the wild</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="faq.html">Frequently Asked Questions</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Embassy中文文档</span>
+    <span class="version">中文</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="index.html">Embassy中文文档</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">中文</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Embassy中文文档</a></li>
+    <li><a href="bootloader.html">Bootloader</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/decaday/embassy-docs-zh/edit/main/docs/zh/modules/ROOT/pages/bootloader.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Bootloader</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>embassy-boot</code> a lightweight bootloader supporting firmware application upgrades in a power-fail-safe way, with trial boots and rollbacks.</p>
+</div>
+<div class="paragraph">
+<p>The bootloader can be used either as a library or be flashed directly if you are happy with the default configuration and capabilities.</p>
+</div>
+<div class="paragraph">
+<p>By design, the bootloader does not provide any network capabilities. Networking capabilities for fetching new firmware can be provided by the user application, using the bootloader as a library for updating the firmware, or by using the bootloader as a library and adding this capability yourself.</p>
+</div>
+<div class="paragraph">
+<p>The bootloader supports both internal and external flash by relying on the <code>embedded-storage</code> traits. The bootloader optionally supports the verification of firmware that has been digitally signed (recommended).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_hardware_support"><a class="anchor" href="#_hardware_support"></a>Hardware support</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The bootloader supports</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>nRF52 with and without softdevice</p>
+</li>
+<li>
+<p>STM32 L4, WB, WL, L1, L0, F3, F7 and H7</p>
+</li>
+<li>
+<p>Raspberry Pi: RP2040</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In general, the bootloader works on any platform that implements the <code>embedded-storage</code> traits for its internal flash, but may require custom initialization code to work.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_design"><a class="anchor" href="#_design"></a>Design</h2>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="_images/bootloader_flash.png" alt="Bootloader flash layout">
+</div>
+</div>
+<div class="paragraph">
+<p>The bootloader divides the storage into 4 main partitions, configurable when creating the bootloader
+instance or via linker scripts:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>BOOTLOADER - Where the bootloader is placed. The bootloader itself consumes about 8kB of flash, but if you need to debug it and have space available, increasing this to 24kB will allow you to run the bootloader with probe-rs.</p>
+</li>
+<li>
+<p>ACTIVE - Where the main application is placed. The bootloader will attempt to load the application at the start of this partition. This partition is only written to by the bootloader. The size required for this partition depends on the size of your application.</p>
+</li>
+<li>
+<p>DFU - Where the application-to-be-swapped is placed. This partition is written to by the application. This partition must be at least 1 page bigger than the ACTIVE partition, since the swap algorithm uses the extra space to ensure power safe copy of data:</p>
+<div class="paragraph">
+<p>Partition Size<sub>dfu</sub>= Partition Size<sub>active</sub>+ Page Size<sub>active</sub></p>
+</div>
+<div class="paragraph">
+<p>All values are specified in bytes.</p>
+</div>
+</li>
+<li>
+<p>BOOTLOADER STATE - Where the bootloader stores the current state describing if the active and dfu partitions need to be swapped. When the new firmware has been written to the DFU partition, a magic field is written to instruct the bootloader that the partitions should be swapped. This partition must be able to store a magic field as well as the partition swap progress. The partition size given by:</p>
+<div class="paragraph">
+<p>Partition Size<sub>state</sub> = Write Size<sub>state</sub> + (2 × Partition Size<sub>active</sub> / Page Size<sub>active</sub>)</p>
+</div>
+<div class="paragraph">
+<p>All values are specified in bytes.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The partitions for ACTIVE (+BOOTLOADER), DFU and BOOTLOADER_STATE may be placed in separate flash. The page size used by the bootloader is determined by the lowest common multiple of the ACTIVE and DFU page sizes.
+The BOOTLOADER_STATE partition must be big enough to store one word per page in the ACTIVE and DFU partitions combined.</p>
+</div>
+<div class="paragraph">
+<p>The bootloader has a platform-agnostic part, which implements the power fail safe swapping algorithm given the boundaries set by the partitions. The platform-specific part is a minimal shim that provides additional functionality such as watchdogs or supporting the nRF52 softdevice.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The linker scripts for the application and bootloader look similar, but the FLASH region must point to the BOOTLOADER partition for the bootloader, and the ACTIVE partition for the application.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_firmwareupdater"><a class="anchor" href="#_firmwareupdater"></a>FirmwareUpdater</h3>
+<div class="paragraph">
+<p>The <code>FirmwareUpdater</code> is an object for conveniently flashing firmware to the DFU partition and subsequently marking it as being ready for swapping with the active partition on the next reset. Its principle methods are <code>write_firmware</code>, which is called once per the size of the flash "write block" (typically 4KiB), and <code>mark_updated</code>, which is the final call.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_verification"><a class="anchor" href="#_verification"></a>Verification</h3>
+<div class="paragraph">
+<p>The bootloader supports the verification of firmware that has been flashed to the DFU partition. Verification requires that firmware has been signed digitally using <a href="https://ed25519.cr.yp.to/"><code>ed25519</code></a> signatures. With verification enabled, the <code>FirmwareUpdater::verify_and_mark_updated</code> method is called in place of <code>mark_updated</code>. A public key and signature are required, along with the actual length of the firmware that has been flashed. If verification fails then the firmware will not be marked as updated and therefore be rejected.</p>
+</div>
+<div class="paragraph">
+<p>Signatures are normally conveyed with the firmware to be updated and not written to flash. How signatures are provided is a firmware responsibility.</p>
+</div>
+<div class="paragraph">
+<p>To enable verification use either the <code>ed25519-dalek</code> or <code>ed25519-salty</code> features when depending on the <code>embassy-boot</code> crate. We recommend <code>ed25519-salty</code> at this time due to its small size.</p>
+</div>
+<div class="sect3">
+<h4 id="_tips_on_keys_and_signing_with_ed25519"><a class="anchor" href="#_tips_on_keys_and_signing_with_ed25519"></a>Tips on keys and signing with ed25519</h4>
+<div class="paragraph">
+<p>Ed25519 is a public key signature system where you are responsible for keeping the private key secure. We recommend embedding the <strong>public</strong> key in your program so that it can be easily passed to <code>verify_and_mark_updated</code>. An example declaration of the public key in your firmware:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-rust hljs" data-lang="rust">static PUBLIC_SIGNING_KEY: &amp;[u8] = include_bytes!("key.pub");</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Signatures are often conveyed along with firmware by appending them.</p>
+</div>
+<div class="paragraph">
+<p>Ed25519 keys can be generated by a variety of tools. We recommend <a href="https://man.openbsd.org/signify"><code>signify</code></a> as it is in wide use to sign and verify OpenBSD distributions, and is straightforward to use.</p>
+</div>
+<div class="paragraph">
+<p>The following set of Bash commands can be used to generate public and private keys on Unix platforms, and also generate a local <code>key.pub</code> file with the <code>signify</code> file headers removed. Declare a <code>SECRETS_DIR</code> environment variable in a secure location.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">signify -G -n -p $SECRETS_DIR/key.pub -s $SECRETS_DIR/key.sec
+tail -n1 $SECRETS_DIR/key.pub | base64 -d -i - | dd ibs=10 skip=1 &gt; key.pub
+chmod 700 $SECRETS_DIR/key.sec
+export SECRET_SIGNING_KEY=$(tail -n1 $SECRETS_DIR/key.sec)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then, to sign your firmware given a declaration of <code>FIRMWARE_DIR</code> and a firmware filename of <code>myfirmware</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">shasum -a 512 -b $FIRMWARE_DIR/myfirmware &gt; $SECRETS_DIR/message.txt
+cat $SECRETS_DIR/message.txt | dd ibs=128 count=1 | xxd -p -r &gt; $SECRETS_DIR/message.txt
+signify -S -s $SECRETS_DIR/key.sec -m $SECRETS_DIR/message.txt -x $SECRETS_DIR/message.txt.sig
+cp $FIRMWARE_DIR/myfirmware $FIRMWARE_DIR/myfirmware+signed
+tail -n1 $SECRETS_DIR/message.txt.sig | base64 -d -i - | dd ibs=10 skip=1 &gt;&gt; $FIRMWARE_DIR/myfirmware+signed</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Remember, guard the <code>$SECRETS_DIR/key.sec</code> key as compromising it means that another party can sign your firmware.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using a modified version of the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

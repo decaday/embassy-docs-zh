@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>一个基础的Embassy应用 :: Embassy中文文档</title>
+    <link rel="canonical" href="https://embassy.dev/book/zh/basic_application.html">
+    <meta name="generator" content="Antora 3.1.7">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <script>var uiRootPath = '../_'</script>
+    <link rel="icon" href="../_/img/favicon.svg" type="image/svg+xml">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <h1>Embassy Documentation</h1>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/embassy-rs/embassy" target="_blank">GitHub</a>
+        <a class="navbar-item" href="https://matrix.to/#/#embassy-rs:matrix.org" target="_blank">Chat</a>
+        <a class="navbar-item" href="https://embassy.dev">Documentation</a>
+      </div>
+    </div>
+  </nav>
+</header><div class="body">
+<div class="nav-container" data-component="ROOT" data-version="zh">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Embassy中文文档</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="getting_started.html">快速开始</a>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="basic_application.html">基础应用</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="project_structure.html">项目结构</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="new_project.html">新建一个Embassy工程</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="best_practices.html">最佳实践</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="runtime.html">执行器（Executor）</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="time_keeping.html">Time-keeping</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="sharing_peripherals.html">共享外设</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="hal.html">硬件抽象层（HAL）</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="layer_by_layer.html">解剖async HAL</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="nrf.html">nRF</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="stm32.html">STM32</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="bootloader.html">Bootloader</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="examples.html">Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="developer.html">Developer Docs</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="developer_stm32.html">Developer Docs: STM32</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="embassy_in_the_wild.html">Embassy in the wild</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="faq.html">Frequently Asked Questions</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Embassy中文文档</span>
+    <span class="version">中文</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="index.html">Embassy中文文档</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">中文</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Embassy中文文档</a></li>
+    <li><a href="getting_started.html">快速开始</a></li>
+    <li><a href="basic_application.html">基础应用</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/decaday/embassy-docs-zh/edit/main/docs/zh/modules/ROOT/pages/basic_application.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">一个基础的Embassy应用</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>你已经运行了 <a href="examples.html" class="xref page">examples</a> ，但是现在咱干啥呢？让我们通过一个运行在nRF52 DK上的简单的Embassy例子来更好地了解它。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_主要部分"><a class="anchor" href="#_主要部分"></a>主要部分</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>完整的示例可以在 <a href="https://github.com/embassy-rs/embassy/tree/master/docs/modules/ROOT/examples/basic">这里</a> 找到</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+如果您使用VS Code和rust-analyzer查看和编辑示例，您可能需要对 <code>.vscode/settings.json</code> 进行一些更改，以告知它我们正在处理哪个项目。请按照该文件中的注释说明来正确配置rust-analyzer。
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_裸机bare_metal"><a class="anchor" href="#_裸机bare_metal"></a>裸机（Bare metal）</h3>
+<div class="paragraph">
+<p>首先，您会注意到文件顶部有两个属性。这些属性告诉编译器程序无法访问std，并且没有主函数（因为它不是由操作系统运行的）。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-rust hljs" data-lang="rust">Unresolved include directive in modules/ROOT/pages/basic_application.adoc - include::example$basic/src/main.rs[]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_处理错误"><a class="anchor" href="#_处理错误"></a>处理错误</h3>
+<div class="paragraph">
+<p>接下来，我们将处理一些关于如何处理panic和错误的声明。在开发过程中，一个好的做法是用 <code>defmt-rtt</code> 和 <code>panic-probe</code> 来将诊断信息打印到终端：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-rust hljs" data-lang="rust">Unresolved include directive in modules/ROOT/pages/basic_application.adoc - include::example$basic/src/main.rs[]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_任务声明"><a class="anchor" href="#_任务声明"></a>任务声明</h3>
+<div class="paragraph">
+<p>在一些导入语句之后，应该声明应用程序运行的任务：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-rust hljs" data-lang="rust">Unresolved include directive in modules/ROOT/pages/basic_application.adoc - include::example$basic/src/main.rs[]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Embassy任务必须声明为 <code>async</code> ，并且 <strong>不能</strong> 带有通用参数。在这种情况下，我们会传递应该闪烁的LED和闪烁的时间间隔。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+请注意，此任务中没有一直等待。它使用了Embassy timer来让出执行权，允许MCU在每个闪烁之间进入休眠状态。
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_主要部分_2"><a class="anchor" href="#_主要部分_2"></a>主要部分</h3>
+<div class="paragraph">
+<p>Embassy应用程序的主要入口点（entry point）是使用 <code>#[embassy_executor::main]</code> 宏定义的。入口点接收一个 <code>Spawner</code> ，它可以用来生成其他任务。</p>
+</div>
+<div class="paragraph">
+<p>然后，我们使用默认配置初始化 HAL，这给了我们一个 <code>Peripherals</code> struct ， 我们可以用它来访问 MCU 的各种外设。比如，我们希望将其中一个引脚配置为驱动 LED 的 GPIO 输出：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-rust hljs" data-lang="rust">Unresolved include directive in modules/ROOT/pages/basic_application.adoc - include::example$basic/src/main.rs[]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>当 <code>blinker</code> 任务被生成（spawn）而且main函数return时，会发生什么呢？ 实际上，main入口点就像任何其他任务一样，只是你只能有一个，并且它需要一些特定类型的参数。魔法就在于 <code>#[embassy_executor::main]</code>  宏。该宏执行以下操作：</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>创建一个 Embassy Executor（执行器）</p>
+</li>
+<li>
+<p>为入口点定义一个主任务</p>
+</li>
+<li>
+<p>运行执行器，生成主任务</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>还有一种不使用宏运行执行器的方法，那就是你必须自己创建 <code>Executor</code> 实例。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cargo_toml"><a class="anchor" href="#_cargo_toml"></a>Cargo.toml</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>项目需要包含Embassy的依赖项：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">Unresolved include directive in modules/ROOT/pages/basic_application.adoc - include::example$basic/Cargo.toml[]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>根据您的微控制器，您可能需要替换 <code>embassy-nrf</code> 为别的。（STM32： <code>embassy-stm32</code> ，记住也要更新feature）.</p>
+</div>
+<div class="paragraph">
+<p>在本文这种特定的情况下，我们选择选择nrf52840芯片，使用RTC1外设作为time driver。</p>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using a modified version of the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

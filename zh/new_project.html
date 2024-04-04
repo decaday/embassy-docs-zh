@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>开始一个新的Embassy项目 :: Embassy中文文档</title>
+    <link rel="canonical" href="https://embassy.dev/book/zh/new_project.html">
+    <meta name="generator" content="Antora 3.1.7">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <script>var uiRootPath = '../_'</script>
+    <link rel="icon" href="../_/img/favicon.svg" type="image/svg+xml">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <h1>Embassy Documentation</h1>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/embassy-rs/embassy" target="_blank">GitHub</a>
+        <a class="navbar-item" href="https://matrix.to/#/#embassy-rs:matrix.org" target="_blank">Chat</a>
+        <a class="navbar-item" href="https://embassy.dev">Documentation</a>
+      </div>
+    </div>
+  </nav>
+</header><div class="body">
+<div class="nav-container" data-component="ROOT" data-version="zh">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Embassy中文文档</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="getting_started.html">快速开始</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="basic_application.html">基础应用</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="project_structure.html">项目结构</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="new_project.html">新建一个Embassy工程</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="best_practices.html">最佳实践</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="runtime.html">执行器（Executor）</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="time_keeping.html">Time-keeping</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="sharing_peripherals.html">共享外设</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="hal.html">硬件抽象层（HAL）</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="layer_by_layer.html">解剖async HAL</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="nrf.html">nRF</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="stm32.html">STM32</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="bootloader.html">Bootloader</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="examples.html">Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="developer.html">Developer Docs</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="developer_stm32.html">Developer Docs: STM32</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="embassy_in_the_wild.html">Embassy in the wild</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="faq.html">Frequently Asked Questions</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Embassy中文文档</span>
+    <span class="version">中文</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="index.html">Embassy中文文档</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">中文</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Embassy中文文档</a></li>
+    <li><a href="getting_started.html">快速开始</a></li>
+    <li><a href="new_project.html">新建一个Embassy工程</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/decaday/embassy-docs-zh/edit/main/docs/zh/modules/ROOT/pages/new_project.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">开始一个新的Embassy项目</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>成功 <a href="getting_started.html" class="xref page">运行一些示例项目</a> 后，下一步就是创建一个独立的Embassy项目。</p>
+</div>
+<div class="paragraph">
+<p>生成Embassy项目，有一些工具（正在开发中，WIP）：</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_命令行cli"><a class="anchor" href="#_命令行cli"></a>命令行（CLI）</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/adinack/cargo-embassy">cargo-embassy</a> (STM32 和 NRF)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cargo_generate"><a class="anchor" href="#_cargo_generate"></a>cargo-generate</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/lulf/embassy-template">embassy-template</a> (STM32, NRF, 和 RP)</p>
+</li>
+<li>
+<p><a href="https://github.com/bentwire/embassy-rp2040-template">embassy-rp2040-template</a> (RP)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>如果您想从零开始：</p>
+</div>
+<div class="paragraph">
+<p>以STM32G474为例，我们来创建一个全新的Embassy项目。该指南也适用于任何支持的芯片，只需做一些小改动。</p>
+</div>
+<div class="paragraph">
+<p>运行：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cargo new stm32g474-example
+cd stm32g474-example</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>创建了一个空的rust项目:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">stm32g474-example
+├── Cargo.toml
+└── src
+    └── main.rs</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>查看 <a href="https://github.com/embassy-rs/embassy/tree/main/examples">Embassy examples</a> , 有一个 <code>stm32g4</code> 文件夹。 将 <code>src/blinky.rs</code> 的内容复制到 <code>src/main.rs</code> 。</p>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cargoconfig_toml"><a class="anchor" href="#_cargoconfig_toml"></a>.cargo/config.toml</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>现在，我们每次运行 <code>cargo build</code> 或者 <code>cargo run</code> 需要给cargo提供一个 target triple（-target &lt;triple&gt;） 。让我们一劳永逸，从 <code>examples/stm32g4</code> 复制 <code>.cargo/config.toml</code> 到我们的项目中。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">stm32g474-example
+├── .cargo
+│   └── config.toml
+├── Cargo.toml
+└── src
+    └── main.rs</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>除了target triple， <code>.cargo/config.toml</code> 还包含一个 <code>runner</code> 键，让我们可以通过probe-rs运行 <code>cargo run</code>. 为了实现这一点，我们需要提供正确的芯片ID。请检查 <code>probe-rs chip list</code> ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ probe-rs chip list | grep -i stm32g474re
+        STM32G474RETx</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>然后复制 <code>STM32G474RETx</code> 到 <code>.cargo/config.toml</code> ，就像这样：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[target.'cfg(all(target_arch = "arm", target_os = "none"))']
+# replace STM32G071C8Rx with your chip as listed in `probe-rs chip list`
+runner = "probe-rs run --chip STM32G474RETx"</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cargo_toml"><a class="anchor" href="#_cargo_toml"></a>Cargo.toml</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>现在cargo已经知道要为哪个目标编译（probe-rs也知道人家要在哪个芯片上运行），让我们添加一些依赖项。</p>
+</div>
+<div class="paragraph">
+<p>查看 <code>examples/stm32g4/Cargo.toml</code> ，我们可以看到示例所需要embassy的一系列crate。对于blinky项目，我们只需要其中的三个： <code>embassy-stm32</code> ，  <code>embassy-executor</code> 和 <code>embassy-time</code> 。</p>
+</div>
+<div class="paragraph">
+<p>在撰写本文时，embassy的最新版本还没有在crates.io上发布，所以我们需要直接从git仓库安装。推荐的安装方法如下：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>从示例中复制所需的 <code>embassy-*</code> 行到 <code>Cargo.toml</code></p>
+</li>
+<li>
+<p>对 <code>features</code> 进行必要的更改，例如：需要 <code>embassy-stm32</code> 中的 <code>stm32g474re</code> feature</p>
+</li>
+<li>
+<p>移除`embassy-*` 条目中的 <code>path = ""</code> 键</p>
+</li>
+<li>
+<p>创建一个 <code>[patch.crates-io]</code> section, 部分，为我们需要的每个embassy crate创建条目。这些条目应该包含相同的值：一个指向git仓库的链接，以及我们正在检出的提交的引用。你可以通过运行 <code>git ls-remote <a href="https://github.com/embassy-rs/embassy.git" class="bare">https://github.com/embassy-rs/embassy.git</a> HEAD</code> 来找到最新的提交</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+注意：使用这种方法时， <code>[dependencies]</code> 中的version键必须与 <code>[patch.crates.io]</code> 下指定的rev中每个crate的Cargo.toml中定义的版本相匹配。这意味着在更新时，你必须选择一个新的修订版本（revision），更改 <code>[patch.crates.io]</code> 中的所有内容以匹配它，然后更正 <code>[dependencies]</code> 下已更改的内容。好复杂，希望一旦embassy在crates.io上发布，就不再需要这样做了！
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>按照目前的方法，会产生以下结果：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[dependencies]
+embassy-stm32 = {version = "0.1.0", features =  ["defmt", "time-driver-any", "stm32g474re", "memory-x", "unstable-pac", "exti"]}
+embassy-executor = { version = "0.3.3", features = ["nightly", "arch-cortex-m", "executor-thread", "defmt", "integrated-timers"] }
+embassy-time = { version = "0.2", features = ["defmt", "defmt-timestamp-uptime", "tick-hz-32_768"] }
+
+[patch.crates-io]
+embassy-time = { git = "https://github.com/embassy-rs/embassy", rev = "7703f47c1ecac029f603033b7977d9a2becef48c" }
+embassy-executor = { git = "https://github.com/embassy-rs/embassy", rev = "7703f47c1ecac029f603033b7977d9a2becef48c" }
+embassy-stm32 = { git = "https://github.com/embassy-rs/embassy", rev = "7703f47c1ecac029f603033b7977d9a2becef48c" }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>我们还需要一些其他的依赖项来构建项目，但幸运的是，它们的安装要简单得多。将它们从示例的 <code>Cargo.toml</code> 复制到新的 <code>Cargo.toml</code> 中的 <code>[dependencies]</code> 部分：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">defmt = "0.3.5"
+defmt-rtt = "0.4.0"
+cortex-m = {version = "0.7.7", features = ["critical-section-single-core"]}
+cortex-m-rt = "0.7.3"
+panic-probe = "0.3.1"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这些是运行 <code>blinky.rs`所需的最低限度的依赖项，但示例 `Cargo.toml`中指定的其他依赖项也值得一看，并注意与embassy一起使用所需的功能 - 例如 `futures = { version = "0.3.17", default-features = false, features = ["async-await"] }</code>.</p>
+</div>
+<div class="paragraph">
+<p>最后，将示例`Cargo.toml` 中的 <code>[profile.release]</code> 部分复制到我们的文件中。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[profile.release]
+debug = 2</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_rust_toolchain_toml"><a class="anchor" href="#_rust_toolchain_toml"></a>rust-toolchain.toml</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>在我们可以构建项目之前，我们需要添加一个额外的文件来告诉cargo使用nightly工具链。将 <code>rust-toolchain.toml</code> 从embassy仓库复制到我们的仓库，并只保留target triple列表中我们需要的。 在这个例子中，是 <code>thumbv7em-none-eabi</code> ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">stm32g474-example
+├── .cargo
+│   └── config.toml
+├── Cargo.toml
+├── rust-toolchain.toml
+└── src
+    └── main.rs</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml"># Before upgrading check that everything is available on all tier1 targets here:
+# https://rust-lang.github.io/rustup-components-history
+[toolchain]
+channel = "nightly-2023-11-01"
+components = [ "rust-src", "rustfmt", "llvm-tools", "miri" ]
+targets = ["thumbv7em-none-eabi"]</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_build_rs"><a class="anchor" href="#_build_rs"></a>build.rs</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>为了为我们的目标生成一个可工作的二进制文件，cargo需要一个自定义的构建脚本。将 <code>build.rs</code> 从示例复制到我们的项目中：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">stm32g474-example
+├── build.rs
+├── .cargo
+│   └── config.toml
+├── Cargo.toml
+├── rust-toolchain.toml
+└── src
+    └── main.rs</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_构建和运行"><a class="anchor" href="#_构建和运行"></a>构建和运行</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>现在，我们终于准备好构建和运行我们的项目了！通过调试器连接您的板子并运行：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cargo run --release</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>应该会有一个LED闪烁 (应该有一个LED连接到 <code>src/main.rs</code> 中定义的引脚，如果不是请修改) 。输出如下：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">   Compiling stm32g474-example v0.1.0 (/home/you/stm32g474-example)
+    Finished release [optimized + debuginfo] target(s) in 0.22s
+     Running `probe-rs run --chip STM32G474RETx target/thumbv7em-none-eabi/release/stm32g474-example`
+     Erasing sectors ✔ [00:00:00] [#########################################################] 18.00 KiB/18.00 KiB @ 54.09 KiB/s (eta 0s )
+ Programming pages   ✔ [00:00:00] [#########################################################] 17.00 KiB/17.00 KiB @ 35.91 KiB/s (eta 0s )    Finished in 0.817s
+0.000000 TRACE BDCR configured: 00008200
+└─ embassy_stm32::rcc::bd::{impl#3}::init::{closure#4} @ /home/you/.cargo/git/checkouts/embassy-9312dcb0ed774b29/7703f47/embassy-stm32/src/fmt.rs:117
+0.000000 DEBUG rcc: Clocks { sys: Hertz(16000000), pclk1: Hertz(16000000), pclk1_tim: Hertz(16000000), pclk2: Hertz(16000000), pclk2_tim: Hertz(16000000), hclk1: Hertz(16000000), hclk2: Hertz(16000000), pll1_p: None, adc: None, adc34: None, rtc: Some(Hertz(32000)) }
+└─ embassy_stm32::rcc::set_freqs @ /home/you/.cargo/git/checkouts/embassy-9312dcb0ed774b29/7703f47/embassy-stm32/src/fmt.rs:130
+0.000000 INFO  Hello World!
+└─ embassy_stm32g474::____embassy_main_task::{async_fn#0} @ src/main.rs:14
+0.000091 INFO  high
+└─ embassy_stm32g474::____embassy_main_task::{async_fn#0} @ src/main.rs:19
+0.300201 INFO  low
+└─ embassy_stm32g474::____embassy_main_task::{async_fn#0} @ src/main.rs:23</code></pre>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using a modified version of the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>最佳实践 :: Embassy中文文档</title>
+    <link rel="canonical" href="https://embassy.dev/book/zh/best_practices.html">
+    <meta name="generator" content="Antora 3.1.7">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <script>var uiRootPath = '../_'</script>
+    <link rel="icon" href="../_/img/favicon.svg" type="image/svg+xml">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <h1>Embassy Documentation</h1>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/embassy-rs/embassy" target="_blank">GitHub</a>
+        <a class="navbar-item" href="https://matrix.to/#/#embassy-rs:matrix.org" target="_blank">Chat</a>
+        <a class="navbar-item" href="https://embassy.dev">Documentation</a>
+      </div>
+    </div>
+  </nav>
+</header><div class="body">
+<div class="nav-container" data-component="ROOT" data-version="zh">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Embassy中文文档</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="getting_started.html">快速开始</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="basic_application.html">基础应用</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="project_structure.html">项目结构</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="new_project.html">新建一个Embassy工程</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="best_practices.html">最佳实践</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="runtime.html">执行器（Executor）</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="time_keeping.html">Time-keeping</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="sharing_peripherals.html">共享外设</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="hal.html">硬件抽象层（HAL）</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="layer_by_layer.html">解剖async HAL</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="nrf.html">nRF</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="stm32.html">STM32</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="bootloader.html">Bootloader</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="examples.html">Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="developer.html">Developer Docs</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="developer_stm32.html">Developer Docs: STM32</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="embassy_in_the_wild.html">Embassy in the wild</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="faq.html">Frequently Asked Questions</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Embassy中文文档</span>
+    <span class="version">中文</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="index.html">Embassy中文文档</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">中文</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Embassy中文文档</a></li>
+    <li><a href="getting_started.html">快速开始</a></li>
+    <li><a href="best_practices.html">最佳实践</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/decaday/embassy-docs-zh/edit/main/docs/zh/modules/ROOT/pages/best_practices.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">最佳实践</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>随着时间的推移，出现了一些一些最佳实践（best practices）。下面的列表应作为开发者在 <em>Rust</em> 中编写嵌入式软件的指南，特别是基于 <em>Embassy</em> 框架的。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_通过引用传递缓冲区"><a class="anchor" href="#_通过引用传递缓冲区"></a>通过引用传递缓冲区</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>有时候，我们会想要将数组或包装器（例如 <a href="https://docs.rs/heapless/latest/heapless/"><code>heapless::Vec</code></a>,
+传递给函数，或者想用 <code>std::Vec</code> 。 然而，在大多数嵌入式应用中，您不希望在allocator上浪费资源，也不希望将缓冲区（buffer）放在栈（stack）上，因为如果不小心翼翼地处理，就会导致栈溢出。</p>
+</div>
+<div class="paragraph">
+<p>请看以下示例：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-rust hljs" data-lang="rust">fn process_buffer(mut buf: [u8; 1024]) -&gt; [u8; 1024] {
+    // 做一些事情然后返回新缓冲区
+    for elem in buf.iter_mut() {
+        *elem = 0;
+    }
+    buf
+}
+
+pub fn main() -&gt; () {
+    let buf = [1u8; 1024];
+    let buf_new = process_buffer(buf);
+    // 用buf_new做一些事情
+    ()
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>当在程序中调用 <code>process_buffer</code> 时，会创建一个传递给该函数的缓冲区的副本，消耗另外 1024 字节的内存。在处理完成后，将在堆栈上放置另一个 1024 字节的缓冲区，以便返回给调用者。在为 Cortex-M 编译时，你可以检查汇编代码，会出现两次内存拷贝操作，例如 <code>bl __aeabi_memcpy</code> ）</p>
+</div>
+<div class="paragraph">
+<p><strong>可能的解决方案：</strong></p>
+</div>
+<div class="paragraph">
+<p>在进入和退出时都通过引用而不是值传递数据。例如，你可以将输入缓冲区的slice（切片）作为输出返回。同时要求输入slice和输出slice的生命周期相同，这样编译器将强制检查内存安全性。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-rust hljs" data-lang="rust">fn process_buffer&lt;'a&gt;(buf: &amp;'a mut [u8]) -&gt; &amp;'a mut[u8] {
+    for elem in buf.iter_mut() {
+        *elem = 0;
+    }
+    buf
+}
+
+pub fn main() -&gt; () {
+    let mut buf = [1u8; 1024];
+    let buf_new = process_buffer(&amp;mut buf);
+    // 用buf_new做一些事情
+    ()
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using a modified version of the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
