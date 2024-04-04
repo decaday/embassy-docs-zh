@@ -1,0 +1,19 @@
+site:
+  title: Embassy中文文档
+  url: https://embassy.dev/book
+  start_page: ROOT::index.adoc
+
+content:
+  sources:
+    - url: .
+      start_path: docs/zh
+ui: 
+  bundle:
+    url: https://github.com/embassy-rs/embassy-antora-ui/releases/download/0.2.2/ui-bundle.zip
+    snapshot: true
+
+output:
+  clean: true
+runtime:
+  fetch: true
+

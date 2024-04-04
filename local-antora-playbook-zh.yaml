@@ -3,7 +3,7 @@
 # tweak this as you need, but only commit and push what is required to stay in sync with the main file.
 #
 site:
-  title: Embassy Docs
+  title: Embassy中文文档
   start_page: ROOT::index.adoc
 
 content:

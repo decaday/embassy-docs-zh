@@ -21,15 +21,8 @@ jobs:
       - run: npm install
       - run: make
 
-      - name: Publish
-        shell: bash
-        run: |
-          mkdir -p ~/.kube
-          echo "${{secrets.KUBECONFIG}}" > ~/.kube/config
-          POD=$(kubectl -n embassy get po -l app=website -o jsonpath={.items[0].metadata.name})
-          mv build/site build/book
-          tar -C build -cf book.tar book
-          kubectl exec $POD -- mkdir -p /usr/share/nginx/html
-          kubectl cp book.tar $POD:/usr/share/nginx/html/
-          kubectl exec $POD -- find /usr/share/nginx/html
-          kubectl exec $POD -- tar -C /usr/share/nginx/html -xvf /usr/share/nginx/html/book.tar
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/site

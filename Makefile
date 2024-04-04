@@ -7,10 +7,10 @@ clean:
 	rm -Rf build
 
 build:
-	$(ANTORA_CLI) --fetch antora-playbook.yaml --stacktrace
+	$(ANTORA_CLI) --fetch antora-playbook-zh.yaml --stacktrace
 
 local:
-	$(ANTORA_CLI) --fetch local-antora-playbook.yaml
+	$(ANTORA_CLI) --fetch local-antora-playbook-zh.yaml
 
 version:
 	@$(ANTORA_CLI) -v
