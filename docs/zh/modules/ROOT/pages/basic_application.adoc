@@ -1,0 +1,72 @@
+= 一个基础的Embassy应用
+
+你已经运行了 xref:examples.adoc[examples] ，但是现在咱干啥呢？让我们通过一个运行在nRF52 DK上的简单的Embassy例子来更好地了解它。
+
+== 主要部分
+
+完整的示例可以在 link:https://github.com/embassy-rs/embassy/tree/master/docs/modules/ROOT/examples/basic[这里] 找到
+
+NOTE: 如果您使用VS Code和rust-analyzer查看和编辑示例，您可能需要对 `.vscode/settings.json` 进行一些更改，以告知它我们正在处理哪个项目。请按照该文件中的注释说明来正确配置rust-analyzer。
+
+=== 裸机（Bare metal）
+
+首先，您会注意到文件顶部有两个属性。这些属性告诉编译器程序无法访问std，并且没有主函数（因为它不是由操作系统运行的）。
+
+[source,rust]
+----
+include::example$basic/src/main.rs[lines="1..2"]
+----
+
+=== 处理错误
+
+接下来，我们将处理一些关于如何处理panic和错误的声明。在开发过程中，一个好的做法是用 `defmt-rtt` 和 `panic-probe` 来将诊断信息打印到终端：
+
+[source,rust]
+----
+include::example$basic/src/main.rs[lines="8"]
+----
+
+=== 任务声明
+
+在一些导入语句之后，应该声明应用程序运行的任务：
+
+[source,rust]
+----
+include::example$basic/src/main.rs[lines="10..18"]
+----
+
+Embassy任务必须声明为 `async` ，并且 *不能* 带有通用参数。在这种情况下，我们会传递应该闪烁的LED和闪烁的时间间隔。
+
+NOTE: 请注意，此任务中没有一直等待。它使用了Embassy timer来让出执行权，允许MCU在每个闪烁之间进入休眠状态。
+
+=== 主要部分
+
+Embassy应用程序的主要入口点（entry point）是使用 `#[embassy_executor::main]` 宏定义的。入口点接收一个 `Spawner` ，它可以用来生成其他任务。
+
+然后，我们使用默认配置初始化 HAL，这给了我们一个 `Peripherals` struct ， 我们可以用它来访问 MCU 的各种外设。比如，我们希望将其中一个引脚配置为驱动 LED 的 GPIO 输出：
+
+[source,rust]
+----
+include::example$basic/src/main.rs[lines="20..-1"]
+----
+
+当 `blinker` 任务被生成（spawn）而且main函数return时，会发生什么呢？ 实际上，main入口点就像任何其他任务一样，只是你只能有一个，并且它需要一些特定类型的参数。魔法就在于 `#[embassy_executor::main]`  宏。该宏执行以下操作：
+
+. 创建一个 Embassy Executor（执行器）
+. 为入口点定义一个主任务
+. 运行执行器，生成主任务
+
+还有一种不使用宏运行执行器的方法，那就是你必须自己创建 `Executor` 实例。
+
+== Cargo.toml
+
+项目需要包含Embassy的依赖项：
+
+[source,toml]
+----
+include::example$basic/Cargo.toml[lines="9..11"]
+----
+
+根据您的微控制器，您可能需要替换 `embassy-nrf` 为别的。（STM32： `embassy-stm32` ，记住也要更新feature）.
+
+在本文这种特定的情况下，我们选择选择nrf52840芯片，使用RTC1外设作为time driver。

@@ -1,0 +1,12 @@
+name: ROOT
+title: Embassy
+version: zh
+display_version: 中文
+nav:
+  - modules/ROOT/nav.adoc
+ext:
+  collector:
+    run:
+      command: "po4a --variable langs=fr po4a.cfg"
+    scan:
+      dir: build/zh

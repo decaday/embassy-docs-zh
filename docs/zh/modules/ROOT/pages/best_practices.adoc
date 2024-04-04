@@ -1,0 +1,48 @@
+= 最佳实践
+
+随着时间的推移，出现了一些一些最佳实践（best practices）。下面的列表应作为开发者在 _Rust_ 中编写嵌入式软件的指南，特别是基于 _Embassy_ 框架的。
+
+== 通过引用传递缓冲区
+有时候，我们会想要将数组或包装器（例如 link:https://docs.rs/heapless/latest/heapless/[`heapless::Vec`],
+传递给函数，或者想用 `std::Vec` 。 然而，在大多数嵌入式应用中，您不希望在allocator上浪费资源，也不希望将缓冲区（buffer）放在栈（stack）上，因为如果不小心翼翼地处理，就会导致栈溢出。
+
+请看以下示例：
+[,rust]
+----
+fn process_buffer(mut buf: [u8; 1024]) -> [u8; 1024] {
+    // 做一些事情然后返回新缓冲区
+    for elem in buf.iter_mut() {
+        *elem = 0;
+    }
+    buf
+}
+
+pub fn main() -> () {
+    let buf = [1u8; 1024];
+    let buf_new = process_buffer(buf);
+    // 用buf_new做一些事情
+    ()
+}
+----
+当在程序中调用 `process_buffer` 时，会创建一个传递给该函数的缓冲区的副本，消耗另外 1024 字节的内存。在处理完成后，将在堆栈上放置另一个 1024 字节的缓冲区，以便返回给调用者。在为 Cortex-M 编译时，你可以检查汇编代码，会出现两次内存拷贝操作，例如 `bl __aeabi_memcpy` ）
+
+*可能的解决方案：*
+
+在进入和退出时都通过引用而不是值传递数据。例如，你可以将输入缓冲区的slice（切片）作为输出返回。同时要求输入slice和输出slice的生命周期相同，这样编译器将强制检查内存安全性。
+
+[,rust]
+----
+fn process_buffer<'a>(buf: &'a mut [u8]) -> &'a mut[u8] {
+    for elem in buf.iter_mut() {
+        *elem = 0;
+    }
+    buf
+}
+
+pub fn main() -> () {
+    let mut buf = [1u8; 1024];
+    let buf_new = process_buffer(&mut buf);
+    // 用buf_new做一些事情
+    ()
+}
+----

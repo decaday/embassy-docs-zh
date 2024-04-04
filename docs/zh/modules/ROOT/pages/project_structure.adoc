@@ -1,0 +1,87 @@
+= 项目结构
+
+有多种方式配置Embassy及其组件以适应您的具体应用程序。每个芯片的 link:https://github.com/embassy-rs/embassy/tree/main/examples[examples] 目录展示了项目结构应该是什么样子。让我们来详细了解一下：
+
+您的项目的顶层文件结构应该如下所示：
+[source,plain]
+----
+{} = Maybe
+
+my-project
+|- .cargo
+|  |- config.toml
+|- src
+|  |- main.rs
+|- build.rs
+|- Cargo.toml
+|- {memory.x}
+|- rust-toolchain.toml
+----
+
+== .cargo/config.toml
+
+这个目录/文件描述了您所在的平台，并配置了 link:https://github.com/probe-rs/probe-rs[probe-rs] 以部署到您的设备。 
+
+以下是一个最小示例：
+
+[source,toml]
+----
+[target.thumbv6m-none-eabi] # <-change for your platform
+runner = 'probe-rs run --chip STM32F031K6Tx' # <- change for your chip
+
+[build]
+target = "thumbv6m-none-eabi" # <-change for your platform
+
+[env]
+DEFMT_LOG = "trace" # <- can change to info, warn, or error
+----
+
+== build.rs
+
+== build.rs
+
+这是您项目的构建脚本。它链接了defmt（什么是 link:https://defmt.ferrous-systems.com[defmt] ？）和memory.x文件（如果需要的话）。这个文件对每个芯片都是特定的，只需从相应的 link:https://github.com/embassy-rs/embassy/tree/main/examples[示例] 中复制粘贴即可。
+
+== Cargo.toml
+
+这是你的清单文件（manifest file），在这里您可以配置所有Embassy组件以使用您需要的功能。
+
+==== Features
+===== Time
+- tick-hz-x:配置 `embassy-time`的频率。更高的频率意味着更高的精度和CPU的更多次唤醒。
+- defmt-timestamp-uptime: defmt日志条目将显示正常运行时间（以秒为单位）。
+
+更多内容正在来袭……
+
+== memory.x
+
+这个文件概述了您的程序的闪存/内存使用情况。在nRF5x上使用 link:https://github.com/embassy-rs/nrf-softdevice[nrf-softdevice] 时特别有用。
+
+以下是使用S140与nRF52840的一个示例：
+
+[source,x]
+----
+MEMORY
+{
+  /* NOTE 1 K = 1 KiBi = 1024 bytes */
+  /* 这些值对应于Softdevices S140 7.0.1的NRF52840 */
+  FLASH : ORIGIN = 0x00027000, LENGTH = 868K
+  RAM : ORIGIN = 0x20020000, LENGTH = 128K
+}
+----
+
+== rust-toolchain.toml
+
+这个文件配置了rust版本和使用配置。
+
+一个最小的例子：
+
+[source,toml]
+----
+[toolchain]
+channel = "nightly-2023-08-19" # <- as of writing, this is the exact rust version embassy uses
+components = [ "rust-src", "rustfmt" ] # <- optionally add "llvm-tools-preview" for some extra features like "cargo size"
+targets = [
+    "thumbv6m-none-eabi" # <-change for your platform
+]
+----
