@@ -1,11 +1,11 @@
 = Embassy 执行器（executor）
 
-Embassy executor是一个为嵌入式使用而设计的async/await executor执行器，它支持中断和定时器功能。
+Embassy executor是一个为嵌入式使用而设计的async/await执行器，它支持中断和定时器功能。
 
 == 特点
 
 * No `alloc`, 不需要堆，任务静态分配。
-* No "固定容量" 的数据结构，执行器可以处理1个或1000个任务，无需设置/tuning。
+* 没有“固定容量”的数据结构，执行器可以处理1个或1000个任务，无需设置/tuning。
 * 集成的定时器队列：sleep很简单，只需执行 `Timer::after_secs(1).await;` 。
 * 没有忙碌等待（busy-loop）轮询: 当没有工作要做时，CPU会使用中断或 `WFE/SEV` 休眠。
 * 高效的轮询：唤醒操作只会轮询被唤醒的任务，而不是所有任务。
@@ -23,7 +23,7 @@ image::embassy_executor.png[Executor model]
 如果您在应用程序中使用 `#[embassy_executor::main]` 宏，它会为您创建 `Executor` 并将main入口点作为第一个任务。您也可以手动创建Executor，实际上您可以创建多个Executor。
 
 
-== 中断（Interrupts）
+== 中断
 
 中断是外设用来标志某些操作完成的常见方式，这与异步执行模型非常契合。下面的图表描述了一个典型的应用流程，其中（1）一个任务被轮询并尝试取得进展。然后任务（2）指示外设执行某项操作，并等待（await）。一段时间过后，（3）中断被触发，标志着操作的完成。
 
