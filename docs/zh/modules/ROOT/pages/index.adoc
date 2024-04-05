@@ -8,41 +8,41 @@ Embassy旨在将async/await作为嵌入式开发的一流选择。
 
 由于操作系统不能假设线程会协作地运行，所以线程相对来说资源消耗较大。并且如果它们在分配的时间内不将控制权交还给内核，可能会被强制中断。如果可以假设任务会协作地运行，或者至少不是恶意的，那么就有可能创建与传统操作系统线程相比几乎无成本的任务。
 
-在其他编程语言中，这些轻量级任务被称为“协程（coroutines）”或“goroutines”。在Rust中，它们通过async实现。Async-await通过将每个async函数转换为一个称为future的对象来工作。当一个future在I/O上阻塞时，future就会产生yields，调度器（我们称为执行器，executor）可以选择执行不同的future。
+在其他编程语言中，这些轻量级任务被称为“coroutines（协程）”或“goroutines”。在Rust中，它们通过async实现。Async-await通过将每个async函数转换为一个称为future的对象来工作。当一个future在I/O上阻塞时，future就会产生yields，调度器（我们称为executor（执行器））可以选择执行不同的future。
 
-与RTOS等替代方案相比，async可以提供更好的性能和更低的功耗，因为执行器不必猜测future何时准备好执行。然而，程序大小可能比其他方案更大，这对于内存非常低的设备可能是一个问题。Embassy支持的设备中，如stm32和nrf，内存通常足够大，可以容纳稍微大点的程序大小。
+与RTOS等替代方案相比，async可以提供更好的性能和更低的功耗，因为执行器不必猜测future何时准备好执行。然而，程序大小可能比其他方案更大，这对于内存非常低的设备可能是一个问题。Embassy支持的设备，如stm32和nrf，内存通常足够大，可以容纳稍微大点的程序。
 
 == Embassy是什么？
 
 Embassy项目包括几个可以一起使用，也可以独立使用的crate：
 
 === 执行器（Executor） 
-link:https://docs.embassy.dev/embassy-executor/[embassy-executor] 是一个async/await执行器，通常在启动时执行固定数量的任务，尽管稍后可以添加更多任务。执行器还可以提供一个系统计时器，您可以用它来进行异步和阻塞延迟。但对于少于一微秒的延迟，应该使用阻塞延迟，因为上下文切换（context-switching）的成本太高，执行器无法提供准确的计时。
+link:https://docs.embassy.dev/embassy-executor/[embassy-executor] 是一个异步/等待（async/await）执行器，通常在启动时执行固定数量的任务，不过稍后可以添加更多任务。执行器还可以提供一个系统计时器，您可以用它来进行异步和阻塞延迟。但对于少于一微秒的延迟，应该使用阻塞延迟，因为上下文切换（context-switching）的成本太高，执行器无法提供准确的计时。
 
 === 硬件抽象层（Hardware Abstraction Layers）
 HAL实现了安全的Rust API，您可以使用USART、UART、I2C、SPI、CAN和USB等外设，而无需直接操作寄存器。
 
-Embassy在合理的情况下提供了异步和阻塞API的实现。DMA（直接内存访问）是异步非常合适的一个例子，而GPIO状态也更适合阻塞式API。
+Embassy在合理的情况下提供了异步和阻塞API的实现。DMA（直接内存访问）就是一个很适合异步的例子，而GPIO状态则更适合阻塞式API。
 
 Embassy项目为一些我们选定的硬件维护HAL，但您仍然可以同时使用Embassy和其他项目的HAL。
 
-* link:https://docs.embassy.dev/embassy-stm32/[embassy-stm32] 支持STM32所有的系列。
-* link:https://docs.embassy.dev/embassy-nrf/[embassy-nrf]支持 Nordic Semiconductor 的 nRF52, nRF53, nRF91 系列。
-* link:https://docs.embassy.dev/embassy-rp/[embassy-rp], 支持 RP2040 MCU。
-* link:https://github.com/esp-rs[esp-rs], 支持 Espressif Systems ESP32 系列芯片。
+* link:https://docs.embassy.dev/embassy-stm32/[embassy-stm32], 适用于所有的STM32 MCU系列。
+* link:https://docs.embassy.dev/embassy-nrf/[embassy-nrf], 适用于 Nordic Semiconductor 的 nRF52, nRF53, nRF91 系列。
+* link:https://docs.embassy.dev/embassy-rp/[embassy-rp], 适用于 RP2040 MCU。
+* link:https://github.com/esp-rs[esp-rs], 适用于 Espressif Systems ESP32 系列芯片。
 
 NOTE: 一个常见的问题是是否可以单独使用Embassy HALs。当然可以！HALs内部没有对执行器的依赖。您可以在不使用async的情况下使用它们，因为它们实现了 link:https://github.com/rust-embedded/embedded-hal[Embedded HAL] 的阻塞和异步trait。
 
 === 网络（Networking）
-link:https://docs.embassy.dev/embassy-net/[embassy-net] 网络栈实现了广泛的网络功能，包括以太网、IP、TCP、UDP、ICMP和DHCP。Async极大地简化了管理超时和同时服务多个连接的操作。这提供了多个WiFi和以太网芯片的驱动程序。
+link:https://docs.embassy.dev/embassy-net/[embassy-net] 网络栈实现了广泛的网络功能，包括以太网、IP、TCP、UDP、ICMP和DHCP。异步极大地简化了超时管理和多个连接的同时服务。这提供了多个WiFi和以太网芯片的驱动程序。
 
-=== Bluetooth
-link:https://github.com/embassy-rs/nrf-softdevice[nrf-softdevice] crate提供了对nRF52微控制器的蓝牙低能耗4.x和5.x的支持。
+=== 蓝牙（Bluetooth）
+link:https://github.com/embassy-rs/nrf-softdevice[nrf-softdevice] crate提供了对nRF52 MCU的低功耗蓝牙技术4.x和5.x的支持。
 
-=== LoRa
-link:https://github.com/lora-rs/lora-rs[lora-rs] 支持在广泛的LoRa无线电设备上进行LoRa网络通信，集成了完全的Rust LoRaWAN实现。它提供了四个crate —— lora-phy、lora-modulation、lorawan-encoding和lorawan-device —— 以及各种开发板的基本示例。它支持STM32WL无线微控制器或Semtech SX127x收发器等。
+=== 远距离无线电标准（LoRa）
+link:https://github.com/lora-rs/lora-rs[lora-rs] 支持在广泛的LoRa无线电设备上进行LoRa网络通信，集成了完全的Rust LoRaWAN实现。它提供了四个crate —— lora-phy、lora-modulation、lorawan-encoding和lorawan-device —— 以及各种开发板的基本示例。它支持STM32WL无线MCU或Semtech SX127x收发器等。
 
-=== USB
+=== 通用串行总线（USB）
 link:https://docs.embassy.dev/embassy-usb/[embassy-usb] 实现了设备端USB协议栈。提供了常见类别如USB serial（CDC ACM）和USB HID的实现，并且丰富的builder API允许您构建自己的协议实现。
 
 === 引导加载程序（Bootloader）和DFU
@@ -50,14 +50,14 @@ link:https://github.com/embassy-rs/embassy/tree/master/embassy-boot[embassy-boot
 
 == 什么是DMA？
 
-DMA，Direct Memory Access，即直接内存访问 。对于大多的嵌入式设备的IO，外设并不直接一次传输多bit数据（CAN总线是一个例外）。通常，MCU必须逐个字节地写入数据，然后等待外设准备好发送下一个字节。对于高速的I/O传输，这可能会成为问题，因为MCU需要花费越来越多的时间来处理每个字节。DMA的设计，就是来解决这个问题的。
+DMA，Direct Memory Access，即直接内存访问 。对于大多的嵌入式设备的IO，外设并不直接支持同时传输多bit数据（CAN总线是一个例外）。通常，MCU必须逐个字节地写入数据，然后等待外设准备好发送下一个字节。对于高速的I/O传输，这可能会成为问题，因为MCU需要花费越来越多的时间来处理每个字节。DMA的设计，就是来解决这个问题的。
 
-Embassy支持的MCU（比如stm32和nrf）中就有DMA。DMA允许MCU设置传输任务，可以是发送或是接收。一旦启动DMA，在传输完成之前，MCU无需进行任何干预，这意味着MCU可以在传输进行时执行其他计算任务或设置其他I/O操作。对于高速I/O传输，DMA可以将MCU处理I/O的时间减少一半以上。然而，由于DMA的设置更为复杂，它在嵌入式社区中的使用并不广泛。Embassy的目标是通过使DMA成为首选而不是最后的选择来改变这一现状。使用Embassy，一旦I/O速率增加，就无需额外调整，因为您的应用程序为处理它们而已经设置好了。
+Embassy支持的MCU（比如stm32和nrf）中就有DMA。DMA允许MCU设置传输任务，可以是发送或是接收。一旦启动DMA，在传输完成之前，MCU无需进行任何干预，这意味着MCU可以在传输进行时执行其他计算任务或设置其他I/O操作。对于高速I/O传输，DMA可以将MCU处理I/O的时间减少一半以上。然而，由于DMA的设置更为复杂，它在嵌入式社区中的使用并不广泛。Embassy的目标是通过使DMA成为首选而不是最后的选择来改变这一现状。使用Embassy，无需额外的调整就能得到I/O速率的增加，因为您的应用程序已经设置好去处理他们了
 
 == 资源
 
-阅读更多有关 Async Rust 和 Embassy:
+关于异步Rust和Embassy的更多阅读材料:
 
 * link:https://tweedegolf.nl/en/blog/65/async-rust-vs-rtos-showdown[FreeRTOS与Embassy的比较]
-* link:https://dev.to/apollolabsbin/series/20707[教程系列]
+* link:https://dev.to/apollolabsbin/series/20707[一些教程]
 * link:https://blog.drogue.io/firmware-updates-part-1/[使用Embassy进行固件更新]

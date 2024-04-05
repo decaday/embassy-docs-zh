@@ -67,6 +67,6 @@ include::example$basic/src/main.rs[lines="20..-1"]
 include::example$basic/Cargo.toml[lines="9..11"]
 ----
 
-根据您的微控制器，您可能需要替换 `embassy-nrf` 为别的。（STM32： `embassy-stm32` ，记住也要更新feature）.
+根据您的MCU，您可能需要替换 `embassy-nrf` 为别的。（STM32： `embassy-stm32` ，记住也要更新feature）.
 
 在本文这种特定的情况下，我们选择选择nrf52840芯片，使用RTC1外设作为time driver。

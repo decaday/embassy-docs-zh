@@ -4,7 +4,7 @@ link:https://github.com/embassy-rs/embassy/tree/master/embassy-stm32[Embassy STM
 
 == STM32有太多的系列
 
-STM32微控制器有许多不同的系列和型号，支持它们所有型号是一项巨大的工作。Embassy利用了STM32外设版本在不同芯片系列之间相同的特点。Embassy没有为每个STM32芯片系列重新实现SPI外设，而是有一个单一的SPI实现，它依赖于代码生成的寄存器类型，这些寄存器类型对于具有相同版本外设的STM32系列是相同的。
+STM32 MCU有许多不同的系列和型号，支持它们所有型号是一项巨大的工作。Embassy利用了STM32外设版本在不同芯片系列之间相同的特点。Embassy没有为每个STM32芯片系列重新实现SPI外设，而是有一个单一的SPI实现，它依赖于代码生成的寄存器类型，这些寄存器类型对于具有相同版本外设的STM32系列是相同的。
 
 === metapac模块
 
