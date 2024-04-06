@@ -4,7 +4,7 @@
 
 以下示例展示了在树莓派Pico板上，两个任务同时使用板载LED。
 
-== 使用互斥锁（MuteX）共享
+== 使用互斥锁（Mutex）共享
 
 互斥锁是共享外设最简单的方式。
 
@@ -25,9 +25,9 @@ static LED: LedType = Mutex::new(None);
 #[embassy_executor::main]
 async fn main(spawner: Spawner) {
     let p = embassy_rp::init(Default::default());
-    // set the content of the global LED reference to the real LED pin
+    // 设置全局LED引用到真正的LED引脚
     let led = Output::new(AnyPin::from(p.PIN_25), Level::High);
-    // 内部作用域是这样的:一旦互斥锁被写入，MutexGuard就会被删除，
+    // 内部作用域是这样的:互斥锁被写入之后，MutexGuard就会被回收，
     // 从而释放互斥锁
     {
         *(LED.lock().await) = Some(led);
@@ -39,7 +39,7 @@ async fn main(spawner: Spawner) {
     unwrap!(spawner.spawn(toggle_led(&LED, Duration::from_nanos((dt as f64 * k) as u64))));
 }
 
-// 这个任务的池（Pool）大小是2意味着你可以创建两个实例。
+// 这个池（Pool）的大小是2，意味着你可以创建两个任务实例。
 #[embassy_executor::task(pool_size = 2)]
 async fn toggle_led(led: &'static LedType, delay: Duration) {
     let mut ticker = Ticker::every(delay);
@@ -59,23 +59,23 @@ async fn toggle_led(led: &'static LedType, delay: Duration) {
 
 === 为什么这么复杂
 
-咱们展开每一层，看看为什么每一层都是必需的。
+让我们逐层展开，看看为什么每一层都是必需的。
 
 ==== `Mutex<RawMutexType, T>`
 
-互斥锁的存在是为了确保当一个任务首先获取资源并开始修改时，其他想要写入的任务必须等待（如果没有任务锁定互斥锁， `led.lock().await` 会立即返回；如果在别处被访问，则会阻塞）。 
+互斥锁的存在是为了确保当一个任务首先获取资源并开始修改它时，其他想要写入的任务必须等待（如果没有任务锁定互斥锁， `led.lock().await` 会立即返回；如果在其他地方访问了它，则会产生阻塞）。 
 
 ==== `Option<T>`
 
-`LED` 变量需要在主任务外部定义，因为任务接受的引用需要 `'static` 生命周期。但是，如果它在主任务外部，它不能初始化为指向任何引脚，因为引脚本身尚未初始化。因此，它被设置为 `None` 。
+`LED` 变量需要在主任务外部定义，因为任务接受的引用需要 `'static` 生命周期。但是，如果它在主任务外部，它在初始化时不能指向任何引脚，因为引脚本身尚未初始化。因此，它被设置为 `None` 。
 
 ==== `Output<AnyPin>`
 
-这表示引脚将被设置为输出。 `AnyPin` 本可以是`embassy_rp::peripherals::PIN_25`，但这样做使得 `toggle_led` 函数更通用。
+这表示引脚将被设置为输出。 `AnyPin` 可以是`embassy_rp::peripherals::PIN_25`，但是这样做使 `toggle_led` 函数更通用。
 
 == 使用通道（Channel）共享
 
-通道是另一种确保对资源独占访问的方式。在可以不立即访问的情况下使用通道非常好，因为可以在排队时做其他事情。
+通道是另一种确保对资源独占访问的方式。在不必须立即访问的情况下使用通道是个不错的选择，因为可以在排队时做其他事情。
 
 [,rust]
 ----
@@ -111,7 +111,7 @@ async fn main(spawner: Spawner) {
     }
 }
 
-// 这个任务的池（Pool）大小是2意味着你可以创建两个实例。
+// 这个池（Pool）的大小是2，意味着你可以创建两个任务实例。
 #[embassy_executor::task(pool_size = 2)]
 async fn toggle_led(control: Sender<'static, ThreadModeRawMutex, LedState, 64>, delay: Duration) {
     let mut ticker = Ticker::every(delay);
