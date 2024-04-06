@@ -1,6 +1,6 @@
 = 一个基础的Embassy应用
 
-你已经运行了 xref:examples.adoc[examples] ，但是现在咱去干啥呢？让我们通过一个运行在nRF52 DK上的简单的Embassy例子来更好地了解它。
+你已经运行了 xref:examples.adoc[examples] ，那么接下来做什么呢？让我们通过一个运行在nRF52 DK上的简单的Embassy例子来更好地了解它。
 
 == 主要内容
 

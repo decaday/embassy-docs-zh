@@ -1,19 +1,19 @@
 = 开始一个新的Embassy项目
 
-成功 xref:getting_started.adoc[运行一些示例项目] 后，下一步就是创建一个独立的Embassy项目。
+当你成功地xref:getting_started.adoc[运行一些示例项目]后，下一步就是创建一个独立的Embassy项目。
 
-生成Embassy项目，有一些工具（正在开发中）：
+有一些生成Embassy项目的工具（正在开发中）：
 
-==== 命令行（CLI）
+==== 脚手架（CLI）
 - link:https://github.com/adinack/cargo-embassy[cargo-embassy] (STM32 和 NRF)
 
-==== cargo-generate
+==== cargo-generate命令
 - link:https://github.com/lulf/embassy-template[embassy-template] (STM32, NRF, 和 RP)
 - link:https://github.com/bentwire/embassy-rp2040-template[embassy-rp2040-template] (RP)
 
 如果您想从零开始：
 
-以STM32G474为例，我们来创建一个全新的Embassy项目。该指南也适用于任何支持的芯片，只需做一些小改动。
+以STM32G474为例，让我们来创建一个全新的Embassy项目。该指南也适用于任何支持的芯片，只需做一些小小的改动。
 
 运行：
 
@@ -23,7 +23,7 @@ cargo new stm32g474-example
 cd stm32g474-example
 ----
 
-创建了一个空的rust项目:
+来创建一个空的rust项目:
 
 [source]
 ----
@@ -33,11 +33,11 @@ stm32g474-example
     └── main.rs
 ----
 
-查看 link:https://github.com/embassy-rs/embassy/tree/main/examples[Embassy examples] , 有一个 `stm32g4` 文件夹。 将 `src/blinky.rs` 的内容复制到 `src/main.rs` 。
+查看 link:https://github.com/embassy-rs/embassy/tree/main/examples[Embassy examples] , 我们可以看到有一个 `stm32g4` 文件夹。 将 `src/blinky.rs` 的内容复制到 `src/main.rs` 。
 
 == .cargo/config.toml
 
-现在，我们每次运行 `cargo build` 或者 `cargo run` 需要给cargo提供一个 target triple（-target <triple>） 。让我们一劳永逸，从 `examples/stm32g4` 复制 `.cargo/config.toml` 到我们的项目中。
+现在，我们每次运行 `cargo build` 或者 `cargo run` 都需要给cargo提供一个 target triple（-target <triple>） 。让我们一劳永逸，从 `examples/stm32g4` 复制 `.cargo/config.toml` 到我们的项目中。
 
 [source]
 ----
@@ -49,7 +49,7 @@ stm32g474-example
     └── main.rs
 ----
 
-除了target triple， `.cargo/config.toml` 还包含一个 `runner` 键，让我们可以通过probe-rs运行 `cargo run`. 为了实现这一点，我们需要提供正确的芯片ID。请检查 `probe-rs chip list` ：
+除了target triple，`.cargo/config.toml` 还包含一个 `runner` 键，让我们可以通过probe-rs运行 `cargo run`。为了让它正常工作，我们需要提供正确的芯片ID。可以通过`probe-rs chip list`获取它：
 
 [source,bash]
 ----
@@ -62,26 +62,26 @@ $ probe-rs chip list | grep -i stm32g474re
 [source,toml]
 ----
 [target.'cfg(all(target_arch = "arm", target_os = "none"))']
-# replace STM32G071C8Rx with your chip as listed in `probe-rs chip list`
+# 替换STM32G071C8Rx为你使用`probe-rs chip list`获取到的芯片ID
 runner = "probe-rs run --chip STM32G474RETx"
 ----
 
 == Cargo.toml
 
-现在cargo已经知道要为哪个目标编译（probe-rs也知道人家要在哪个芯片上运行），让我们添加一些依赖项。
+现在cargo已经知道要为哪个目标编译（probe-rs也知道它会在哪个芯片上运行），让我们添加一些依赖项。
 
-查看 `examples/stm32g4/Cargo.toml` ，我们可以看到示例所需要embassy的一系列crate。对于blinky项目，我们只需要其中的三个： `embassy-stm32` ，  `embassy-executor` 和 `embassy-time` 。
+查看 `examples/stm32g4/Cargo.toml` ，我们可以看到示例所需要的一系列embassy crate。对于blinky项目，我们只需要其中的三个： `embassy-stm32` ，  `embassy-executor` 和 `embassy-time` 。
 
 在撰写本文时，embassy的最新版本还没有在crates.io上发布，所以我们需要直接从git仓库安装。推荐的安装方法如下：
 
 * 从示例中复制所需的 `embassy-*` 行到 `Cargo.toml`
 * 对 `features` 进行必要的更改，例如：需要 `embassy-stm32` 中的 `stm32g474re` feature
 * 移除`embassy-*` 条目中的 `path = ""` 键
-* 创建一个 `[patch.crates-io]` section, 部分，为我们需要的每个embassy crate创建条目。这些条目应该包含相同的值：一个指向git仓库的链接，以及我们正在检出的提交的引用。你可以通过运行 `git ls-remote https://github.com/embassy-rs/embassy.git HEAD` 来找到最新的提交
+* 创建一个 `[patch.crates-io]`部分，列出我们需要的embassy crate。它们应该包含相同的值：一个指向git仓库的链接，以及我们正在检出的提交的引用。你可以通过运行 `git ls-remote https://github.com/embassy-rs/embassy.git HEAD` 来找到最新的提交
 
-NOTE: 注意：使用这种方法时， `[dependencies]` 中的version键必须与 `[patch.crates.io]` 下指定的rev中每个crate的Cargo.toml中定义的版本相匹配。这意味着在更新时，你必须选择一个新的修订版本（revision），更改 `[patch.crates.io]` 中的所有内容以匹配它，然后更正 `[dependencies]` 下已更改的内容。好复杂，希望一旦embassy在crates.io上发布，就不再需要这样做了！
+NOTE: 注意：使用这种方法时， `[dependencies]`必须与 `[patch.crates.io]` 下的rev键对应的Cargo.toml的crate version相匹配。这意味着在更新时，你必须选择一个新的修订版本（revision），修改 `[patch.crates.io]` 中的所有相关内容，然后更正 `[dependencies]` 下已更改的内容。好复杂，希望一旦embassy在crates.io上发布，就不再需要这样做了！
 
-按照目前的方法，会产生以下结果：
+这是攥写本文时按照上述方法写出的：
 
 [source,toml]
 ----
@@ -107,7 +107,7 @@ cortex-m-rt = "0.7.3"
 panic-probe = "0.3.1"
 ----
 
-这些是运行 `blinky.rs`所需的最低限度的依赖项，但示例 `Cargo.toml`中指定的其他依赖项也值得一看，并注意与embassy一起使用所需的功能 - 例如 `futures = { version = "0.3.17", default-features = false, features = ["async-await"] }`.
+这些是运行 `blinky.rs`所需的最少依赖项，但示例 `Cargo.toml`中指定的其他依赖项也值得一看————注意与embassy一起使用所需的功能 - 例如 `futures = { version = "0.3.17", default-features = false, features = ["async-await"] }`.
 
 最后，将示例`Cargo.toml` 中的 `[profile.release]` 部分复制到我们的文件中。
 
@@ -119,7 +119,7 @@ debug = 2
 
 == rust-toolchain.toml
 
-在我们可以构建项目之前，我们需要添加一个额外的文件来告诉cargo使用nightly工具链。将 `rust-toolchain.toml` 从embassy仓库复制到我们的仓库，并只保留target triple列表中我们需要的。 在这个例子中，是 `thumbv7em-none-eabi` ：
+在我们构建项目之前，我们还需要添加一个额外的文件来告诉cargo使用nightly工具链。将 `rust-toolchain.toml` 从embassy仓库复制到我们的项目，只需要保留target triple列表中我们需要的。 在这个例子中，是 `thumbv7em-none-eabi` ：
 
 [source]
 ----
@@ -134,7 +134,7 @@ stm32g474-example
 
 [source,toml]
 ----
-# Before upgrading check that everything is available on all tier1 targets here:
+# 在更新前请确认第一层（tier1）targets的一切都是可用的
 # https://rust-lang.github.io/rustup-components-history
 [toolchain]
 channel = "nightly-2023-11-01"
@@ -144,7 +144,7 @@ targets = ["thumbv7em-none-eabi"]
 
 == build.rs
 
-为了为我们的目标生成一个可工作的二进制文件，cargo需要一个自定义的构建脚本。将 `build.rs` 从示例复制到我们的项目中：
+为了给我们的目标生成一个可工作的二进制文件，cargo需要一个自定义的构建脚本。将示例中的 `build.rs` 复制到我们的项目中：
 
 [source]
 ----
@@ -167,7 +167,7 @@ stm32g474-example
 cargo run --release
 ----
 
-应该会有一个LED闪烁 (应该有一个LED连接到 `src/main.rs` 中定义的引脚，如果不是请修改) 。输出如下：
+应该会有一个LED闪烁 (需要有一个LED连接到 `src/main.rs` 中定义的引脚，如果不是请修改) 。输出如下：
 
 [source]
 ----
