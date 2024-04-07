@@ -7,7 +7,7 @@
 ==== 脚手架（CLI）
 - link:https://github.com/adinack/cargo-embassy[cargo-embassy] (STM32 和 NRF)
 
-==== cargo-generate命令
+==== cargo-generate
 - link:https://github.com/lulf/embassy-template[embassy-template] (STM32, NRF, 和 RP)
 - link:https://github.com/bentwire/embassy-rp2040-template[embassy-rp2040-template] (RP)
 
