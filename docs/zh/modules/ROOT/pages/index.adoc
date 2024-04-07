@@ -56,7 +56,7 @@ Embassy支持的MCU（比如stm32和nrf）中就有DMA。DMA允许MCU设置传�
 
 == 资源
 
-关于异步Rust和Embassy的更多阅读材料:
+关于Async Rust和Embassy的更多阅读材料:
 
 * link:https://tweedegolf.nl/en/blog/65/async-rust-vs-rtos-showdown[FreeRTOS与Embassy的比较]
 * link:https://dev.to/apollolabsbin/series/20707[一些教程]
