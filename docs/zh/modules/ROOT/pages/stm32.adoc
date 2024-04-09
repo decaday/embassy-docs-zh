@@ -2,9 +2,9 @@
 
 link:https://github.com/embassy-rs/embassy/tree/master/embassy-stm32[Embassy STM32 HAL] 基于 `stm32-metapac` 项目。
 
-== 忙不过来
+== 无限变体问题
 
-STM32 MCU有许多不同的系列和型号，支持它们所有型号是一项巨大的工作。Embassy利用了STM32外设版本在不同芯片系列之间相同的特点，没有为每个STM32芯片系列重新实现SPI外设，而是有一个单一的SPI实现，它依赖于代码生成的寄存器类型，这些寄存器类型对于具有相同版本外设的STM32系列是相同的。
+STM32 MCU有许多不同的系列和型号，支持所有型号是一项巨大的工作。Embassy利用了STM32外设版本在不同芯片系列之间相同的特点，没有为每个STM32芯片系列重新实现SPI外设，而是有一个单一的SPI实现，它依赖于代码生成的寄存器类型，这些寄存器类型对于具有相同版本外设的STM32系列是相同的。
 
 === metapac模块
 

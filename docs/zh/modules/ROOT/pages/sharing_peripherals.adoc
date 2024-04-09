@@ -71,7 +71,7 @@ async fn toggle_led(led: &'static LedType, delay: Duration) {
 
 ==== `Output<AnyPin>`
 
-这表示引脚将被设置为输出。 `AnyPin` 可以是`embassy_rp::peripherals::PIN_25`，但是这样做使 `toggle_led` 函数更通用。
+这表示引脚将被设置为输出。 `AnyPin` 可以是`embassy_rp::peripherals::PIN_25`，但是不这样做使 `toggle_led` 函数更通用。
 
 == 使用通道（Channel）共享
 

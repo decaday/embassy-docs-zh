@@ -39,7 +39,7 @@ include::example$layer-by-layer/blinky-hal/src/main.rs[]
 
 如你所见，即使不使用任何异步代码，应用程序也变得简单得多。Input和Output类型隐藏了访问GPIO寄存器的所有细节，并允许你使用更简单的API来查询按钮的状态和翻转LED引脚的输出。
 
-然而，PAC示例中的缺点仍然存在：应用程序在忙等，消耗不必要的电力。
+然而，PAC示例中的缺点仍然存在：应用程序在忙等（busy-loop），消耗不必要的电力。
 
 == 中断驱动
 

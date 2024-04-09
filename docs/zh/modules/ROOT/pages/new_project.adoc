@@ -81,7 +81,7 @@ runner = "probe-rs run --chip STM32G474RETx"
 
 NOTE: 注意：使用这种方法时， `[dependencies]`必须与 `[patch.crates.io]` 下的rev键对应的Cargo.toml的crate version相匹配。这意味着在更新时，你必须选择一个新的修订版本（revision），修改 `[patch.crates.io]` 中的所有相关内容，然后更正 `[dependencies]` 下已更改的内容。好复杂，希望一旦embassy在crates.io上发布，就不再需要这样做了！
 
-这是攥写本文时按照上述方法写出的：
+这是撰写本文时按照上述方法写出的：
 
 [source,toml]
 ----
