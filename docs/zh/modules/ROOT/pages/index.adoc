@@ -26,10 +26,10 @@ Embassy在合理的情况下提供了异步和阻塞API的实现。DMA（直接�
 
 Embassy项目为一些我们选定的硬件维护HAL，但您仍然可以同时使用Embassy和其他项目的HAL。
 
-* link:https://docs.embassy.dev/embassy-stm32/[embassy-stm32], 适用于所有的STM32 MCU系列。
+* link:https://docs.embassy.dev/embassy-stm32/[embassy-stm32], 适用于STM32所有的系列。
 * link:https://docs.embassy.dev/embassy-nrf/[embassy-nrf], 适用于Nordic公司的 nRF52, nRF53, nRF91 系列。
 * link:https://docs.embassy.dev/embassy-rp/[embassy-rp], 适用于 RP2040 MCU。
-* link:https://github.com/esp-rs[esp-rs], 适用于Espressif公司的 ESP32 系列芯片。
+* link:https://github.com/esp-rs[esp-rs], 适用于Espressif（乐鑫）的 ESP32 系列芯片。
 
 NOTE: 一个常见的问题是是否可以单独使用Embassy HALs。当然可以！HALs内部没有对执行器的依赖。您可以在不使用async的情况下使用它们，因为它们实现了 link:https://github.com/rust-embedded/embedded-hal[Embedded HAL] 的阻塞和异步trait。
 
@@ -37,12 +37,12 @@ NOTE: 一个常见的问题是是否可以单独使用Embassy HALs。当然可�
 link:https://docs.embassy.dev/embassy-net/[embassy-net] 网络栈实现了广泛的网络功能，包括以太网、IP、TCP、UDP、ICMP和DHCP。异步极大地简化了超时管理和多个连接的同时服务。这提供了多个WiFi和以太网芯片的驱动程序。
 
 === 蓝牙（Bluetooth）
-link:https://github.com/embassy-rs/nrf-softdevice[nrf-softdevice] crate提供了对nRF52 MCU的低功耗蓝牙技术4.x和5.x的支持。
+link:https://github.com/embassy-rs/nrf-softdevice[nrf-softdevice] crate提供了对nRF52 MCU的低功耗蓝牙4.x和5.x的支持。
 
-=== 远距离无线电标准（LoRa）
+=== 远距离无线电（LoRa）
 link:https://github.com/lora-rs/lora-rs[lora-rs] 支持在广泛的LoRa无线电设备上进行LoRa网络通信，集成了完全的Rust LoRaWAN实现。它提供了四个crate —— lora-phy、lora-modulation、lorawan-encoding和lorawan-device —— 以及各种开发板的基本示例。它支持STM32WL无线MCU或Semtech SX127x收发器等。
 
-=== 通用串行总线（USB）
+=== USB
 link:https://docs.embassy.dev/embassy-usb/[embassy-usb] 实现了设备端USB协议栈。提供了常见类别如USB serial（CDC ACM）和USB HID的实现，并且丰富的builder API允许您构建自己的协议实现。
 
 === 引导加载程序（Bootloader）和DFU

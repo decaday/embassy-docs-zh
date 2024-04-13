@@ -25,7 +25,7 @@ include::example$layer-by-layer/blinky-pac/src/main.rs[]
 
 == HAL版本
 
-为了简化我们的应用程序，我们可以改用HAL。HAL提供了更高级别的API，处理一些细节比如：
+为了简化我们的应用程序，我们可以改用HAL。HAL提供了更高级别的API，处理诸如这样的事务：
 
 在你使用外设时自动启用外设时钟
 从更高级别的类型派生和应用寄存器配置

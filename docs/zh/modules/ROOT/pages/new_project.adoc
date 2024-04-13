@@ -4,7 +4,7 @@
 
 有一些生成Embassy项目的工具（正在开发中）：
 
-==== 脚手架（CLI）
+==== 命令行（CLI）
 - link:https://github.com/adinack/cargo-embassy[cargo-embassy] (STM32 和 NRF)
 
 ==== cargo-generate
@@ -49,7 +49,7 @@ stm32g474-example
     └── main.rs
 ----
 
-除了target triple，`.cargo/config.toml` 还包含一个 `runner` 键，让我们可以通过probe-rs运行 `cargo run`。为了让它正常工作，我们需要提供正确的芯片ID。可以通过`probe-rs chip list`获取它：
+除了target triple，`.cargo/config.toml` 还包含一个 `runner` 键，让我们可以通过probe-rs运行 `cargo run` 。为了让它正常工作，我们需要提供正确的芯片ID。可以通过 `probe-rs chip list` 获取它：
 
 [source,bash]
 ----
@@ -62,7 +62,7 @@ $ probe-rs chip list | grep -i stm32g474re
 [source,toml]
 ----
 [target.'cfg(all(target_arch = "arm", target_os = "none"))']
-# 替换STM32G071C8Rx为你使用`probe-rs chip list`获取到的芯片ID
+# 替换STM32G071C8Rx为你使用 `probe-rs chip list` 获取到的芯片ID
 runner = "probe-rs run --chip STM32G474RETx"
 ----
 
@@ -76,10 +76,10 @@ runner = "probe-rs run --chip STM32G474RETx"
 
 * 从示例中复制所需的 `embassy-*` 行到 `Cargo.toml`
 * 对 `features` 进行必要的更改，例如：需要 `embassy-stm32` 中的 `stm32g474re` feature
-* 移除`embassy-*` 条目中的 `path = ""` 键
-* 创建一个 `[patch.crates-io]`部分，列出我们需要的embassy crate。它们应该包含相同的值：一个指向git仓库的链接，以及我们正在检出的提交的引用。你可以通过运行 `git ls-remote https://github.com/embassy-rs/embassy.git HEAD` 来找到最新的提交
+* 移除 `embassy-*` 条目中的 `path = ""` 键
+* 创建一个 `[patch.crates-io]` 部分（section），列出我们需要的embassy crate。它们应该包含相同的值：一个指向git仓库的链接，以及我们正在检出的提交的引用。你可以通过运行 `git ls-remote https://github.com/embassy-rs/embassy.git HEAD` 来找到最新的提交
 
-NOTE: 注意：使用这种方法时， `[dependencies]`必须与 `[patch.crates.io]` 下的rev键对应的Cargo.toml的crate version相匹配。这意味着在更新时，你必须选择一个新的修订版本（revision），修改 `[patch.crates.io]` 中的所有相关内容，然后更正 `[dependencies]` 下已更改的内容。好复杂，希望一旦embassy在crates.io上发布，就不再需要这样做了！
+NOTE: 注意：使用这种方法时， `[dependencies]` 必须与 `[patch.crates.io]` 下的rev键对应的Cargo.toml的crate version相匹配。这意味着在更新时，你必须选择一个新的修订版本（revision），修改 `[patch.crates.io]` 中的所有相关内容，然后更正 `[dependencies]` 下已更改的内容。好复杂，希望一旦embassy在crates.io上发布，就不再需要这样做了！
 
 这是撰写本文时按照上述方法写出的：
 
@@ -107,7 +107,7 @@ cortex-m-rt = "0.7.3"
 panic-probe = "0.3.1"
 ----
 
-这些是运行 `blinky.rs`所需的最少依赖项，但示例 `Cargo.toml`中指定的其他依赖项也值得一看————注意与embassy一起使用所需的功能 - 例如 `futures = { version = "0.3.17", default-features = false, features = ["async-await"] }`.
+这些是运行 `blinky.rs`所需的最少依赖项，但示例 `Cargo.toml`中指定的其他依赖项也值得一看————注意与embassy一起使用所需的功能 -- 例如 `futures = { version = "0.3.17", default-features = false, features = ["async-await"] }` 。
 
 最后，将示例`Cargo.toml` 中的 `[profile.release]` 部分复制到我们的文件中。
 
