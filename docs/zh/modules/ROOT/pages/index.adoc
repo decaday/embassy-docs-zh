@@ -8,21 +8,21 @@ Embassy旨在将async/await作为嵌入式开发的一流选择。
 
 由于操作系统不能假设线程会协作地运行，所以线程相对来说资源消耗较大。并且如果它们在分配的时间内不将控制权交还给内核，可能会被强制中断。如果可以假设任务会协作地运行，或者至少不是恶意的，那么就有可能创建与传统操作系统线程相比几乎无成本的任务。
 
-在其他编程语言中，这些轻量级任务被称为“协程（coroutines）”或“goroutines”。在Rust中，它们通过async实现。Async-await通过将每个async函数转换为一个称为future的对象来工作。当一个future在I/O上阻塞时，future就会产生yields，调度器（我们称为执行器，executor）可以选择执行不同的future。
+在其他编程语言中，这些轻量级任务被称为“协程（coroutines）”或“goroutines”。在Rust中，它们通过async实现。Async-await通过将每个async函数转换为一个称为future的对象来工作。当一个future在I/O上阻塞时，future就会让出CPU，调度器（我们称为执行器，executor）可以选择执行不同的future。
 
-与RTOS等替代方案相比，async可以提供更好的性能和更低的功耗，因为执行器不必猜测future何时准备好执行。然而，程序大小可能比其他方案更大，这对于内存非常低的设备可能是一个问题。Embassy支持的设备中，如stm32和nrf，内存通常足够大，可以容纳稍微大点的程序大小。
+与RTOS等替代方案相比，async可以提供更好的性能和更低的功耗，因为执行器不必猜测future何时准备好执行。然而，程序大小可能比其他方案更大，这对于内存非常低的设备可能是一个问题。Embassy支持的设备，如stm32和nrf，内存通常足够大，可以容纳稍微大点的程序。
 
 == Embassy是什么？
 
 Embassy项目包括几个可以一起使用，也可以独立使用的crate：
 
 === 执行器（Executor） 
-link:https://docs.embassy.dev/embassy-executor/[embassy-executor] 是一个async/await执行器，通常在启动时执行固定数量的任务，尽管稍后可以添加更多任务。执行器还可以提供一个系统计时器，您可以用它来进行异步和阻塞延迟。但对于少于一微秒的延迟，应该使用阻塞延迟，因为上下文切换（context-switching）的成本太高，执行器无法提供准确的计时。
+link:https://docs.embassy.dev/embassy-executor/[embassy-executor] 是一个async/await执行器，通常在启动时执行固定数量的任务，不过稍后可以添加更多任务。执行器还可以提供一个系统计时器，您可以用它来进行异步和阻塞延迟。但对于少于一微秒的延迟，应该使用阻塞延迟，因为上下文切换（context-switching）的成本太高，执行器无法提供准确的计时。
 
 === 硬件抽象层（Hardware Abstraction Layers）
 HAL实现了安全的Rust API，您可以使用USART、UART、I2C、SPI、CAN和USB等外设，而无需直接操作寄存器。
 
-Embassy在合理的情况下提供了异步和阻塞API的实现。DMA（直接内存访问）是异步非常合适的一个例子，而GPIO状态也更适合阻塞式API。
+Embassy在合理的情况下提供了异步和阻塞API的实现。DMA（直接内存访问）就是一个很适合异步的例子，而GPIO状态也更适合阻塞式API。
 
 Embassy项目为一些我们选定的硬件维护HAL，但您仍然可以同时使用Embassy和其他项目的HAL。
 
