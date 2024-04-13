@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>开发者文档：STM32 :: Embassy中文文档</title>
+    <title>STM32开发者文档 :: Embassy中文文档</title>
     <link rel="canonical" href="https://embassy.dev/book/zh/developer_stm32.html">
     <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../_/css/site.css">
@@ -144,7 +144,7 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">开发者文档：STM32</h1>
+<h1 class="page">STM32开发者文档</h1>
 <div class="sect1">
 <h2 id="_理解_metapac"><a class="anchor" href="#_理解_metapac"></a>理解 metapac</h2>
 <div class="sectionbody">
@@ -157,7 +157,7 @@
 <h2 id="_stm32_data_sources"><a class="anchor" href="#_stm32_data_sources"></a><code>stm32-data-sources</code></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="https://github.com/embassy-rs/stm32-data-sources"><code>stm32-data-sources</code></a> 是一个几乎空白的仓库。它没有README，没有文档，watcher也很少。但它使 <code>embassy-stm32</code>  成为可能。我们支持的每个芯片的数据部分来自于相应的XML文件，例如 <a href="https://github.com/embassy-rs/stm32-data-sources/blob/b8b85202e22a954d6c59d4a43d9795d34cff05cf/cubedb/mcu/STM32F051K4Ux.xml"><code>STM32F051K4Ux.xml</code></a> 。在该文件中，您会看到如下行：</p>
+<p><a href="https://github.com/embassy-rs/stm32-data-sources"><code>stm32-data-sources</code></a> 是一个几乎空白的仓库。它没有README，没有文档，watcher（关注者）也很少。但它使 <code>embassy-stm32</code>  成为可能。我们支持的芯片的数据都来自于相应的XML文件，例如 <a href="https://github.com/embassy-rs/stm32-data-sources/blob/b8b85202e22a954d6c59d4a43d9795d34cff05cf/cubedb/mcu/STM32F051K4Ux.xml"><code>STM32F051K4Ux.xml</code></a> 。在该文件中，您会看到类似于下面的内容：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -167,7 +167,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>这些行表明这个芯片有一个i2c，其版本为 “v1_1”。它还表明它有一个版本为 “v2_x” 的通用定时器。根据这些数据，我们可以确定那些实现可以被包含在 <code>embassy-stm32</code> 中。但实际上，做到这一点又是另外一回事。</p>
+<p>这些内容表明这个芯片有一个i2c，其版本为 “v1_1”。它还表明它有一个版本为 “v2_x” 的通用定时器。根据这些数据，我们可以确定哪些实现可以被包含在 <code>embassy-stm32</code> 中。但实际上，做到这一点又是另外一回事。</p>
 </div>
 </div>
 </div>
@@ -175,7 +175,7 @@
 <h2 id="_stm32_data"><a class="anchor" href="#_stm32_data"></a><code>stm32-data</code></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>虽然所有使用这个项目的用户都熟悉 <code>embassy-stm32</code> ，但较少人熟悉驱动它的项目：<code>stm32-data</code> 。这个项目的目标不仅是为 <code>embassy-stm32</code> 生成数据，而且是为了能机器处理。为了实现这一点，<code>stm32-data-sources</code> 项目中的多个文件的信息被合并和解析，以给每个支持的IP分配寄存器块实现。这种匹配的核心位于 <code>chips.rs</code>：</p>
+<p>虽然所有使用这个项目的用户都熟悉 <code>embassy-stm32</code> ，但很少熟悉驱动它的项目：<code>stm32-data</code> 。这个项目的目标不止是为 <code>embassy-stm32</code> 生成数据，还旨在一般地机器处理。为了实现这一点，来自 <code>stm32-data-sources</code> 项目多个文件的信息被合并和解析，以给每个支持的IP分配寄存器块实现。这种匹配的核心位于 <code>chips.rs</code>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -185,7 +185,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>在这种情况下，i2c的版本对应我们的 “v2”，通用定时器的版本对应我们的 “v1”。因此， <code>i2c_v2.yaml</code> 和 <code>timer_v1.yaml</code> 寄存器块实现分别被分配给这些IP。结果是，在 <code>STM32F051K4.json</code> 中生成了这些行：</p>
+<p>在这种情况下，i2c的版本对应我们的 “v2”，通用定时器的版本对应我们的 “v1”。因此， <code>i2c_v2.yaml</code> 和 <code>timer_v1.yaml</code> 寄存器块实现分别被分配给这些IP。最后在 <code>STM32F051K4.json</code> 中生成了这些行：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -213,7 +213,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>除了寄存器块，它还生成了引脚和RCC映射的数据，并被 <code>embassy-stm32</code> 使用。<code>stm32-metapac-gen</code> 打包和发布数据作为一个crate。</p>
+<p>除了寄存器块，它还生成了引脚和RCC映射的数据，并被 <code>embassy-stm32</code> 使用。<code>stm32-metapac-gen</code> 被用于打包和发布数据作为一个crate。</p>
 </div>
 </div>
 </div>
@@ -221,7 +221,7 @@
 <h2 id="_embassy_stm32"><a class="anchor" href="#_embassy_stm32"></a><code>embassy-stm32</code></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>在 <code>embassy-stm32</code> 根目录中的 <code>lib.rs</code> 文件中，您会看到这样一行：</p>
+<p>在 <code>embassy-stm32</code> 根目录的 <code>lib.rs</code> 文件中，您会看到这样一行：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -238,7 +238,7 @@ pub mod i2c;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>因为STM32F051K4支持i2c，其版本对应我们的 “v2”，所以 i2c 和 i2c_v2 配置指令将会出现， <code>embassy-stm32</code> 将分别包含这些文件。这些和其他配置指令及表格是根据芯片数据生成的，因此 <code>embassy-stm32</code> 可以清晰地适应每个芯片所需的逻辑和实现。与嵌入式生态中的其他项目相比， <code>embassy-stm32</code> 是唯一一个能够在整个stm32系列中复用代码，并移除HAL中难以实现的不安全逻辑。</p>
+<p>因为STM32F051K4支持i2c，其版本对应我们的 “v2”，所以 i2c 和 i2c_v2 配置指令将会出现， <code>embassy-stm32</code> 会分别包含这些文件。它们和其他配置指令以及表格是根据芯片数据生成的，因此 <code>embassy-stm32</code> 可以清晰地适应每个芯片所需的逻辑和实现。与嵌入式生态中的其他项目相比， <code>embassy-stm32</code> 是唯一一个能够在整个stm32系列中复用代码，并且移除HAL中难以实现的不安全逻辑的项目。</p>
 </div>
 </div>
 </div>

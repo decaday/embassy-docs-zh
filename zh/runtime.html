@@ -147,7 +147,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Embassy executor是一个为嵌入式使用而设计的async/await执行器，它支持中断和定时器功能。</p>
+<p>Embassy executor是一个为嵌入式使用而设计的异步/等待（async/await）执行器，它支持中断和定时器功能。</p>
 </div>
 </div>
 </div>
@@ -157,35 +157,35 @@
 <div class="ulist">
 <ul>
 <li>
-<p>No <code>alloc</code>, 不需要堆，任务静态分配。</p>
+<p>不需要 <code>堆内存分配（alloc）</code>, 不需要堆，任务静态分配。</p>
 </li>
 <li>
-<p>没有“固定容量”的数据结构，执行器可以处理1个或1000个任务，无需设置/tuning。</p>
+<p>没有“固定容量”的数据结构，执行器可以处理1个或1000个任务，无需设置/调整。</p>
 </li>
 <li>
-<p>集成的定时器队列：sleep很简单，只需执行 <code>Timer::after_secs(1).await;</code> 。</p>
+<p>集成的定时器队列：睡眠（sleep）很简单，只需执行 <code>Timer::after_secs(1).await;</code> 。</p>
 </li>
 <li>
-<p>没有忙碌等待（busy-loop）轮询: 当没有工作要做时，CPU会使用中断或 <code>WFE/SEV</code> 休眠。</p>
+<p>没有忙等（busy-loop）轮询: 当没有工作要做时，CPU会使用中断或 <code>WFE/SEV</code> 休眠。</p>
 </li>
 <li>
 <p>高效的轮询：唤醒操作只会轮询被唤醒的任务，而不是所有任务。</p>
 </li>
 <li>
-<p>平均：即使一个任务不断被唤醒，它也不能垄断CPU时间。在一个给定任务第二次被轮询之前，所有其他任务都有机会运行。</p>
+<p>平均：即使一个任务不断被唤醒，它也不能垄断CPU时间。在任务第二次被轮询之前，所有其他任务都有机会运行。</p>
 </li>
 <li>
-<p>Embassy支持创建多个executor实例，以在不同优先级上运行任务，可以让高优先级任务抢占低优先级任务。</p>
+<p>Embassy支持创建多个Executor实例，以在不同优先级上运行任务，可以让高优先级任务抢占低优先级任务。</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_executor"><a class="anchor" href="#_executor"></a>Executor</h2>
+<h2 id="_执行器"><a class="anchor" href="#_执行器"></a>执行器</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>执行器的功能如下所述。执行器维护一个应该轮询的任务队列。当一个任务被创建时，它会被轮询（1）。任务将尝试取得进展，直到它达到一个可能被阻塞的点。这可能发生在任务正在等待一个异步函数时。当这种情况发生时，任务通过返回 <code>Poll::Pending</code> （2）来让出执行权。一旦任务让出，执行器就会将任务排到运行队列的末尾，并继续轮询队列中的下一个任务（3）。当一个任务完成或取消时，它将不会再次被入队。</p>
+<p>执行器（Executor）的功能如下所述：它维护一个应该轮询的任务队列。当一个任务被创建时，会被轮询（1）。任务将尝试取得进展，直到它到达一个可能被阻塞的点。这可能发生在任务正在等待一个异步函数时。当这种情况发生，任务通过返回 <code>Poll::Pending</code> （2）来让出执行权。一旦任务让出，执行器就会将任务排到运行队列的末尾，并继续轮询队列中的下一个任务（3）。当一个任务完成或取消后，它不会再次进入队列。</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -194,7 +194,7 @@
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-执行器需要不会无限期地阻塞的任务，因为这会阻止执行器重新获得控制权并调度另一个任务。
+Executor需要不会无限期阻塞的任务，因为这会阻止执行器重新获得控制权并调度另一个任务。
 </td>
 </tr>
 </table>
@@ -205,7 +205,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>如果您在应用程序中使用 <code>#[embassy_executor::main]</code> 宏，它会为您创建 <code>Executor</code> 并将main入口点作为第一个任务。您也可以手动创建Executor，实际上您可以创建多个Executor。</p>
+<p>如果您在应用程序中使用 <code>#[embassy_executor::main]</code> 宏，它会为您创建 <code>Executor</code> 并将入口点作为第一个任务。您也可以手动创建Executor，实际上，您可以创建多个Executor。</p>
 </div>
 </div>
 </div>
@@ -213,10 +213,10 @@
 <h2 id="_中断"><a class="anchor" href="#_中断"></a>中断</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>中断是外设用来标志某些操作完成的常见方式，这与异步执行模型非常契合。下面的图表描述了一个典型的应用流程，其中（1）一个任务被轮询并尝试取得进展。然后任务（2）指示外设执行某项操作，并等待（await）。一段时间过后，（3）中断被触发，标志着操作的完成。</p>
+<p>中断是外设用来标志某些操作完成的常见方式，这与异步执行模型非常契合。下面的图表描述了一个典型的应用流程，其中（1）一个任务被轮询并尝试取得进展。然后任务（2）指示外设执行某项操作，并等待（await）。一段时间过后，（3）中断触发，标志着操作的完成。</p>
 </div>
 <div class="paragraph">
-<p>然后外设HAL（4）确保中断信号被传输（route）到外设，并根据操作结果来更新外设状态。然后执行器（5）被通知应该轮询该任务，然后执行器就这么做。</p>
+<p>然后外设HAL（4）确保中断信号被传输（route）到外设，并根据操作结果来更新外设状态。然后Executor（5）被通知应该轮询该任务，然后它就会这么做。</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -241,10 +241,10 @@
 <h2 id="_time"><a class="anchor" href="#_time"></a>Time</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Embassy提供了一个内部定时器队列，可以通过 <code>time</code> feature 来启用。 Embassy假定平台上存在一个time <code>Driver</code> 实现。 Embassy为nRF、STM32、RPi Pico、WASM和Std平台提供了time drivers。</p>
+<p>Embassy提供了一个内部定时器队列，可以通过 <code>time</code> feature 来启用。 Embassy假定平台上存在一个时钟 <code>驱动</code> 实现。 Embassy为nRF、STM32、RPi Pico、WASM和Std平台提供了时钟驱动（time driver）。</p>
 </div>
 <div class="paragraph">
-<p>嵌入式平台的定时器驱动实现可能只支持设置固定数量的闹钟（alarm）。确保您希望同时使用定时器的任务数量不超过此限制。</p>
+<p>嵌入式平台的定时器驱动（timer driver）实现可能只支持设置固定数量的闹钟（alarm）。确保您希望同时使用定时器的任务数量不超过此限制。</p>
 </div>
 <div class="paragraph">
 <p>定时器的速度可以在编译时使用 <code>time-tick-&lt;frequency&gt;</code> 来配置。目前，定时器可以配置为1000 Hz、32768 Hz或1 MHz。在更改默认设置之前，请确保目标芯片的HAL支持此频率设置。</p>

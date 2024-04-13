@@ -148,13 +148,13 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>如果您刚接触Embassy，可能会觉得理解所有术语和概念有些困难。本指南旨在阐明Embassy中的不同层次，以及每一层如何是使用。</p>
+<p>如果您刚接触Embassy，可能会觉得理解所有术语和概念有些困难。本指南旨在阐明Embassy中每一层次的不同，以及他们分别为开发者解决了什么问题。</p>
 </div>
 <div class="paragraph">
-<p>本指南使用STM32 IOT01A开发板，但应该很容易切换到任何STM32芯片。对于nRF，PAC本身并不在Embassy项目中维护，但概念和层次结构是相似的。</p>
+<p>本指南使用STM32 IOT01A开发板，但切换到其他STM32芯片应该也不难。对于nRF，PAC（Peripheral Access Crate，外设访问包）本身并不在Embassy项目中维护，但概念和层次结构是相似的。</p>
 </div>
 <div class="paragraph">
-<p>我们将编写的应用程序是一个简单的“按下按钮，闪烁LED”的应用程序，讨论的每个示例的输入和输出处理。我们将从外设访问包（Peripheral Access Crate，PAC）示例开始，最后介绍async示例。</p>
+<p>我们将编写一个简单的“按下按钮，闪烁LED”的应用程序，它非常适合用来说明我们将要学习的每个示例中的输入和输出处理。我们将从PAC示例开始，最后介绍async示例。</p>
 </div>
 </div>
 </div>
@@ -162,10 +162,10 @@
 <h2 id="_pac版本"><a class="anchor" href="#_pac版本"></a>PAC版本</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>如果不考虑直接读写内存地址的话，PAC是访问外设和寄存器的最低级API。它提供了不同的类型来简化外设寄存器的访问，但它并不能防止你编写不安全的代码。</p>
+<p>如果不考虑直接读写内存地址的话，PAC是访问外设和寄存器的最低级API。它提供了不同类型的方式去简化外设寄存器访问，但它并不能防止你编写不安全的代码。</p>
 </div>
 <div class="paragraph">
-<p>因此，不推荐直接使用PAC编写应用程序，但如果你想使用的功能在上层没有实现，那么你就需要使用PAC了。</p>
+<p>因此，不推荐直接使用PAC编写应用程序，但如果你想使用的功能没有高层实现，那么你就需要使用PAC了。</p>
 </div>
 <div class="paragraph">
 <p>下面展示了使用PAC的blinky应用：</p>
@@ -179,7 +179,7 @@
 <p>如你所见，需要大量代码来启用外设时钟并配置输入引脚和输出引脚。</p>
 </div>
 <div class="paragraph">
-<p>这个应用程序的另一个缺点是它在轮询按钮状态时会一直忙等（busy-looping），而不能使用任何睡眠模式来省电。</p>
+<p>这个应用程序的另一个缺点是它在轮询按钮状态时会一直忙等（busy-loop），而不能使用任何睡眠模式来省电。</p>
 </div>
 </div>
 </div>
@@ -187,12 +187,12 @@
 <h2 id="_hal版本"><a class="anchor" href="#_hal版本"></a>HAL版本</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>为了简化我们的应用程序，我们可以改用HAL。HAL提供了更高级别的API，处理诸如：</p>
+<p>为了简化我们的应用程序，我们可以改用HAL。HAL提供了更高级别的API，处理诸如这样的事务：</p>
 </div>
 <div class="paragraph">
-<p>当你使用外设时，自动启用外设时钟
+<p>在你使用外设时自动启用外设时钟
 从更高级别的类型派生和应用寄存器配置
-实现embedded-hal特性，可以使用第三方驱动
+实现embedded-hal trait以在第三方驱动中使用外设
 HAL示例如下所示：</p>
 </div>
 <div class="listingblock">
@@ -201,10 +201,10 @@ HAL示例如下所示：</p>
 </div>
 </div>
 <div class="paragraph">
-<p>如你所见，即使不使用任何异步代码，应用程序也变得简单得多。Input和Output类型隐藏了访问GPIO寄存器的所有细节，并允许你使用更简单的API来查询按钮的状态和切换LED输出。</p>
+<p>如你所见，即使不使用任何异步代码，应用程序也变得简单得多。Input和Output类型隐藏了访问GPIO寄存器的所有细节，并允许你使用更简单的API来查询按钮的状态和翻转LED引脚的输出。</p>
 </div>
 <div class="paragraph">
-<p>然而，PAC示例中的同样缺点仍然存在：应用程序在忙等，消耗更多电力。</p>
+<p>然而，PAC示例中的缺点仍然存在：应用程序在忙等（busy-loop），消耗不必要的电力。</p>
 </div>
 </div>
 </div>
@@ -212,13 +212,13 @@ HAL示例如下所示：</p>
 <h2 id="_中断驱动"><a class="anchor" href="#_中断驱动"></a>中断驱动</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>为了省电，我们需要配置应用程序，以便在按下按钮时通过中断通知应用程序。</p>
+<p>为了省电，我们需要配置应用程序，以便在按下按钮时通过中断通知它。</p>
 </div>
 <div class="paragraph">
-<p>一旦配置了中断，应用程序就可以指示MCU进入睡眠模式，消耗的电力非常少。</p>
+<p>一旦配置了中断，应用程序就可以指示MCU进入睡眠模式，消耗非常少的电力。</p>
 </div>
 <div class="paragraph">
-<p>鉴于Embassy专注于异步Rust（我们将在本示例之后继续说这个），示例应用程序必须结合使用HAL和PAC才能使用中断。因此，应用程序还包含一些访问PAC的辅助函数（下面未显示）。</p>
+<p>鉴于Embassy专注于Async Rust（我们将在本示例之后继续说这个），示例应用程序必须结合使用HAL和PAC才能使用中断。因此，应用程序还包含一些访问PAC的辅助函数（没有展示在下面）。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -226,7 +226,7 @@ HAL示例如下所示：</p>
 </div>
 </div>
 <div class="paragraph">
-<p>在这个过程中，由于需要在全局范围内保持按钮和LED状态，以便主应用程序循环和中断处理程序都能访问，应用程序变得更加复杂。</p>
+<p>在这个过程中，由于需要在全局范围内保持button和LED的状态，以便主应用程序循环和中断处理程序都能访问，应用程序变得更加复杂。</p>
 </div>
 <div class="paragraph">
 <p>为了这么做，必须通过互斥锁来保护这些类型，并且在访问这些全局状态以获取外设访问权限时，必须禁用中断。</p>
@@ -253,7 +253,7 @@ HAL示例如下所示：</p>
 <div class="ulist">
 <ul>
 <li>
-<p>main入口点使用不同的宏，并且具有async类型签名。这个宏创建并启动一个Embassy运行时实例，并启动main程序任务。使用 <code>Spawner</code> 实例，应用程序还可以生成其他任务。</p>
+<p>main入口点使用不同的宏，并且具有async签名。这个宏创建并启动一个Embassy运行时实例，并启动main应用程序任务。使用 <code>Spawner</code> 实例，应用程序还可以生成其他任务。</p>
 </li>
 <li>
 <p>外设初始化由main宏完成，并交给main任务。</p>
@@ -264,7 +264,7 @@ HAL示例如下所示：</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>当调用 <code>button.await_for_any_edge().await</code> 时，执行器将暂停主任务并使微控制器进入睡眠模式，除非有其他任务可以运行。在内部，Embassy HAL已经为按钮配置了中断处理程序（在 <code>ExtiButton</code> 中），因此每当中断被触发时，正在等待按钮的任务就会被唤醒。</p>
+<p>当调用 <code>button.await_for_any_edge().await</code> 时，执行器将暂停主任务并使MCU进入睡眠模式，除非有其他任务可以运行。在内部，Embassy HAL已经为按钮配置了中断处理程序（在 <code>ExtiButton</code> 中），因此每当中断被触发时，正在等待按钮的任务就会被唤醒。</p>
 </div>
 <div class="paragraph">
 <p>执行器的最小开销和能够“并发”运行多个任务的能力，加上应用程序的极大简化，使得 <code>async</code> 非常适合嵌入式开发.</p>

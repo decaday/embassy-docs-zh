@@ -147,7 +147,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>所以，你想尝试一下Embassy诶，这太棒了！那，首先，你需要安装一些工具：</p>
+<p>所以，你想尝试一下Embassy诶，这太棒了！你只需要安装一点工具就可以开始啦：</p>
 </div>
 <div class="ulist">
 <ul>
@@ -255,7 +255,7 @@ cargo build --bin blinky --release</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>成功构建构建示例后，将你的开发板使用调试器链接到你的电脑上，然后在硬件上运行它：</p>
+<p>成功构建构建示例后，将你的开发板使用调试器链接到你的电脑上，然后在硬件上运行示例：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -263,7 +263,7 @@ cargo build --bin blinky --release</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>如果一切正常，你应该在开发板上看到一个闪烁的 LED，并在你的计算机上看到类似于以下的调试输出：</p>
+<p>如果一切正常，你应该在开发板上看到一个闪烁的 LED，并在你的计算机上看到类似于以下的调试输出信息：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -297,7 +297,7 @@ cargo build --bin blinky --release</code></pre>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_运行出错"><a class="anchor" href="#_运行出错"></a>运行出错！</h3>
+<h3 id="_它出错了"><a class="anchor" href="#_它出错了"></a>它出错了！</h3>
 <div class="paragraph">
 <p>如果你在运行 <code>cargo run --release</code> 时遇到问题，请检查：</p>
 </div>
@@ -310,12 +310,12 @@ cargo build --bin blinky --release</code></pre>
 <p>已将 <code>.cargo/config.toml</code> 的运行设置为正确的芯片, 而且</p>
 </li>
 <li>
-<p>已更改了 <code>examples/Cargo.toml</code> 的 HAL（例如 embassy-stm32）依赖项的特性，以使用正确的芯片（替换默认的 stm32xxxx feature）</p>
+<p>已更改了 <code>examples/Cargo.toml</code> 的 HAL（例如 embassy-stm32）依赖项的feature，以使用正确的芯片（替换默认的 stm32xxxx feature）</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>此时，项目应该可以运行。如果你在 blinky 示例中没有看到闪烁的LED，请确保代码正在翻转你开发板的LED引脚。</p>
+<p>此时，项目应该可以运行。如果你在 blinky 示例中没有看到闪烁的LED，请确保代码正在翻转你开发板LED所在的引脚。</p>
 </div>
 <div class="paragraph">
 <p>如果你尝试 <code>cargo run --release</code> 运行示例，并且看到以下输出：</p>
@@ -342,7 +342,7 @@ debug = 2</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>如果你遇到一个包含类似以下内容的极长错误消息：</p>
+<p>如果你遇到一个很长的，包含类似以下内容的错误消息：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -359,10 +359,10 @@ debug = 2</code></pre>
 <p>如果你使用的是 Raspberry Pi Pico-W，请确保你运行的是  <code>cargo run --bin wifi_blinky --release</code> ，而不是普通的 blinky 示例。Pico-W 的板载LED连接到WiFi芯片，需要在LED可以闪烁之前进行初始化。</p>
 </div>
 <div class="paragraph">
-<p>如果你使用的是rp2040调试器（比如 pico probe）并且在运行 <code>probe-rs info</code> 之后出现问题，重新连接调试器让它重新上电。<a href="https://github.com/probe-rs/probe-rs/issues/1849">已知运行 <code>probe-rs info</code> 会使pico调试器进入不可用状态</a>.</p>
+<p>如果你使用的是rp2040调试器（比如 pico probe）并且在运行 <code>probe-rs info</code> 之后出现问题，重新连接调试器让它重新上电。<a href="https://github.com/probe-rs/probe-rs/issues/1849">已知运行 <code>probe-rs info</code> 会使pico调试器进入不可用状态</a>。</p>
 </div>
 <div class="paragraph">
-<p>如果你仍然遇到问题，请查看常见问题解答： <a href="https://embassy.dev/book/dev/faq.html">FAQ</a>, 或者在聊天室寻求帮助： <a href="https://matrix.to/#/#embassy-rs:matrix.org">Embassy Chat Room</a>.</p>
+<p>如果你仍然遇到问题，请查看<a href="https://embassy.dev/book/dev/faq.html">常见问题解答</a>, 或者在<a href="https://matrix.to/#/#embassy-rs:matrix.org">Embassy Chat Room</a>寻求帮助。</p>
 </div>
 </div>
 </div>
@@ -376,10 +376,10 @@ debug = 2</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>阅读更多关于 <a href="runtime.html" class="xref page">executor</a> 的内容.</p>
+<p>阅读更多关于 <a href="runtime.html" class="xref page">执行器（Executor）</a> 的内容.</p>
 </li>
 <li>
-<p>阅读更多关于硬件抽象层 <a href="hal.html" class="xref page">HAL(硬件抽象层)</a> 的内容。</p>
+<p>阅读更多关于 <a href="hal.html" class="xref page">硬件抽象层（HAL）</a> 的内容。</p>
 </li>
 <li>
 <p>开始 <a href="basic_application.html" class="xref page">编写你的应用程序</a>。</p>

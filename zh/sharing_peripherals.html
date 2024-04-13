@@ -155,7 +155,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_使用互斥锁mutex共享"><a class="anchor" href="#_使用互斥锁mutex共享"></a>使用互斥锁（MuteX）共享</h2>
+<h2 id="_使用互斥锁mutex共享"><a class="anchor" href="#_使用互斥锁mutex共享"></a>使用互斥锁（Mutex）共享</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>互斥锁是共享外设最简单的方式。</p>
@@ -177,9 +177,9 @@ static LED: LedType = Mutex::new(None);
 #[embassy_executor::main]
 async fn main(spawner: Spawner) {
     let p = embassy_rp::init(Default::default());
-    // set the content of the global LED reference to the real LED pin
+    // 设置全局LED引用到真正的LED引脚
     let led = Output::new(AnyPin::from(p.PIN_25), Level::High);
-    // 内部作用域是这样的:一旦互斥锁被写入，MutexGuard就会被删除，
+    // 内部作用域是这样的:互斥锁被写入之后，MutexGuard就会被回收，
     // 从而释放互斥锁
     {
         *(LED.lock().await) = Some(led);
@@ -191,7 +191,7 @@ async fn main(spawner: Spawner) {
     unwrap!(spawner.spawn(toggle_led(&amp;LED, Duration::from_nanos((dt as f64 * k) as u64))));
 }
 
-// 这个任务的池（Pool）大小是2意味着你可以创建两个实例。
+// 这个池（Pool）的大小是2，意味着你可以创建两个任务实例。
 #[embassy_executor::task(pool_size = 2)]
 async fn toggle_led(led: &amp;'static LedType, delay: Duration) {
     let mut ticker = Ticker::every(delay);
@@ -213,24 +213,24 @@ async fn toggle_led(led: &amp;'static LedType, delay: Duration) {
 <div class="sect2">
 <h3 id="_为什么这么复杂"><a class="anchor" href="#_为什么这么复杂"></a>为什么这么复杂</h3>
 <div class="paragraph">
-<p>咱们展开每一层，看看为什么每一层都是必需的。</p>
+<p>让我们逐层展开，看看为什么每一层都是必需的。</p>
 </div>
 <div class="sect3">
 <h4 id="_mutexrawmutextype_t"><a class="anchor" href="#_mutexrawmutextype_t"></a><code>Mutex&lt;RawMutexType, T&gt;</code></h4>
 <div class="paragraph">
-<p>互斥锁的存在是为了确保当一个任务首先获取资源并开始修改时，其他想要写入的任务必须等待（如果没有任务锁定互斥锁， <code>led.lock().await</code> 会立即返回；如果在别处被访问，则会阻塞）。</p>
+<p>互斥锁的存在是为了确保当一个任务首先获取资源并开始修改它时，其他想要写入的任务必须等待（如果没有任务锁定互斥锁， <code>led.lock().await</code> 会立即返回；如果在其他地方访问了它，则会产生阻塞）。</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_optiont"><a class="anchor" href="#_optiont"></a><code>Option&lt;T&gt;</code></h4>
 <div class="paragraph">
-<p><code>LED</code> 变量需要在主任务外部定义，因为任务接受的引用需要 <code>'static</code> 生命周期。但是，如果它在主任务外部，它不能初始化为指向任何引脚，因为引脚本身尚未初始化。因此，它被设置为 <code>None</code> 。</p>
+<p><code>LED</code> 变量需要在主任务外部定义，因为任务接受的引用需要 <code>'static</code> 生命周期。但是，如果它在主任务外部，它在初始化时不能指向任何引脚，因为引脚本身尚未初始化。因此，它被设置为 <code>None</code> 。</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_outputanypin"><a class="anchor" href="#_outputanypin"></a><code>Output&lt;AnyPin&gt;</code></h4>
 <div class="paragraph">
-<p>这表示引脚将被设置为输出。 <code>AnyPin</code> 本可以是`embassy_rp::peripherals::PIN_25`，但这样做使得 <code>toggle_led</code> 函数更通用。</p>
+<p>这表示引脚将被设置为输出。 <code>AnyPin</code> 可以是`embassy_rp::peripherals::PIN_25`，但是不这样做使 <code>toggle_led</code> 函数更通用。</p>
 </div>
 </div>
 </div>
@@ -240,7 +240,7 @@ async fn toggle_led(led: &amp;'static LedType, delay: Duration) {
 <h2 id="_使用通道channel共享"><a class="anchor" href="#_使用通道channel共享"></a>使用通道（Channel）共享</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>通道是另一种确保对资源独占访问的方式。在可以不立即访问的情况下使用通道非常好，因为可以在排队时做其他事情。</p>
+<p>通道是另一种确保对资源独占访问的方式。在不必须立即访问的情况下使用通道是个不错的选择，因为可以在排队时做其他事情。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -276,7 +276,7 @@ async fn main(spawner: Spawner) {
     }
 }
 
-// 这个任务的池（Pool）大小是2意味着你可以创建两个实例。
+// 这个池（Pool）的大小是2，意味着你可以创建两个任务实例。
 #[embassy_executor::task(pool_size = 2)]
 async fn toggle_led(control: Sender&lt;'static, ThreadModeRawMutex, LedState, 64&gt;, delay: Duration) {
     let mut ticker = Ticker::every(delay);

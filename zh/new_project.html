@@ -148,10 +148,10 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>成功 <a href="getting_started.html" class="xref page">运行一些示例项目</a> 后，下一步就是创建一个独立的Embassy项目。</p>
+<p>当你成功地<a href="getting_started.html" class="xref page">运行一些示例项目</a>后，下一步就是创建一个独立的Embassy项目。</p>
 </div>
 <div class="paragraph">
-<p>生成Embassy项目，有一些工具（正在开发中）：</p>
+<p>有一些生成Embassy项目的工具（正在开发中）：</p>
 </div>
 </div>
 </div>
@@ -181,7 +181,7 @@
 <p>如果您想从零开始：</p>
 </div>
 <div class="paragraph">
-<p>以STM32G474为例，我们来创建一个全新的Embassy项目。该指南也适用于任何支持的芯片，只需做一些小改动。</p>
+<p>以STM32G474为例，让我们来创建一个全新的Embassy项目。该指南也适用于任何支持的芯片，只需做一些小小的改动。</p>
 </div>
 <div class="paragraph">
 <p>运行：</p>
@@ -193,7 +193,7 @@ cd stm32g474-example</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>创建了一个空的rust项目:</p>
+<p>来创建一个空的rust项目:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -204,14 +204,14 @@ cd stm32g474-example</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>查看 <a href="https://github.com/embassy-rs/embassy/tree/main/examples">Embassy examples</a> , 有一个 <code>stm32g4</code> 文件夹。 将 <code>src/blinky.rs</code> 的内容复制到 <code>src/main.rs</code> 。</p>
+<p>查看 <a href="https://github.com/embassy-rs/embassy/tree/main/examples">Embassy examples</a> , 我们可以看到有一个 <code>stm32g4</code> 文件夹。 将 <code>src/blinky.rs</code> 的内容复制到 <code>src/main.rs</code> 。</p>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_cargoconfig_toml"><a class="anchor" href="#_cargoconfig_toml"></a>.cargo/config.toml</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>现在，我们每次运行 <code>cargo build</code> 或者 <code>cargo run</code> 需要给cargo提供一个 target triple（-target &lt;triple&gt;） 。让我们一劳永逸，从 <code>examples/stm32g4</code> 复制 <code>.cargo/config.toml</code> 到我们的项目中。</p>
+<p>现在，我们每次运行 <code>cargo build</code> 或者 <code>cargo run</code> 都需要给cargo提供一个 target triple（-target &lt;triple&gt;） 。让我们一劳永逸，从 <code>examples/stm32g4</code> 复制 <code>.cargo/config.toml</code> 到我们的项目中。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -224,7 +224,7 @@ cd stm32g474-example</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>除了target triple， <code>.cargo/config.toml</code> 还包含一个 <code>runner</code> 键，让我们可以通过probe-rs运行 <code>cargo run</code>. 为了实现这一点，我们需要提供正确的芯片ID。请检查 <code>probe-rs chip list</code> ：</p>
+<p>除了target triple，<code>.cargo/config.toml</code> 还包含一个 <code>runner</code> 键，让我们可以通过probe-rs运行 <code>cargo run</code> 。为了让它正常工作，我们需要提供正确的芯片ID。可以通过 <code>probe-rs chip list</code> 获取它：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -238,7 +238,7 @@ cd stm32g474-example</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[target.'cfg(all(target_arch = "arm", target_os = "none"))']
-# replace STM32G071C8Rx with your chip as listed in `probe-rs chip list`
+# 替换STM32G071C8Rx为你使用 `probe-rs chip list` 获取到的芯片ID
 runner = "probe-rs run --chip STM32G474RETx"</code></pre>
 </div>
 </div>
@@ -248,10 +248,10 @@ runner = "probe-rs run --chip STM32G474RETx"</code></pre>
 <h2 id="_cargo_toml"><a class="anchor" href="#_cargo_toml"></a>Cargo.toml</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>现在cargo已经知道要为哪个目标编译（probe-rs也知道人家要在哪个芯片上运行），让我们添加一些依赖项。</p>
+<p>现在cargo已经知道要为哪个目标编译（probe-rs也知道它会在哪个芯片上运行），让我们添加一些依赖项。</p>
 </div>
 <div class="paragraph">
-<p>查看 <code>examples/stm32g4/Cargo.toml</code> ，我们可以看到示例所需要embassy的一系列crate。对于blinky项目，我们只需要其中的三个： <code>embassy-stm32</code> ，  <code>embassy-executor</code> 和 <code>embassy-time</code> 。</p>
+<p>查看 <code>examples/stm32g4/Cargo.toml</code> ，我们可以看到示例所需要的一系列embassy crate。对于blinky项目，我们只需要其中的三个： <code>embassy-stm32</code> ，  <code>embassy-executor</code> 和 <code>embassy-time</code> 。</p>
 </div>
 <div class="paragraph">
 <p>在撰写本文时，embassy的最新版本还没有在crates.io上发布，所以我们需要直接从git仓库安装。推荐的安装方法如下：</p>
@@ -265,10 +265,10 @@ runner = "probe-rs run --chip STM32G474RETx"</code></pre>
 <p>对 <code>features</code> 进行必要的更改，例如：需要 <code>embassy-stm32</code> 中的 <code>stm32g474re</code> feature</p>
 </li>
 <li>
-<p>移除`embassy-*` 条目中的 <code>path = ""</code> 键</p>
+<p>移除 <code>embassy-*</code> 条目中的 <code>path = ""</code> 键</p>
 </li>
 <li>
-<p>创建一个 <code>[patch.crates-io]</code> section, 部分，为我们需要的每个embassy crate创建条目。这些条目应该包含相同的值：一个指向git仓库的链接，以及我们正在检出的提交的引用。你可以通过运行 <code>git ls-remote <a href="https://github.com/embassy-rs/embassy.git" class="bare">https://github.com/embassy-rs/embassy.git</a> HEAD</code> 来找到最新的提交</p>
+<p>创建一个 <code>[patch.crates-io]</code> 部分（section），列出我们需要的embassy crate。它们应该包含相同的值：一个指向git仓库的链接，以及我们正在检出的提交的引用。你可以通过运行 <code>git ls-remote <a href="https://github.com/embassy-rs/embassy.git" class="bare">https://github.com/embassy-rs/embassy.git</a> HEAD</code> 来找到最新的提交</p>
 </li>
 </ul>
 </div>
@@ -279,13 +279,13 @@ runner = "probe-rs run --chip STM32G474RETx"</code></pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-注意：使用这种方法时， <code>[dependencies]</code> 中的version键必须与 <code>[patch.crates.io]</code> 下指定的rev中每个crate的Cargo.toml中定义的版本相匹配。这意味着在更新时，你必须选择一个新的修订版本（revision），更改 <code>[patch.crates.io]</code> 中的所有内容以匹配它，然后更正 <code>[dependencies]</code> 下已更改的内容。好复杂，希望一旦embassy在crates.io上发布，就不再需要这样做了！
+注意：使用这种方法时， <code>[dependencies]</code> 必须与 <code>[patch.crates.io]</code> 下的rev键对应的Cargo.toml的crate version相匹配。这意味着在更新时，你必须选择一个新的修订版本（revision），修改 <code>[patch.crates.io]</code> 中的所有相关内容，然后更正 <code>[dependencies]</code> 下已更改的内容。好复杂，希望一旦embassy在crates.io上发布，就不再需要这样做了！
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>按照目前的方法，会产生以下结果：</p>
+<p>这是撰写本文时按照上述方法写出的：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -313,7 +313,7 @@ panic-probe = "0.3.1"</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>这些是运行 <code>blinky.rs`所需的最低限度的依赖项，但示例 `Cargo.toml`中指定的其他依赖项也值得一看，并注意与embassy一起使用所需的功能 - 例如 `futures = { version = "0.3.17", default-features = false, features = ["async-await"] }</code>.</p>
+<p>这些是运行 <code>blinky.rs`所需的最少依赖项，但示例 `Cargo.toml`中指定的其他依赖项也值得一看————注意与embassy一起使用所需的功能&#8201;&#8212;&#8201;例如 `futures = { version = "0.3.17", default-features = false, features = ["async-await"] }</code> 。</p>
 </div>
 <div class="paragraph">
 <p>最后，将示例`Cargo.toml` 中的 <code>[profile.release]</code> 部分复制到我们的文件中。</p>
@@ -330,7 +330,7 @@ debug = 2</code></pre>
 <h2 id="_rust_toolchain_toml"><a class="anchor" href="#_rust_toolchain_toml"></a>rust-toolchain.toml</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>在我们可以构建项目之前，我们需要添加一个额外的文件来告诉cargo使用nightly工具链。将 <code>rust-toolchain.toml</code> 从embassy仓库复制到我们的仓库，并只保留target triple列表中我们需要的。 在这个例子中，是 <code>thumbv7em-none-eabi</code> ：</p>
+<p>在我们构建项目之前，我们还需要添加一个额外的文件来告诉cargo使用nightly工具链。将 <code>rust-toolchain.toml</code> 从embassy仓库复制到我们的项目，只需要保留target triple列表中我们需要的。 在这个例子中，是 <code>thumbv7em-none-eabi</code> ：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -345,7 +345,7 @@ debug = 2</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml"># Before upgrading check that everything is available on all tier1 targets here:
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml"># 在更新前请确认第一层（tier1）targets的一切都是可用的
 # https://rust-lang.github.io/rustup-components-history
 [toolchain]
 channel = "nightly-2023-11-01"
@@ -359,7 +359,7 @@ targets = ["thumbv7em-none-eabi"]</code></pre>
 <h2 id="_build_rs"><a class="anchor" href="#_build_rs"></a>build.rs</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>为了为我们的目标生成一个可工作的二进制文件，cargo需要一个自定义的构建脚本。将 <code>build.rs</code> 从示例复制到我们的项目中：</p>
+<p>为了给我们的目标生成一个可工作的二进制文件，cargo需要一个自定义的构建脚本。将示例中的 <code>build.rs</code> 复制到我们的项目中：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -387,7 +387,7 @@ targets = ["thumbv7em-none-eabi"]</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>应该会有一个LED闪烁 (应该有一个LED连接到 <code>src/main.rs</code> 中定义的引脚，如果不是请修改) 。输出如下：</p>
+<p>应该会有一个LED闪烁 (需要有一个LED连接到 <code>src/main.rs</code> 中定义的引脚，如果不是请修改) 。输出如下：</p>
 </div>
 <div class="listingblock">
 <div class="content">

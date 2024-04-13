@@ -145,23 +145,23 @@
 <article class="doc">
 <h1 class="page">硬件抽象层（Hardware Abstraction Layer,HAL）</h1>
 <div class="paragraph">
-<p>Embassy为多个微控制器系列提供了（HAL）：</p>
+<p>Embassy为多个MCU系列提供了HAL：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>embassy-nrf</code> 适用于Nordic Semiconductor的nRF微控制器</p>
+<p><code>embassy-nrf</code> 适用于Nordic公司的nRF MCU</p>
 </li>
 <li>
-<p><code>embassy-stm32</code> 适用于ST Microelectronics的STM32微控制器</p>
+<p><code>embassy-stm32</code> 适用于ST公司的STM32 MCU</p>
 </li>
 <li>
-<p><code>embassy-rp</code> 适用于Raspberry Pi RP2040微控制器</p>
+<p><code>embassy-rp</code> 适用于树莓派 RP2040 MCU</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>这些HAL实现了大多数外设的 async/await 功能，并且还实现了 <code>embedded-hal</code> 和 <code>embedded-hal-async</code> 中的async traits。你也可以将这些HAL与其他执行器(executor)一起使用。</p>
+<p>这些HAL实现了大多数外设的 async/await 功能，并且还实现了 <code>embedded-hal</code> 和 <code>embedded-hal-async</code> 中的async trait。你也可以将这些HAL与其他执行器(Executor)一起使用。</p>
 </div>
 <div class="paragraph">
 <p>对于ESP32系列，你可以使用 <a href="https://github.com/esp-rs/esp-hal">esp-hal</a> 。</p>

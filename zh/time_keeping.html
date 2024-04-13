@@ -147,7 +147,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>在嵌入式开发中，延迟任务是最常见的操作之一。在事件循环中，如果不执行其他I/O操作，需要加入延迟以确保其他任务有机会在下一次循环迭代调用之前运行。Embassy提供了抽象方法来以指定的时间延迟当前任务。</p>
+<p>在嵌入式开发中，延迟任务是最常见的操作之一。在事件循环中，如果不执行其他I/O操作，需要加入延迟以确保其他任务有机会在下一次循环迭代调用之前运行。Embassy提供了延迟当前任务指定的时间间隔的抽象。</p>
 </div>
 <div class="paragraph">
 <p>Embassy中的Time-keeping接口由 <a href="https://crates.io/crates/embassy-time">embassy-time</a> crate处理。这些类型可以与 <a href="https://crates.io/crates/embassy-executor">embassy-executor</a> 的内部定时器队列或自定义定时器队列实现一起使用。</p>
@@ -162,7 +162,7 @@
 embassy::time::Timer类型提供了两种计时方法。</p>
 </div>
 <div class="paragraph">
-<p>Timer::at创建一个在指定的Instant完成的future，相对于系统启动时间。 Timer::after创建一个在指定的Duration之后完成的future，相对于future被创建的时间。</p>
+<p>Timer::at创建一个在指定的时刻完成的future（相对于系统启动时间）。 Timer::after创建一个在指定的延时之后完成的future（相对于future被创建的时间）。</p>
 </div>
 <div class="paragraph">
 <p>以下是一个延迟的例子：</p>
@@ -177,7 +177,7 @@ use embassy::time::{Duration, Timer};
 async fn tick_periodic() -&gt; ! {
     loop {
         rprintln!("tick!");
-        // async 异步睡眠原语（primitive），挂起任务500ms。
+        // 异步睡眠原语（primitive），挂起任务500ms。
         Timer::after(Duration::from_millis(500)).await;
     }
 }</code></pre>
@@ -203,7 +203,7 @@ async fn tick_periodic() -&gt; ! {
 async fn tick_periodic() -&gt; ! {
     loop {
         rprintln!("tick!");
-        // async 异步睡眠原语（primitive），挂起任务500ms。
+        // 异步睡眠原语（primitive），挂起任务500ms。
         generic_delay(embassy::time::Delay).await
     }
 }

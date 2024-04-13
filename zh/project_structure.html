@@ -148,14 +148,14 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>有多种方式配置Embassy及其组件以适应您的具体应用程序。每个芯片的 <a href="https://github.com/embassy-rs/embassy/tree/main/examples">examples</a> 目录展示了项目结构应该是什么样子。让我们来详细了解一下：</p>
+<p>有多种方式配置Embassy及其组件以适应您的具体应用程序。每个芯片的 <a href="https://github.com/embassy-rs/embassy/tree/main/examples">示例</a> 目录展示了项目结构应该是什么样子。让我们来详细了解一下：</p>
 </div>
 <div class="paragraph">
 <p>您的项目的顶层文件结构应该如下所示：</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-plain hljs" data-lang="plain">{} = Maybe
+<pre class="highlightjs highlight"><code class="language-plain hljs" data-lang="plain">{} -&gt; 可选的
 
 my-project
 |- .cargo
@@ -174,7 +174,7 @@ my-project
 <h2 id="_cargoconfig_toml"><a class="anchor" href="#_cargoconfig_toml"></a>.cargo/config.toml</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>这个目录/文件描述了您所在的平台，并配置了 <a href="https://github.com/probe-rs/probe-rs">probe-rs</a> 以部署到您的设备。</p>
+<p>这个目录/文件描述了您所在的平台，并配置了 <a href="https://github.com/probe-rs/probe-rs">probe-rs</a> 以烧录到您的设备。</p>
 </div>
 <div class="paragraph">
 <p>以下是一个最小示例：</p>
@@ -182,25 +182,19 @@ my-project
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[target.thumbv6m-none-eabi] # &lt;-change for your platform
-runner = 'probe-rs run --chip STM32F031K6Tx' # &lt;- change for your chip
+runner = 'probe-rs run --chip STM32F031K6Tx' # &lt;- 修改为您的芯片
 
 [build]
-target = "thumbv6m-none-eabi" # &lt;-change for your platform
+target = "thumbv6m-none-eabi" # &lt;- 修改为您的架构
 
 [env]
-DEFMT_LOG = "trace" # &lt;- can change to info, warn, or error</code></pre>
+DEFMT_LOG = "trace" # &lt;- 可以修改为info,warn或error日志级别</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_build_rs"><a class="anchor" href="#_build_rs"></a>build.rs</h2>
-<div class="sectionbody">
-
-</div>
-</div>
-<div class="sect1">
-<h2 id="_build_rs_2"><a class="anchor" href="#_build_rs_2"></a>build.rs</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>这是您项目的构建脚本。它链接了defmt（什么是 <a href="https://defmt.ferrous-systems.com">defmt</a> ？）和memory.x文件（如果需要的话）。这个文件对每个芯片都是特定的，只需从相应的 <a href="https://github.com/embassy-rs/embassy/tree/main/examples">示例</a> 中复制粘贴即可。</p>
@@ -214,7 +208,7 @@ DEFMT_LOG = "trace" # &lt;- can change to info, warn, or error</code></pre>
 <p>这是你的清单文件（manifest file），在这里您可以配置所有Embassy组件以使用您需要的功能。</p>
 </div>
 <div class="sect3">
-<h4 id="_features"><a class="anchor" href="#_features"></a>Features</h4>
+<h4 id="_计划"><a class="anchor" href="#_计划"></a>计划</h4>
 <div class="sect4">
 <h5 id="_time"><a class="anchor" href="#_time"></a>Time</h5>
 <div class="ulist">
@@ -228,7 +222,7 @@ DEFMT_LOG = "trace" # &lt;- can change to info, warn, or error</code></pre>
 </ul>
 </div>
 <div class="paragraph">
-<p>更多内容正在来袭……</p>
+<p>敬请期待……</p>
 </div>
 </div>
 </div>
@@ -238,7 +232,7 @@ DEFMT_LOG = "trace" # &lt;- can change to info, warn, or error</code></pre>
 <h2 id="_memory_x"><a class="anchor" href="#_memory_x"></a>memory.x</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>这个文件概述了您的程序的闪存/内存使用情况。在nRF5x上使用 <a href="https://github.com/embassy-rs/nrf-softdevice">nrf-softdevice</a> 时特别有用。</p>
+<p>这个文件概述了您的程序的闪存/内存（flash/ram）使用情况。在nRF5x上使用 <a href="https://github.com/embassy-rs/nrf-softdevice">nrf-softdevice</a> 时特别有用。</p>
 </div>
 <div class="paragraph">
 <p>以下是使用S140与nRF52840的一个示例：</p>
@@ -260,18 +254,18 @@ DEFMT_LOG = "trace" # &lt;- can change to info, warn, or error</code></pre>
 <h2 id="_rust_toolchain_toml"><a class="anchor" href="#_rust_toolchain_toml"></a>rust-toolchain.toml</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>这个文件配置了rust版本和使用配置。</p>
+<p>这个文件配置rust版本和要使用的配置。</p>
 </div>
 <div class="paragraph">
-<p>一个最小的例子：</p>
+<p>一个最小化示例：</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[toolchain]
-channel = "nightly-2023-08-19" # &lt;- as of writing, this is the exact rust version embassy uses
-components = [ "rust-src", "rustfmt" ] # &lt;- optionally add "llvm-tools-preview" for some extra features like "cargo size"
+channel = "nightly-2023-08-19" # &lt;- 截至本文撰写时，embassy使用的Rust版本
+components = [ "rust-src", "rustfmt" ] # &lt;- 可以选择添加"llvm-tools-preview"来获取一些额外的功能，比如"cargo size"
 targets = [
-    "thumbv6m-none-eabi" # &lt;-change for your platform
+    "thumbv6m-none-eabi" # &lt;- 修改为您的架构
 ]</code></pre>
 </div>
 </div>

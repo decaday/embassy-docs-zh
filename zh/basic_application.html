@@ -148,12 +148,12 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>你已经运行了 <a href="examples.html" class="xref page">examples</a> ，但是现在咱去干啥呢？让我们通过一个运行在nRF52 DK上的简单的Embassy例子来更好地了解它。</p>
+<p>你已经运行了 <a href="examples.html" class="xref page">examples</a> ，那么接下来做什么呢？让我们通过一个运行在nRF52 DK上的简单的Embassy例子来更好地了解它。</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_主要部分"><a class="anchor" href="#_主要部分"></a>主要部分</h2>
+<h2 id="_主要内容"><a class="anchor" href="#_主要内容"></a>主要内容</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>完整的示例可以在 <a href="https://github.com/embassy-rs/embassy/tree/master/docs/modules/ROOT/examples/basic">这里</a> 找到</p>
@@ -173,7 +173,7 @@
 <div class="sect2">
 <h3 id="_裸机bare_metal"><a class="anchor" href="#_裸机bare_metal"></a>裸机（Bare metal）</h3>
 <div class="paragraph">
-<p>首先，您会注意到文件顶部有两个属性。这些属性告诉编译器程序无法访问std，并且没有主函数（因为它不是由操作系统运行的）。</p>
+<p>首先，您会注意到文件顶部有两个属性宏。这些属性宏告诉编译器程序无法访问标准库（std），并且没有主函数（因为它不是由操作系统运行的）。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -184,7 +184,7 @@
 <div class="sect2">
 <h3 id="_处理错误"><a class="anchor" href="#_处理错误"></a>处理错误</h3>
 <div class="paragraph">
-<p>接下来，我们将处理一些关于如何处理panic和错误的声明。在开发过程中，一个好的做法是用 <code>defmt-rtt</code> 和 <code>panic-probe</code> 来将诊断信息打印到终端：</p>
+<p>接下来是一些关于如何处理panic和错误的声明。在开发过程中，一个好的做法是用 <code>defmt-rtt</code> 和 <code>panic-probe</code> 来将诊断信息打印到终端：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -203,7 +203,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>Embassy任务必须声明为 <code>async</code> ，并且 <strong>不能</strong> 带有通用参数。在这种情况下，我们会传递应该闪烁的LED和闪烁的时间间隔。</p>
+<p>Embassy任务必须声明为 <code>async</code> ，并且 <strong>不能</strong> 带有泛型参数。之后，我们传递应该闪烁的LED和闪烁的时间间隔。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -212,14 +212,14 @@
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-请注意，此任务中没有一直等待。它使用了Embassy timer来让出执行权，允许MCU在每个闪烁之间进入休眠状态。
+请注意，此任务没有一直忙于等待。它使用了Embassy timer来让出执行权，允许MCU在每个闪烁之间进入休眠状态。
 </td>
 </tr>
 </table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_主要部分_2"><a class="anchor" href="#_主要部分_2"></a>主要部分</h3>
+<h3 id="_主要部分"><a class="anchor" href="#_主要部分"></a>主要部分</h3>
 <div class="paragraph">
 <p>Embassy应用程序的主要入口点（entry point）是使用 <code>#[embassy_executor::main]</code> 宏定义的。入口点接收一个 <code>Spawner</code> ，它可以用来生成其他任务。</p>
 </div>
@@ -232,7 +232,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>当 <code>blinker</code> 任务被生成（spawn）而且main函数return时，会发生什么呢？ 实际上，main入口点就像任何其他任务一样，只是你只能有一个，并且它需要一些特定类型的参数。魔法就在于 <code>#[embassy_executor::main]</code>  宏。该宏执行以下操作：</p>
+<p>当 <code>blinker</code> 任务被生成（spawn）而且main函数return时，会发生什么呢？ 实际上，main入口点就像任何其他任务一样，但是只能有一个，并且它需要一些特定类型的参数。魔法就在于 <code>#[embassy_executor::main]</code>  宏。该宏执行以下操作：</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -248,7 +248,7 @@
 </ol>
 </div>
 <div class="paragraph">
-<p>还有一种不使用宏运行执行器的方法，那就是你必须自己创建 <code>Executor</code> 实例。</p>
+<p>还有一种不使用宏运行执行器的方法，那就是你来自己创建 <code>Executor</code> 实例。</p>
 </div>
 </div>
 </div>
@@ -265,10 +265,10 @@
 </div>
 </div>
 <div class="paragraph">
-<p>根据您的微控制器，您可能需要替换 <code>embassy-nrf</code> 为别的。（STM32： <code>embassy-stm32</code> ，记住也要更新feature）.</p>
+<p>根据您的MCU，您可能需要把`embassy-nrf`替换成其他的。（STM32： <code>embassy-stm32</code> ，记住也要更新feature）.</p>
 </div>
 <div class="paragraph">
-<p>在本文这种特定的情况下，我们选择选择nrf52840芯片，使用RTC1外设作为time driver。</p>
+<p>在本文这种特定的情况下，我们选择nrf52840芯片，使用RTC1外设作为time driver。</p>
 </div>
 </div>
 </div>
