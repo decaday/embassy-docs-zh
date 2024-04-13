@@ -1,10 +1,10 @@
 = Embassy nRF HAL
 
-link:https://github.com/embassy-rs/embassy/tree/master/embassy-nrf[Embassy nRF HAL] 基于来自 link:https://github.com/nrf-rs/[nrf-rs] 的PAC。
+link:https://github.com/embassy-rs/embassy/tree/master/embassy-nrf[Embassy nRF HAL] 基于 link:https://github.com/nrf-rs/[nrf-rs] 的PAC。
 
 == Timer driver
 
-nRF timer driver 默认使用32768Hz。
+nRF timer driver 默认工作在32768Hz。
 
 == 外设
 
@@ -26,4 +26,4 @@ nRF timer driver 默认使用32768Hz。
 
 == Bluetooth
 
-对于蓝牙，请参看 link:https://github.com/embassy-rs/nrf-softdevice[nrf-softdevice] 。
+对于蓝牙，你可以使用 link:https://github.com/embassy-rs/nrf-softdevice[nrf-softdevice] crate。

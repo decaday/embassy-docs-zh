@@ -1,11 +1,11 @@
 = 项目结构
 
-有多种方式配置Embassy及其组件以适应您的具体应用程序。每个芯片的 link:https://github.com/embassy-rs/embassy/tree/main/examples[examples] 目录展示了项目结构应该是什么样子。让我们来详细了解一下：
+有多种方式配置Embassy及其组件以适应您的具体应用程序。每个芯片的 link:https://github.com/embassy-rs/embassy/tree/main/examples[示例] 目录展示了项目结构应该是什么样子。让我们来详细了解一下：
 
 您的项目的顶层文件结构应该如下所示：
 [source,plain]
 ----
-{} = Maybe
+{} -> 可选的
 
 my-project
 |- .cargo
@@ -20,23 +20,21 @@ my-project
 
 == .cargo/config.toml
 
-这个目录/文件描述了您所在的平台，并配置了 link:https://github.com/probe-rs/probe-rs[probe-rs] 以部署到您的设备。 
+这个目录/文件描述了您所在的平台，并配置了 link:https://github.com/probe-rs/probe-rs[probe-rs] 以烧录到您的设备。 
 
 以下是一个最小示例：
 
 [source,toml]
 ----
 [target.thumbv6m-none-eabi] # <-change for your platform
-runner = 'probe-rs run --chip STM32F031K6Tx' # <- change for your chip
+runner = 'probe-rs run --chip STM32F031K6Tx' # <- 修改为您的芯片
 
 [build]
-target = "thumbv6m-none-eabi" # <-change for your platform
+target = "thumbv6m-none-eabi" # <- 修改为您的架构
 
 [env]
-DEFMT_LOG = "trace" # <- can change to info, warn, or error
+DEFMT_LOG = "trace" # <- 可以修改为info,warn或error日志级别
 ----
-
-== build.rs
 
 == build.rs
 
@@ -46,16 +44,16 @@ DEFMT_LOG = "trace" # <- can change to info, warn, or error
 
 这是你的清单文件（manifest file），在这里您可以配置所有Embassy组件以使用您需要的功能。
 
-==== Features
+==== 计划
 ===== Time
 - tick-hz-x:配置 `embassy-time`的频率。更高的频率意味着更高的精度和CPU的更多次唤醒。
 - defmt-timestamp-uptime: defmt日志条目将显示正常运行时间（以秒为单位）。
 
-更多内容正在来袭……
+敬请期待……
 
 == memory.x
 
-这个文件概述了您的程序的闪存/内存使用情况。在nRF5x上使用 link:https://github.com/embassy-rs/nrf-softdevice[nrf-softdevice] 时特别有用。
+这个文件概述了您的程序的闪存/内存（flash/ram）使用情况。在nRF5x上使用 link:https://github.com/embassy-rs/nrf-softdevice[nrf-softdevice] 时特别有用。
 
 以下是使用S140与nRF52840的一个示例：
 
@@ -72,16 +70,16 @@ MEMORY
 
 == rust-toolchain.toml
 
-这个文件配置了rust版本和使用配置。
+这个文件配置rust版本和要使用的配置。
 
-一个最小的例子：
+一个最小化示例：
 
 [source,toml]
 ----
 [toolchain]
-channel = "nightly-2023-08-19" # <- as of writing, this is the exact rust version embassy uses
-components = [ "rust-src", "rustfmt" ] # <- optionally add "llvm-tools-preview" for some extra features like "cargo size"
+channel = "nightly-2023-08-19" # <- 截至本文撰写时，embassy使用的Rust版本
+components = [ "rust-src", "rustfmt" ] # <- 可以选择添加"llvm-tools-preview"来获取一些额外的功能，比如"cargo size"
 targets = [
-    "thumbv6m-none-eabi" # <-change for your platform
+    "thumbv6m-none-eabi" # <- 修改为您的架构
 ]
 ----

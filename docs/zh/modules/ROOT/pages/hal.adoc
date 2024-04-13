@@ -1,11 +1,11 @@
 = 硬件抽象层（Hardware Abstraction Layer,HAL）
 
-Embassy为多个微控制器系列提供了（HAL）：
+Embassy为多个MCU系列提供了HAL：
 
-* `embassy-nrf` 适用于Nordic Semiconductor的nRF微控制器
-* `embassy-stm32` 适用于ST Microelectronics的STM32微控制器
-* `embassy-rp` 适用于Raspberry Pi RP2040微控制器
+* `embassy-nrf` 适用于Nordic公司的nRF MCU
+* `embassy-stm32` 适用于ST公司的STM32 MCU
+* `embassy-rp` 适用于树莓派 RP2040 MCU
 
-这些HAL实现了大多数外设的 async/await 功能，并且还实现了 `embedded-hal` 和 `embedded-hal-async` 中的async traits。你也可以将这些HAL与其他执行器(executor)一起使用。
+这些HAL实现了大多数外设的 async/await 功能，并且还实现了 `embedded-hal` 和 `embedded-hal-async` 中的async trait。你也可以将这些HAL与其他执行器(Executor)一起使用。
 
 对于ESP32系列，你可以使用 link:https://github.com/esp-rs/esp-hal[esp-hal] 。

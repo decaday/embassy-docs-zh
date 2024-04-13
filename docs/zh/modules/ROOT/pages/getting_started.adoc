@@ -1,6 +1,6 @@
 = 快速开始
 
-所以，你想尝试一下Embassy诶，这太棒了！那，首先，你需要安装一些工具：
+所以，你想尝试一下Embassy诶，这太棒了！你只需要安装一点工具就可以开始啦：
 
 * link:https://rustup.rs/[rustup] - Rust工具链，用于编译 Rust 代码
 * link:https://probe.rs/[probe-rs] - 用于在设备上烧录固件。如果你已经安装了其他工具，比如  `OpenOCD` ，你也可以使用它。
@@ -54,14 +54,14 @@ cd examples/nrf52840
 cargo build --bin blinky --release
 ----
 
-成功构建构建示例后，将你的开发板使用调试器链接到你的电脑上，然后在硬件上运行它：
+成功构建构建示例后，将你的开发板使用调试器链接到你的电脑上，然后在硬件上运行示例：
 
 [source, bash]
 ----
 cargo run --bin blinky --release
 ----
 
-如果一切正常，你应该在开发板上看到一个闪烁的 LED，并在你的计算机上看到类似于以下的调试输出：
+如果一切正常，你应该在开发板上看到一个闪烁的 LED，并在你的计算机上看到类似于以下的调试输出信息：
 
 [source]
 ----
@@ -84,15 +84,15 @@ cargo run --bin blinky --release
 
 NOTE: `+cargo run+` 命令是怎么知道如何去连接和编程你的开发板？在每个 `examples` 文件夹中，有一个 `.cargo/config.toml` 文件，它告诉cargo使用 link:https://probe.rs/[probe-rs] 作为ARM二进制文件的运行器。 probe-rs 处理与调试器和MCU的通信。为了使其正常工作，probe-rs 需要知道它正在编程的芯片，因此如果你想在其他芯片上运行示例，你需要编辑这个文件。
 
-=== 运行出错！
+=== 它出错了！
 
 如果你在运行 `+cargo run --release+` 时遇到问题，请检查：
 
 * 在命令行中指定了正确的 `+--chip+` ，或者
 * 已将 `+.cargo/config.toml+` 的运行设置为正确的芯片, 而且
-* 已更改了 `+examples/Cargo.toml+` 的 HAL（例如 embassy-stm32）依赖项的特性，以使用正确的芯片（替换默认的 stm32xxxx feature）
+* 已更改了 `+examples/Cargo.toml+` 的 HAL（例如 embassy-stm32）依赖项的feature，以使用正确的芯片（替换默认的 stm32xxxx feature）
 
-此时，项目应该可以运行。如果你在 blinky 示例中没有看到闪烁的LED，请确保代码正在翻转你开发板的LED引脚。
+此时，项目应该可以运行。如果你在 blinky 示例中没有看到闪烁的LED，请确保代码正在翻转你开发板LED所在的引脚。
 
 如果你尝试 `+cargo run --release+` 运行示例，并且看到以下输出：
 [source]
@@ -115,7 +115,7 @@ NOTE: `+cargo run+` 命令是怎么知道如何去连接和编程你的开发板
 debug = 2
 ----
 
-如果你遇到一个包含类似以下内容的极长错误消息：
+如果你遇到一个很长的，包含类似以下内容的错误消息：
 
 [source]
 ----
@@ -129,15 +129,15 @@ error[E0463]: can't find crate for `std`
 
 如果你使用的是 Raspberry Pi Pico-W，请确保你运行的是  `+cargo run --bin wifi_blinky --release+` ，而不是普通的 blinky 示例。Pico-W 的板载LED连接到WiFi芯片，需要在LED可以闪烁之前进行初始化。
 
-如果你使用的是rp2040调试器（比如 pico probe）并且在运行 `probe-rs info` 之后出现问题，重新连接调试器让它重新上电。link:https://github.com/probe-rs/probe-rs/issues/1849[已知运行 `probe-rs info` 会使pico调试器进入不可用状态].
+如果你使用的是rp2040调试器（比如 pico probe）并且在运行 `probe-rs info` 之后出现问题，重新连接调试器让它重新上电。link:https://github.com/probe-rs/probe-rs/issues/1849[已知运行 `probe-rs info` 会使pico调试器进入不可用状态]。
 
-如果你仍然遇到问题，请查看常见问题解答： link:https://embassy.dev/book/dev/faq.html[FAQ], 或者在聊天室寻求帮助： link:https://matrix.to/#/#embassy-rs:matrix.org[Embassy Chat Room].
+如果你仍然遇到问题，请查看link:https://embassy.dev/book/dev/faq.html[常见问题解答], 或者在link:https://matrix.to/#/#embassy-rs:matrix.org[Embassy Chat Room]寻求帮助。
 
 == 接下来干啥？
 
 恭喜，你已经成功运行了你的第一个 Embassy 应用程序！下面是一些建议，帮助你继续前进：
 
-* 阅读更多关于 xref:runtime.adoc[executor] 的内容.
-* 阅读更多关于硬件抽象层 xref:hal.adoc[HAL(硬件抽象层)] 的内容。
+* 阅读更多关于 xref:runtime.adoc[执行器（Executor）] 的内容.
+* 阅读更多关于 xref:hal.adoc[硬件抽象层（HAL）] 的内容。
 * 开始 xref:basic_application.adoc[编写你的应用程序]。
 * 学习如何 xref:new_project.adoc[通过改编示例来开始一个新项目].
