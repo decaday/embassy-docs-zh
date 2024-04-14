@@ -156,7 +156,7 @@
 <h2 id="_通过引用传递缓冲区"><a class="anchor" href="#_通过引用传递缓冲区"></a>通过引用传递缓冲区</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>有时候，像使用 <code>std::Vec</code> 一样传递数组或包装器（例如 <a href="https://docs.rs/heapless/latest/heapless/"><code>heapless::Vec</code></a>）可能很诱人。然而，在大多数嵌入式应用中，您可能既不希望在空间分配器（allocator）上浪费资源，也不希望将缓冲区（buffer）放在栈（stack）上，因为如果不小心翼翼地处理，就会导致栈溢出。</p>
+<p>有时候，像使用 <code>std::Vec</code> 一样传递数组或包装器（例如 <a href="https://docs.rs/heapless/latest/heapless/"><code>heapless::Vec</code></a>）可能很诱人。然而，在大多数嵌入式应用中，您可能既不希望在堆空间分配器（allocator）上浪费资源，也不希望将缓冲区（buffer）放在栈（stack）上，因为如果不小心翼翼地处理，就会导致栈溢出。</p>
 </div>
 <div class="paragraph">
 <p>请看以下示例：</p>
