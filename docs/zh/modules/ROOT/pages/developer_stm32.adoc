@@ -1,12 +1,12 @@
-= STM32开发者文档
+= 开发者文档：STM32
 
 == 理解 metapac
 
-当一个项目引入 `embassy-stm32` 并进行编译时，该项目会选择与其使用的芯片相对应的feature。基于这个feature，`embassy-stm32`  会选择该芯片支持的 link:https://anysilicon.com/ip-intellectual-property-core-semiconductors/[IP] ，并启用相应的HAL实现。但是 `embassy-stm32` 如何知道芯片包含哪些IP呢？这是一个很长的故事，让我们从 `stm32-data-sources`  开始讲起。
+当一个项目引入 `embassy-stm32` 包并进行编译时，它会选择与项目使用的芯片相对应的feature。基于这个feature，`embassy-stm32`  会选出该芯片支持的 link:https://anysilicon.com/ip-intellectual-property-core-semiconductors/[IP] ，并启用相应的HAL实现。但是 `embassy-stm32` 如何知道芯片包含哪些IP呢？这是一个很长的故事，让我们从 `stm32-data-sources`  开始讲起。
 
 == `stm32-data-sources`
 
-link:https://github.com/embassy-rs/stm32-data-sources[`stm32-data-sources`] 是一个几乎空白的仓库。它没有README，没有文档，watcher（关注者）也很少。但它使 `embassy-stm32`  成为可能。我们支持的芯片的数据都来自于相应的XML文件，例如 link:https://github.com/embassy-rs/stm32-data-sources/blob/b8b85202e22a954d6c59d4a43d9795d34cff05cf/cubedb/mcu/STM32F051K4Ux.xml[`STM32F051K4Ux.xml`] 。在该文件中，您会看到类似于下面的内容：
+link:https://github.com/embassy-rs/stm32-data-sources[`stm32-data-sources`] 是一个几乎空白的仓库。它没有README，没有文档，watcher也很少。但它使 `embassy-stm32`  成为可能。我们支持的每个芯片的数据部分来自于相应的XML文件，例如 link:https://github.com/embassy-rs/stm32-data-sources/blob/b8b85202e22a954d6c59d4a43d9795d34cff05cf/cubedb/mcu/STM32F051K4Ux.xml[`STM32F051K4Ux.xml`] 。在该文件中，您会看到类似于下面的内容：
 
 [source,xml]
 ----
@@ -15,12 +15,12 @@ link:https://github.com/embassy-rs/stm32-data-sources[`stm32-data-sources`] 是�
     <IP ConfigFile="TIM-STM32F0xx" InstanceName="TIM1" Name="TIM1_8F0" Version="gptimer2_v2_x_Cube"/>
 ----
 
-这些内容表明这个芯片有一个i2c，其版本为 “v1_1”。它还表明它有一个版本为 “v2_x” 的通用定时器。根据这些数据，我们可以确定哪些实现可以被包含在 `embassy-stm32` 中。但实际上，做到这一点又是另外一回事。
+这些内容表明这个芯片有一个i2c，其版本为 “v1_1”。它还表明它有一个版本为 “v2_x” 的通用定时器。根据这些数据，我们可以确定要在 `embassy-stm32` 中写哪些实现。但实际上，做到这一点又是另外一回事。
 
 
 == `stm32-data`
 
-虽然所有使用这个项目的用户都熟悉 `embassy-stm32` ，但很少熟悉驱动它的项目：`stm32-data` 。这个项目的目标不止是为 `embassy-stm32` 生成数据，还旨在一般地机器处理。为了实现这一点，来自 `stm32-data-sources` 项目多个文件的信息被合并和解析，以给每个支持的IP分配寄存器块实现。这种匹配的核心位于 `chips.rs`：
+虽然所有使用这个项目的用户都熟悉 `embassy-stm32` ，但较少人熟悉驱动它的项目：`stm32-data` 。这个项目的目标是以机器化的方式为 `embassy-stm32` 生成数据。为了实现这一点，我们合并与解析了 `stm32-data-sources` 项目中的多个文件的信息，以给每个支持的IP分配寄存器块实现。这种匹配的核心机制位于 `chips.rs` ：
 
 [source,rust]
 ----
@@ -29,7 +29,7 @@ link:https://github.com/embassy-rs/stm32-data-sources[`stm32-data-sources`] 是�
     (r".*TIM\d.*:gptimer.*", ("timer", "v1", "TIM_GP16")),
 ----
 
-在这种情况下，i2c的版本对应我们的 “v2”，通用定时器的版本对应我们的 “v1”。因此， `i2c_v2.yaml` 和 `timer_v1.yaml` 寄存器块实现分别被分配给这些IP。最后在 `STM32F051K4.json` 中生成了这些行：
+在这种情况下，i2c的版本对应我们的 “v2”，通用定时器的版本对应我们的 “v1”。因此， `i2c_v2.yaml` 和 `timer_v1.yaml` 寄存器块实现分别被分配给这些IP。于是，在 `STM32F051K4.json` 中生成了这些行：
 
 [source,json]
 ----
@@ -56,12 +56,12 @@ link:https://github.com/embassy-rs/stm32-data-sources[`stm32-data-sources`] 是�
     }
 ----
 
-除了寄存器块，它还生成了引脚和RCC映射的数据，并被 `embassy-stm32` 使用。`stm32-metapac-gen` 被用于打包和发布数据作为一个crate。
+除了寄存器块，它还生成了引脚映射和RCC映射的数据，并被 `embassy-stm32` 使用。`stm32-metapac-gen` 打包数据，并作为一个crate发布。
 
 
 == `embassy-stm32`
 
-在 `embassy-stm32` 根目录的 `lib.rs` 文件中，您会看到这样一行：
+在 `embassy-stm32` 根目录中的 `lib.rs` 文件中，您会看到这样一行：
 
 [source,rust]
 ----
@@ -76,4 +76,4 @@ pub mod i2c;
 #[cfg_attr(i2c_v2, path = "v2.rs")]
 ----
 
-因为STM32F051K4支持i2c，其版本对应我们的 “v2”，所以 i2c 和 i2c_v2 配置指令将会出现， `embassy-stm32` 会分别包含这些文件。它们和其他配置指令以及表格是根据芯片数据生成的，因此 `embassy-stm32` 可以清晰地适应每个芯片所需的逻辑和实现。与嵌入式生态中的其他项目相比， `embassy-stm32` 是唯一一个能够在整个stm32系列中复用代码，并且移除HAL中难以实现的不安全逻辑的项目。
+因为STM32F051K4支持i2c，其版本对应我们的 “v2”，所以将会出现 i2c 和 i2c_v2 配置指令， `embassy-stm32` 会分别包含这些文件。它们和其他配置指令以及表格是根据芯片数据生成的，因此 `embassy-stm32` 可以清晰地满足每个芯片所需的逻辑和实现。与嵌入式生态中的其他项目相比， `embassy-stm32` 是唯一一个能够在stm32所有系列中复用代码，并移除HAL中难以实现的不安全逻辑的项目。

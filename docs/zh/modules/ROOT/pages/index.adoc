@@ -36,7 +36,7 @@ NOTE: 一个常见的问题是是否可以单独使用Embassy HALs。当然可�
 link:https://docs.embassy.dev/embassy-net/[embassy-net] 网络栈实现了广泛的网络功能，包括以太网、IP、TCP、UDP、ICMP和DHCP。异步极大地简化了超时管理和多个连接的同时服务。这提供了多个WiFi和以太网芯片的驱动程序。
 
 === 蓝牙（Bluetooth）
-link:https://github.com/embassy-rs/nrf-softdevice[nrf-softdevice] crate提供了对nRF52 MCU的低功耗蓝牙4.x和5.x的支持。
+link:https://github.com/embassy-rs/nrf-softdevice[nrf-softdevice] crate提供了nRF52 MCU低功耗蓝牙4.x和5.x的支持。
 
 === 远距离无线电（LoRa）
 link:https://github.com/lora-rs/lora-rs[lora-rs] 支持在广泛的LoRa无线电设备上进行LoRa网络通信，集成了完全的Rust LoRaWAN实现。它提供了四个crate —— lora-phy、lora-modulation、lorawan-encoding和lorawan-device —— 以及各种开发板的基本示例。它支持STM32WL无线MCU或Semtech SX127x收发器等。
