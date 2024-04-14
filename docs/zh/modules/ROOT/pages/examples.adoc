@@ -1,9 +1,9 @@
-= Examples
+= 示例
 
-Embassy provides examples for all HALs supported. You can find them in the `examples/` folder.
+个支持的HAL提供了示例，你可以在 `examples/` 文件夹下找到。
 
 
-Main loop example
+主循环示例
 
 [source,rust]
 ----

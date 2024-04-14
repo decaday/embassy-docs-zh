@@ -4,7 +4,7 @@
 ** xref:new_project.adoc[新建一个Embassy工程]
 ** xref:best_practices.adoc[最佳实践]
 * xref:runtime.adoc[执行器（Executor）]
-* xref::time_keeping.adoc[Time-keeping]
+* xref::time_keeping.adoc[计时（Time-keeping）]
 * xref:sharing_peripherals.adoc[共享外设]
 * xref:hal.adoc[硬件抽象层（HAL）]
 ** xref:layer_by_layer.adoc[解剖Async HAL]
