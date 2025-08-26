@@ -4,7 +4,3 @@ node_modules
 .idea
 .history
 package-lock.json
-
-# In the official embassy docs, this folder points to the example folder in the same warehouse. 
-# I ignored it here. If you need to build the project, you must replace this folder.
-docs/zh/modules/ROOT/examples
