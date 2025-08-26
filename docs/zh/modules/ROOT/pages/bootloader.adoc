@@ -1,78 +1,76 @@
-= Bootloader
+= 启动加载器（Bootloader）
 
-`embassy-boot` a lightweight bootloader supporting firmware application upgrades in a power-fail-safe way, with trial boots and rollbacks.
+`embassy-boot` 是一个轻量级启动加载器，支持断电安全的固件应用升级，具备试运行和回滚功能。
 
-The bootloader can be used either as a library or be flashed directly if you are happy with the default configuration and capabilities.
+该启动加载器既可以作为库使用，也可以直接烧录（如果你对默认配置和功能满意）。
 
-By design, the bootloader does not provide any network capabilities. Networking capabilities for fetching new firmware can be provided by the user application, using the bootloader as a library for updating the firmware, or by using the bootloader as a library and adding this capability yourself.
+设计上，启动加载器不提供任何网络功能。获取新固件的网络能力应由用户应用实现，可以将启动加载器作为库来更新固件，或在库的基础上自行添加网络功能。
 
-The bootloader supports both internal and external flash by relying on the `embedded-storage` traits. The bootloader optionally supports the verification of firmware that has been digitally signed (recommended).
+该启动加载器通过依赖 `embedded-storage` traits 支持内部和外部 flash。还可选支持对已数字签名固件的验证（推荐开启）。
 
+== 硬件支持
 
-== Hardware support
+启动加载器支持：
 
-The bootloader supports
+* nRF52（支持/不支持 softdevice）
+* STM32 L4、WB、WL、L1、L0、F3、F7 和 H7
+* 树莓派 RP2040
 
-* nRF52 with and without softdevice
-* STM32 L4, WB, WL, L1, L0, F3, F7 and H7
-* Raspberry Pi: RP2040
+一般来说，只要平台为其内部 flash 实现了 `embedded-storage` traits，启动加载器都能工作，但可能需要自定义初始化代码。
 
-In general, the bootloader works on any platform that implements the `embedded-storage` traits for its internal flash, but may require custom initialization code to work.
-
-== Design
+== 设计
 
 image::bootloader_flash.png[Bootloader flash layout]
 
-The bootloader divides the storage into 4 main partitions, configurable when creating the bootloader
-instance or via linker scripts:
+启动加载器将存储空间分为 4 个主要分区，可在创建实例或通过链接脚本配置：
 
-* BOOTLOADER - Where the bootloader is placed. The bootloader itself consumes about 8kB of flash, but if you need to debug it and have space available, increasing this to 24kB will allow you to run the bootloader with probe-rs.
-* ACTIVE - Where the main application is placed. The bootloader will attempt to load the application at the start of this partition. This partition is only written to by the bootloader. The size required for this partition depends on the size of your application.
-* DFU - Where the application-to-be-swapped is placed. This partition is written to by the application. This partition must be at least 1 page bigger than the ACTIVE partition, since the swap algorithm uses the extra space to ensure power safe copy of data:
+* BOOTLOADER —— 启动加载器本身存放位置。大约占用 8kB flash，如果需要调试且空间充足，建议增大到 24kB 以便用 probe-rs 调试。
+* ACTIVE —— 主应用存放位置。启动加载器会尝试从该分区起始处加载应用。该分区仅由启动加载器写入，所需大小取决于应用体积。
+* DFU —— 待切换的新应用存放位置。该分区由应用写入，必须比 ACTIVE 分区至少大 1 页，因为交换算法需要额外空间保证断电安全：
 +
-Partition Size~dfu~= Partition Size~active~+ Page Size~active~
+分区大小~dfu~ = 分区大小~active~ + 页大小~active~
 +
-All values are specified in bytes.
+所有值均为字节。
 
-* BOOTLOADER STATE - Where the bootloader stores the current state describing if the active and dfu partitions need to be swapped. When the new firmware has been written to the DFU partition, a magic field is written to instruct the bootloader that the partitions should be swapped. This partition must be able to store a magic field as well as the partition swap progress. The partition size given by:
+* BOOTLOADER STATE —— 启动加载器存储当前状态（如是否需要交换 active 和 dfu 分区）。当新固件写入 DFU 分区后，会写入一个 magic 字段，指示启动加载器进行分区交换。该分区需能存储 magic 字段和交换进度，大小为：
 +
-Partition Size~state~ = Write Size~state~ + (2 × Partition Size~active~ / Page Size~active~)
+分区大小~state~ = 写入大小~state~ + (2 × 分区大小~active~ / 页大小~active~)
 +
-All values are specified in bytes.
+所有值均为字节。
 
-The partitions for ACTIVE (+BOOTLOADER), DFU and BOOTLOADER_STATE may be placed in separate flash. The page size used by the bootloader is determined by the lowest common multiple of the ACTIVE and DFU page sizes.
-The BOOTLOADER_STATE partition must be big enough to store one word per page in the ACTIVE and DFU partitions combined.
+ACTIVE（+BOOTLOADER）、DFU 和 BOOTLOADER_STATE 分区可放在不同 flash。启动加载器使用的页大小为 ACTIVE 和 DFU 页大小的最小公倍数。
+BOOTLOADER_STATE 分区需足够大，能为 ACTIVE 和 DFU 分区的每一页存储一个字。
 
-The bootloader has a platform-agnostic part, which implements the power fail safe swapping algorithm given the boundaries set by the partitions. The platform-specific part is a minimal shim that provides additional functionality such as watchdogs or supporting the nRF52 softdevice.
+启动加载器有平台无关部分，实现断电安全交换算法；平台相关部分为最小 shim，提供看门狗等功能或支持 nRF52 softdevice。
 
-NOTE: The linker scripts for the application and bootloader look similar, but the FLASH region must point to the BOOTLOADER partition for the bootloader, and the ACTIVE partition for the application.
+注意：应用和启动加载器的链接脚本类似，但 FLASH 区域需分别指向 BOOTLOADER（启动加载器）和 ACTIVE（应用）分区。
 
 === FirmwareUpdater
 
-The `FirmwareUpdater` is an object for conveniently flashing firmware to the DFU partition and subsequently marking it as being ready for swapping with the active partition on the next reset. Its principle methods are `write_firmware`, which is called once per the size of the flash "write block" (typically 4KiB), and `mark_updated`, which is the final call.
+`FirmwareUpdater` 对象用于方便地将固件写入 DFU 分区，并在下次重启时标记为可与 active 分区交换。主要方法有 `write_firmware`（每个 flash 写块调用一次，通常为 4KiB）和 `mark_updated`（最后调用）。
 
-=== Verification
+=== 验证
 
-The bootloader supports the verification of firmware that has been flashed to the DFU partition. Verification requires that firmware has been signed digitally using link:https://ed25519.cr.yp.to/[`ed25519`] signatures. With verification enabled, the `FirmwareUpdater::verify_and_mark_updated` method is called in place of `mark_updated`. A public key and signature are required, along with the actual length of the firmware that has been flashed. If verification fails then the firmware will not be marked as updated and therefore be rejected.
+启动加载器支持对 DFU 分区已写入固件的验证。验证要求固件使用 link:https://ed25519.cr.yp.to/[`ed25519`] 数字签名。启用验证后，需用 `FirmwareUpdater::verify_and_mark_updated` 替代 `mark_updated`，并提供公钥、签名和固件实际长度。验证失败则不会标记为已更新，固件会被拒绝。
 
-Signatures are normally conveyed with the firmware to be updated and not written to flash. How signatures are provided is a firmware responsibility.
+签名通常随固件一起传递，不写入 flash。如何传递签名由固件自行决定。
 
-To enable verification use either the `ed25519-dalek` or `ed25519-salty` features when depending on the `embassy-boot` crate. We recommend `ed25519-salty` at this time due to its small size.
+如需启用验证，依赖 `embassy-boot` crate 时启用 `ed25519-dalek` 或 `ed25519-salty` 特性。推荐使用 `ed25519-salty`，因其体积更小。
 
-==== Tips on keys and signing with ed25519
+==== 关于 Ed25519 密钥与签名的提示
 
-Ed25519 is a public key signature system where you are responsible for keeping the private key secure. We recommend embedding the *public* key in your program so that it can be easily passed to `verify_and_mark_updated`. An example declaration of the public key in your firmware:
+Ed25519 是一种公钥签名系统，需妥善保管私钥。建议将*公钥*嵌入程序，便于传递给 `verify_and_mark_updated`。例如：
 
 [source, rust]
 ----
 static PUBLIC_SIGNING_KEY: &[u8] = include_bytes!("key.pub");
 ----
 
-Signatures are often conveyed along with firmware by appending them.
+签名通常与固件一起传递，可直接追加。
 
-Ed25519 keys can be generated by a variety of tools. We recommend link:https://man.openbsd.org/signify[`signify`] as it is in wide use to sign and verify OpenBSD distributions, and is straightforward to use.
+Ed25519 密钥可用多种工具生成。推荐 link:https://man.openbsd.org/signify[`signify`]，广泛用于 OpenBSD 发行版签名与验证，且易用。
 
-The following set of Bash commands can be used to generate public and private keys on Unix platforms, and also generate a local `key.pub` file with the `signify` file headers removed. Declare a `SECRETS_DIR` environment variable in a secure location.
+以下 Bash 命令可在 Unix 平台生成公私钥，并生成无头部的 `key.pub` 文件。请将 `SECRETS_DIR` 环境变量设为安全目录。
 
 [source, bash]
 ----
@@ -82,7 +80,7 @@ chmod 700 $SECRETS_DIR/key.sec
 export SECRET_SIGNING_KEY=$(tail -n1 $SECRETS_DIR/key.sec)
 ----
 
-Then, to sign your firmware given a declaration of `FIRMWARE_DIR` and a firmware filename of `myfirmware`:
+签名固件时，假设已声明 `FIRMWARE_DIR`，固件文件名为 `myfirmware`：
 
 [source, bash]
 ----
@@ -93,4 +91,5 @@ cp $FIRMWARE_DIR/myfirmware $FIRMWARE_DIR/myfirmware+signed
 tail -n1 $SECRETS_DIR/message.txt.sig | base64 -d -i - | dd ibs=10 skip=1 >> $FIRMWARE_DIR/myfirmware+signed
 ----
 
-Remember, guard the `$SECRETS_DIR/key.sec` key as compromising it means that another party can sign your firmware.
+请务必妥善保管 `$SECRETS_DIR/key.sec`，一旦泄露，其他人即可签名你的固件。
+
