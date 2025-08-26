@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Bootloader :: Embassy中文文档</title>
+    <title>启动加载器（Bootloader） :: Embassy中文文档</title>
     <link rel="canonical" href="https://embassy.dev/book/zh/bootloader.html">
-    <meta name="generator" content="Antora 3.1.7">
+    <meta name="generator" content="Antora 3.1.12">
     <link rel="stylesheet" href="../_/css/site.css">
     <script>var uiRootPath = '../_'</script>
     <link rel="icon" href="../_/img/favicon.svg" type="image/svg+xml">
@@ -143,49 +143,49 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Bootloader</h1>
+<h1 class="page">启动加载器（Bootloader）</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p><code>embassy-boot</code> a lightweight bootloader supporting firmware application upgrades in a power-fail-safe way, with trial boots and rollbacks.</p>
+<p><code>embassy-boot</code> 是一个轻量级启动加载器，支持断电安全的固件应用升级，具备试运行和回滚功能。</p>
 </div>
 <div class="paragraph">
-<p>The bootloader can be used either as a library or be flashed directly if you are happy with the default configuration and capabilities.</p>
+<p>该启动加载器既可以作为库使用，也可以直接烧录（如果你对默认配置和功能满意）。</p>
 </div>
 <div class="paragraph">
-<p>By design, the bootloader does not provide any network capabilities. Networking capabilities for fetching new firmware can be provided by the user application, using the bootloader as a library for updating the firmware, or by using the bootloader as a library and adding this capability yourself.</p>
+<p>设计上，启动加载器不提供任何网络功能。获取新固件的网络能力应由用户应用实现，可以将启动加载器作为库来更新固件，或在库的基础上自行添加网络功能。</p>
 </div>
 <div class="paragraph">
-<p>The bootloader supports both internal and external flash by relying on the <code>embedded-storage</code> traits. The bootloader optionally supports the verification of firmware that has been digitally signed (recommended).</p>
+<p>该启动加载器通过依赖 <code>embedded-storage</code> traits 支持内部和外部 flash。还可选支持对已数字签名固件的验证（推荐开启）。</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_hardware_support"><a class="anchor" href="#_hardware_support"></a>Hardware support</h2>
+<h2 id="_硬件支持"><a class="anchor" href="#_硬件支持"></a>硬件支持</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The bootloader supports</p>
+<p>启动加载器支持：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>nRF52 with and without softdevice</p>
+<p>nRF52（支持/不支持 softdevice）</p>
 </li>
 <li>
-<p>STM32 L4, WB, WL, L1, L0, F3, F7 and H7</p>
+<p>STM32 L4、WB、WL、L1、L0、F3、F7 和 H7</p>
 </li>
 <li>
-<p>Raspberry Pi: RP2040</p>
+<p>树莓派 RP2040</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>In general, the bootloader works on any platform that implements the <code>embedded-storage</code> traits for its internal flash, but may require custom initialization code to work.</p>
+<p>一般来说，只要平台为其内部 flash 实现了 <code>embedded-storage</code> traits，启动加载器都能工作，但可能需要自定义初始化代码。</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_design"><a class="anchor" href="#_design"></a>Design</h2>
+<h2 id="_设计"><a class="anchor" href="#_设计"></a>设计</h2>
 <div class="sectionbody">
 <div class="imageblock">
 <div class="content">
@@ -193,77 +193,67 @@
 </div>
 </div>
 <div class="paragraph">
-<p>The bootloader divides the storage into 4 main partitions, configurable when creating the bootloader
-instance or via linker scripts:</p>
+<p>启动加载器将存储空间分为 4 个主要分区，可在创建实例或通过链接脚本配置：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>BOOTLOADER - Where the bootloader is placed. The bootloader itself consumes about 8kB of flash, but if you need to debug it and have space available, increasing this to 24kB will allow you to run the bootloader with probe-rs.</p>
+<p>BOOTLOADER —— 启动加载器本身存放位置。大约占用 8kB flash，如果需要调试且空间充足，建议增大到 24kB 以便用 probe-rs 调试。</p>
 </li>
 <li>
-<p>ACTIVE - Where the main application is placed. The bootloader will attempt to load the application at the start of this partition. This partition is only written to by the bootloader. The size required for this partition depends on the size of your application.</p>
+<p>ACTIVE —— 主应用存放位置。启动加载器会尝试从该分区起始处加载应用。该分区仅由启动加载器写入，所需大小取决于应用体积。</p>
 </li>
 <li>
-<p>DFU - Where the application-to-be-swapped is placed. This partition is written to by the application. This partition must be at least 1 page bigger than the ACTIVE partition, since the swap algorithm uses the extra space to ensure power safe copy of data:</p>
+<p>DFU —— 待切换的新应用存放位置。该分区由应用写入，必须比 ACTIVE 分区至少大 1 页，因为交换算法需要额外空间保证断电安全：</p>
 <div class="paragraph">
-<p>Partition Size<sub>dfu</sub>= Partition Size<sub>active</sub>+ Page Size<sub>active</sub></p>
+<p>分区大小<sub>dfu</sub> = 分区大小<sub>active</sub> + 页大小<sub>active</sub></p>
 </div>
 <div class="paragraph">
-<p>All values are specified in bytes.</p>
+<p>所有值均为字节。</p>
 </div>
 </li>
 <li>
-<p>BOOTLOADER STATE - Where the bootloader stores the current state describing if the active and dfu partitions need to be swapped. When the new firmware has been written to the DFU partition, a magic field is written to instruct the bootloader that the partitions should be swapped. This partition must be able to store a magic field as well as the partition swap progress. The partition size given by:</p>
+<p>BOOTLOADER STATE —— 启动加载器存储当前状态（如是否需要交换 active 和 dfu 分区）。当新固件写入 DFU 分区后，会写入一个 magic 字段，指示启动加载器进行分区交换。该分区需能存储 magic 字段和交换进度，大小为：</p>
 <div class="paragraph">
-<p>Partition Size<sub>state</sub> = Write Size<sub>state</sub> + (2 × Partition Size<sub>active</sub> / Page Size<sub>active</sub>)</p>
+<p>分区大小<sub>state</sub> = 写入大小<sub>state</sub> + (2 × 分区大小<sub>active</sub> / 页大小<sub>active</sub>)</p>
 </div>
 <div class="paragraph">
-<p>All values are specified in bytes.</p>
+<p>所有值均为字节。</p>
 </div>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>The partitions for ACTIVE (+BOOTLOADER), DFU and BOOTLOADER_STATE may be placed in separate flash. The page size used by the bootloader is determined by the lowest common multiple of the ACTIVE and DFU page sizes.
-The BOOTLOADER_STATE partition must be big enough to store one word per page in the ACTIVE and DFU partitions combined.</p>
+<p>ACTIVE（+BOOTLOADER）、DFU 和 BOOTLOADER_STATE 分区可放在不同 flash。启动加载器使用的页大小为 ACTIVE 和 DFU 页大小的最小公倍数。
+BOOTLOADER_STATE 分区需足够大，能为 ACTIVE 和 DFU 分区的每一页存储一个字。</p>
 </div>
 <div class="paragraph">
-<p>The bootloader has a platform-agnostic part, which implements the power fail safe swapping algorithm given the boundaries set by the partitions. The platform-specific part is a minimal shim that provides additional functionality such as watchdogs or supporting the nRF52 softdevice.</p>
+<p>启动加载器有平台无关部分，实现断电安全交换算法；平台相关部分为最小 shim，提供看门狗等功能或支持 nRF52 softdevice。</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The linker scripts for the application and bootloader look similar, but the FLASH region must point to the BOOTLOADER partition for the bootloader, and the ACTIVE partition for the application.
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>注意：应用和启动加载器的链接脚本类似，但 FLASH 区域需分别指向 BOOTLOADER（启动加载器）和 ACTIVE（应用）分区。</p>
 </div>
 <div class="sect2">
 <h3 id="_firmwareupdater"><a class="anchor" href="#_firmwareupdater"></a>FirmwareUpdater</h3>
 <div class="paragraph">
-<p>The <code>FirmwareUpdater</code> is an object for conveniently flashing firmware to the DFU partition and subsequently marking it as being ready for swapping with the active partition on the next reset. Its principle methods are <code>write_firmware</code>, which is called once per the size of the flash "write block" (typically 4KiB), and <code>mark_updated</code>, which is the final call.</p>
+<p><code>FirmwareUpdater</code> 对象用于方便地将固件写入 DFU 分区，并在下次重启时标记为可与 active 分区交换。主要方法有 <code>write_firmware</code>（每个 flash 写块调用一次，通常为 4KiB）和 <code>mark_updated</code>（最后调用）。</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_verification"><a class="anchor" href="#_verification"></a>Verification</h3>
+<h3 id="_验证"><a class="anchor" href="#_验证"></a>验证</h3>
 <div class="paragraph">
-<p>The bootloader supports the verification of firmware that has been flashed to the DFU partition. Verification requires that firmware has been signed digitally using <a href="https://ed25519.cr.yp.to/"><code>ed25519</code></a> signatures. With verification enabled, the <code>FirmwareUpdater::verify_and_mark_updated</code> method is called in place of <code>mark_updated</code>. A public key and signature are required, along with the actual length of the firmware that has been flashed. If verification fails then the firmware will not be marked as updated and therefore be rejected.</p>
+<p>启动加载器支持对 DFU 分区已写入固件的验证。验证要求固件使用 <a href="https://ed25519.cr.yp.to/"><code>ed25519</code></a> 数字签名。启用验证后，需用 <code>FirmwareUpdater::verify_and_mark_updated</code> 替代 <code>mark_updated</code>，并提供公钥、签名和固件实际长度。验证失败则不会标记为已更新，固件会被拒绝。</p>
 </div>
 <div class="paragraph">
-<p>Signatures are normally conveyed with the firmware to be updated and not written to flash. How signatures are provided is a firmware responsibility.</p>
+<p>签名通常随固件一起传递，不写入 flash。如何传递签名由固件自行决定。</p>
 </div>
 <div class="paragraph">
-<p>To enable verification use either the <code>ed25519-dalek</code> or <code>ed25519-salty</code> features when depending on the <code>embassy-boot</code> crate. We recommend <code>ed25519-salty</code> at this time due to its small size.</p>
+<p>如需启用验证，依赖 <code>embassy-boot</code> crate 时启用 <code>ed25519-dalek</code> 或 <code>ed25519-salty</code> 特性。推荐使用 <code>ed25519-salty</code>，因其体积更小。</p>
 </div>
 <div class="sect3">
-<h4 id="_tips_on_keys_and_signing_with_ed25519"><a class="anchor" href="#_tips_on_keys_and_signing_with_ed25519"></a>Tips on keys and signing with ed25519</h4>
+<h4 id="_关于_ed25519_密钥与签名的提示"><a class="anchor" href="#_关于_ed25519_密钥与签名的提示"></a>关于 Ed25519 密钥与签名的提示</h4>
 <div class="paragraph">
-<p>Ed25519 is a public key signature system where you are responsible for keeping the private key secure. We recommend embedding the <strong>public</strong> key in your program so that it can be easily passed to <code>verify_and_mark_updated</code>. An example declaration of the public key in your firmware:</p>
+<p>Ed25519 是一种公钥签名系统，需妥善保管私钥。建议将*公钥*嵌入程序，便于传递给 <code>verify_and_mark_updated</code>。例如：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -271,13 +261,13 @@ The linker scripts for the application and bootloader look similar, but the FLAS
 </div>
 </div>
 <div class="paragraph">
-<p>Signatures are often conveyed along with firmware by appending them.</p>
+<p>签名通常与固件一起传递，可直接追加。</p>
 </div>
 <div class="paragraph">
-<p>Ed25519 keys can be generated by a variety of tools. We recommend <a href="https://man.openbsd.org/signify"><code>signify</code></a> as it is in wide use to sign and verify OpenBSD distributions, and is straightforward to use.</p>
+<p>Ed25519 密钥可用多种工具生成。推荐 <a href="https://man.openbsd.org/signify"><code>signify</code></a>，广泛用于 OpenBSD 发行版签名与验证，且易用。</p>
 </div>
 <div class="paragraph">
-<p>The following set of Bash commands can be used to generate public and private keys on Unix platforms, and also generate a local <code>key.pub</code> file with the <code>signify</code> file headers removed. Declare a <code>SECRETS_DIR</code> environment variable in a secure location.</p>
+<p>以下 Bash 命令可在 Unix 平台生成公私钥，并生成无头部的 <code>key.pub</code> 文件。请将 <code>SECRETS_DIR</code> 环境变量设为安全目录。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -288,7 +278,7 @@ export SECRET_SIGNING_KEY=$(tail -n1 $SECRETS_DIR/key.sec)</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Then, to sign your firmware given a declaration of <code>FIRMWARE_DIR</code> and a firmware filename of <code>myfirmware</code>:</p>
+<p>签名固件时，假设已声明 <code>FIRMWARE_DIR</code>，固件文件名为 <code>myfirmware</code>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -300,7 +290,7 @@ tail -n1 $SECRETS_DIR/message.txt.sig | base64 -d -i - | dd ibs=10 skip=1 &gt;&g
 </div>
 </div>
 <div class="paragraph">
-<p>Remember, guard the <code>$SECRETS_DIR/key.sec</code> key as compromising it means that another party can sign your firmware.</p>
+<p>请务必妥善保管 <code>$SECRETS_DIR/key.sec</code>，一旦泄露，其他人即可签名你的固件。</p>
 </div>
 </div>
 </div>

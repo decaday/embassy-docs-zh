@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Frequently Asked Questions :: Embassy中文文档</title>
+    <title>常见问题解答 :: Embassy中文文档</title>
     <link rel="canonical" href="https://embassy.dev/book/zh/faq.html">
-    <meta name="generator" content="Antora 3.1.7">
+    <meta name="generator" content="Antora 3.1.12">
     <link rel="stylesheet" href="../_/css/site.css">
     <script>var uiRootPath = '../_'</script>
     <link rel="icon" href="../_/img/favicon.svg" type="image/svg+xml">
@@ -143,25 +143,25 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Frequently Asked Questions</h1>
+<h1 class="page">常见问题解答</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>These are a list of unsorted, commonly asked questions and answers.</p>
+<p>这里是一些未排序的常见问题及解答。</p>
 </div>
 <div class="paragraph">
-<p>Please feel free to add items to <a href="https://github.com/embassy-rs/embassy/edit/main/docs/modules/ROOT/pages/faq.adoc">this page</a>, especially if someone in the chat answered a question for you!</p>
+<p>如果你在聊天中得到了问题的答案，欢迎随时在 <a href="https://github.com/embassy-rs/embassy/edit/main/docs/modules/ROOT/pages/faq.adoc">此页面</a> 添加内容！</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_how_to_deploy_to_rp2040_without_a_debugging_probe"><a class="anchor" href="#_how_to_deploy_to_rp2040_without_a_debugging_probe"></a>How to deploy to RP2040 without a debugging probe.</h2>
+<h2 id="_如何在没有_debugging_probe_的情况下部署到_rp2040"><a class="anchor" href="#_如何在没有_debugging_probe_的情况下部署到_rp2040"></a>如何在没有 debugging probe 的情况下部署到 RP2040</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Install <a href="https://github.com/JoNil/elf2uf2-rs">elf2uf2-rs</a> for converting the generated elf binary into a uf2 file.</p>
+<p>安装 <a href="https://github.com/JoNil/elf2uf2-rs">elf2uf2-rs</a>，用于将生成的 elf 二进制文件转换为 uf2 文件。</p>
 </div>
 <div class="paragraph">
-<p>Configure the runner to use this tool, add this to <code>.cargo/config.toml</code>:</p>
+<p>配置 runner 使用该工具，在 <code>.cargo/config.toml</code> 中添加如下内容：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -170,15 +170,15 @@ runner = "elf2uf2-rs --deploy --serial --verbose"</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The command-line parameters <code>--deploy</code> will detect your device and upload the binary, <code>--serial</code> starts a serial connection. See the documentation for more info.</p>
+<p>命令行参数 <code>--deploy</code> 会自动检测你的设备并上传二进制文件，<code>--serial</code> 会启动串口连接。更多信息请查阅文档。</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_missing_main_macro"><a class="anchor" href="#_missing_main_macro"></a>Missing main macro</h2>
+<h2 id="_缺少_main_宏"><a class="anchor" href="#_缺少_main_宏"></a>缺少 main 宏</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>If you see an error like this:</p>
+<p>如果你看到如下错误：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -187,10 +187,10 @@ runner = "elf2uf2-rs --deploy --serial --verbose"</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>You are likely missing some features of the <code>embassy-executor</code> crate.</p>
+<p>你很可能缺少了 <code>embassy-executor</code> crate 的某些特性。</p>
 </div>
 <div class="paragraph">
-<p>For Cortex-M targets, check whether ALL of the following features are enabled in your <code>Cargo.toml</code> for the <code>embassy-executor</code> crate:</p>
+<p>对于 Cortex-M 目标，请确保在 <code>Cargo.toml</code> 的 <code>embassy-executor</code> crate 中启用了以下所有特性：</p>
 </div>
 <div class="ulist">
 <ul>
@@ -203,15 +203,15 @@ runner = "elf2uf2-rs --deploy --serial --verbose"</code></pre>
 </ul>
 </div>
 <div class="paragraph">
-<p>For ESP32, consider using the executors and <code>#[main]</code> macro provided by your appropriate <a href="https://crates.io/crates/esp-hal-common">HAL crate</a>.</p>
+<p>对于 ESP32，请考虑使用对应 <a href="https://crates.io/crates/esp-hal-common">HAL crate</a> 提供的 executors 和 <code>#[main]</code> 宏。</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_why_is_my_binary_so_big"><a class="anchor" href="#_why_is_my_binary_so_big"></a>Why is my binary so big?</h2>
+<h2 id="_为什么我的二进制文件这么大"><a class="anchor" href="#_为什么我的二进制文件这么大"></a>为什么我的二进制文件这么大？</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The first step to managing your binary size is to set up your <a href="https://doc.rust-lang.org/cargo/reference/profiles.html">profiles</a>.</p>
+<p>管理二进制体积的第一步是设置 <a href="https://doc.rust-lang.org/cargo/reference/profiles.html">profiles</a>。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -220,20 +220,20 @@ lto = true
 opt-level = "s"
 incremental = false
 codegen-units = 1
-# note: debug = true is okay - debuginfo isn't flashed to the device!
+# 注意：设置 debug = true 没问题，调试信息不会被烧录到设备！
 debug = true</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>All of these flags are elaborated on in the Rust Book page linked above.</p>
+<p>这些参数的详细说明见上面链接的 Rust Book 页面。</p>
 </div>
 <div class="sect2">
-<h3 id="_my_binary_is_still_big_filled_with_stdfmt_stuff"><a class="anchor" href="#_my_binary_is_still_big_filled_with_stdfmt_stuff"></a>My binary is still big&#8230;&#8203; filled with <code>std::fmt</code> stuff!</h3>
+<h3 id="_我的二进制依然很大充满了_stdfmt_相关内容"><a class="anchor" href="#_我的二进制依然很大充满了_stdfmt_相关内容"></a>我的二进制依然很大，充满了 <code>std::fmt</code> 相关内容！</h3>
 <div class="paragraph">
-<p>This means your code is sufficiently complex that <code>panic!</code> invocation&#8217;s formatting requirements could not be optimized out, despite your usage of <code>panic-halt</code> or <code>panic-reset</code>.</p>
+<p>这说明你的代码足够复杂，<code>panic!</code> 的格式化需求没有被优化掉，即使你用了 <code>panic-halt</code> 或 <code>panic-reset</code>。</p>
 </div>
 <div class="paragraph">
-<p>You can remedy this by adding the following to your <code>.cargo/config.toml</code>:</p>
+<p>你可以在 <code>.cargo/config.toml</code> 中添加如下内容来解决：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -243,33 +243,33 @@ build-std-features = ["panic_immediate_abort"]</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This replaces all panics with a <code>UDF</code> (undefined) instruction.</p>
+<p>这会将所有 panic 替换为 <code>UDF</code>（未定义）指令。</p>
 </div>
 <div class="paragraph">
-<p>Depending on your chipset, this will exhibit different behavior.</p>
+<p>具体行为取决于芯片型号。</p>
 </div>
 <div class="paragraph">
-<p>Refer to the spec for your chipset, but for <code>thumbv6m</code>, it results in a hardfault. Which can be configured like so:</p>
+<p>请查阅芯片手册，对于 <code>thumbv6m</code>，这会导致 hardfault。可以这样配置：</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-rust hljs" data-lang="rust">#[exception]
 unsafe fn HardFault(_frame: &amp;ExceptionFrame) -&gt; ! {
-    SCB::sys_reset() // &lt;- you could do something other than reset
+    SCB::sys_reset() // 你也可以做其他操作
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Refer to cortex-m&#8217;s <a href="https://docs.rs/cortex-m-rt/latest/cortex_m_rt/attr.exception.html">exception handling</a> for more info.</p>
+<p>更多信息请查阅 cortex-m 的 <a href="https://docs.rs/cortex-m-rt/latest/cortex_m_rt/attr.exception.html">异常处理</a>。</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_embassy_time_throws_linker_errors"><a class="anchor" href="#_embassy_time_throws_linker_errors"></a><code>embassy-time</code> throws linker errors</h2>
+<h2 id="_embassy_time_报链接错误"><a class="anchor" href="#_embassy_time_报链接错误"></a><code>embassy-time</code> 报链接错误</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>If you see linker error like this:</p>
+<p>如果你看到如下链接错误：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -291,7 +291,7 @@ unsafe fn HardFault(_frame: &amp;ExceptionFrame) -&gt; ! {
 </div>
 </div>
 <div class="paragraph">
-<p>You probably need to enable a time driver for your HAL (not in <code>embassy-time</code>!). For example with <code>embassy-stm32</code>, you might need to enable <code>time-driver-any</code>:</p>
+<p>你可能需要为 HAL 启用时间驱动（不是在 <code>embassy-time</code> 里！）。比如 <code>embassy-stm32</code>，你需要启用 <code>time-driver-any</code>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -299,13 +299,13 @@ unsafe fn HardFault(_frame: &amp;ExceptionFrame) -&gt; ! {
 version = "0.1.0"
 features = [
     # ...
-    "time-driver-any", # Add this line!
+    "time-driver-any", # 添加这一行！
     # ...
 ]</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>If you are in the early project setup phase and not using anything from the HAL, make sure the HAL is explicitly used to prevent the linker removing it as dead code by adding this line to your source:</p>
+<p>如果你在项目早期阶段还没用到 HAL 的任何内容，请确保 HAL 被显式使用，防止链接器将其当作无用代码移除，在源码中加上：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -315,20 +315,17 @@ features = [
 </div>
 </div>
 <div class="sect1">
-<h2 id="_error_only_one_package_in_the_dependency_graph_may_specify_the_same_links_value"><a class="anchor" href="#_error_only_one_package_in_the_dependency_graph_may_specify_the_same_links_value"></a>Error: <code>Only one package in the dependency graph may specify the same links value.</code></h2>
+<h2 id="_错误only_one_package_in_the_dependency_graph_may_specify_the_same_links_value"><a class="anchor" href="#_错误only_one_package_in_the_dependency_graph_may_specify_the_same_links_value"></a>错误：<code>Only one package in the dependency graph may specify the same links value.</code></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>You have multiple versions of the same crate in your dependency tree. This means that some of your
-embassy crates are coming from crates.io, and some from git, each of them pulling in a different set
-of dependencies.</p>
+<p>你的依赖树中有多个版本的同一个 crate。这意味着有些 embassy crate 来自 crates.io，有些来自 git，导致依赖不一致。</p>
 </div>
 <div class="paragraph">
-<p>To resolve this issue, make sure to only use a single source for all your embassy crates!
-To do this, you should patch your dependencies to use git sources using <code>[patch.crates.io]</code>
-and maybe <code>[patch.'https://github.com/embassy-rs/embassy.git']</code>.</p>
+<p>解决方法：确保所有 embassy crate 都来自同一个源！
+你可以用 <code>[patch.crates.io]</code> 和（如有需要）<code>[patch.'https://github.com/embassy-rs/embassy.git']</code> 来统一依赖。</p>
 </div>
 <div class="paragraph">
-<p>Example:</p>
+<p>示例：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -339,26 +336,26 @@ embassy-time-driver = { git = "https://github.com/embassy-rs/embassy.git", rev =
 </div>
 </div>
 <div class="paragraph">
-<p>Note that the git revision should match any other embassy patches or git dependencies that you are using!</p>
+<p>注意 git 版本号要和你用的其他 embassy 依赖一致！</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_how_can_i_optimize_the_speed_of_my_embassy_stm32_program"><a class="anchor" href="#_how_can_i_optimize_the_speed_of_my_embassy_stm32_program"></a>How can I optimize the speed of my embassy-stm32 program?</h2>
+<h2 id="_如何优化我的_embassy_stm32_程序的速度"><a class="anchor" href="#_如何优化我的_embassy_stm32_程序的速度"></a>如何优化我的 embassy-stm32 程序的速度？</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
-<p>Make sure RCC is set up to go as fast as possible</p>
+<p>确保 RCC 设置为最高速</p>
 </li>
 <li>
-<p>Make sure <a href="https://docs.rs/cortex-m/latest/cortex_m/peripheral/struct.SCB.html">flash cache</a> is enabled</p>
+<p>确保启用了 <a href="https://docs.rs/cortex-m/latest/cortex_m/peripheral/struct.SCB.html">flash cache</a></p>
 </li>
 <li>
-<p>build with <code>--release</code></p>
+<p>用 <code>--release</code> 构建</p>
 </li>
 <li>
-<p>Set the following keys for the release profile in your <code>Cargo.toml</code>:</p>
+<p>在 <code>Cargo.toml</code> 的 release 配置中设置：</p>
 <div class="ulist">
 <ul>
 <li>
@@ -371,7 +368,7 @@ embassy-time-driver = { git = "https://github.com/embassy-rs/embassy.git", rev =
 </div>
 </li>
 <li>
-<p>Set the following keys in the <code>[unstable]</code> section of your <code>.cargo/config.toml</code></p>
+<p>在 <code>.cargo/config.toml</code> 的 <code>[unstable]</code> 部分设置：</p>
 <div class="ulist">
 <ul>
 <li>
@@ -384,20 +381,20 @@ embassy-time-driver = { git = "https://github.com/embassy-rs/embassy.git", rev =
 </div>
 </li>
 <li>
-<p>Enable feature <code>embassy-time/generic-queue</code>, disable feature <code>embassy-executor/integrated-timers</code></p>
+<p>启用特性 <code>embassy-time/generic-queue</code>，禁用 <code>embassy-executor/integrated-timers</code></p>
 </li>
 <li>
-<p>When using <code>InterruptExecutor</code>:</p>
+<p>使用 <code>InterruptExecutor</code> 时：</p>
 <div class="ulist">
 <ul>
 <li>
-<p>disable <code>executor-thread</code></p>
+<p>禁用 <code>executor-thread</code></p>
 </li>
 <li>
-<p>make <code>main`</code> spawn everything, then enable <a href="https://docs.rs/cortex-m/latest/cortex_m/peripheral/struct.SCB.html#method.set_sleeponexit">SCB.SLEEPONEXIT</a> and <code>loop { cortex_m::asm::wfi() }</code></p>
+<p>让 <code>main</code> 启动所有任务，然后启用 <a href="https://docs.rs/cortex-m/latest/cortex_m/peripheral/struct.SCB.html#method.set_sleeponexit">SCB.SLEEPONEXIT</a> 并 <code>loop { cortex_m::asm::wfi() }</code></p>
 </li>
 <li>
-<p><strong>Note:</strong>  If you need 2 priority levels, using 2 interrupt executors is better than 1 thread executor + 1 interrupt executor.</p>
+<p><strong>注意</strong>：如果需要 2 个优先级，建议用 2 个中断执行器，而不是 1 个线程执行器 + 1 个中断执行器。</p>
 </li>
 </ul>
 </div>
@@ -407,13 +404,13 @@ embassy-time-driver = { git = "https://github.com/embassy-rs/embassy.git", rev =
 </div>
 </div>
 <div class="sect1">
-<h2 id="_how_do_i_set_up_the_task_arenas_on_stable"><a class="anchor" href="#_how_do_i_set_up_the_task_arenas_on_stable"></a>How do I set up the task arenas on stable?</h2>
+<h2 id="_如何在_stable_上配置任务_arena"><a class="anchor" href="#_如何在_stable_上配置任务_arena"></a>如何在 stable 上配置任务 arena？</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>When you aren&#8217;t using the <code>nightly</code> feature of <code>embassy-executor</code>, the executor uses a bump allocator, which may require configuration.</p>
+<p>未启用 <code>embassy-executor</code> 的 <code>nightly</code> 特性时，执行器使用 bump allocator，可能需要配置。</p>
 </div>
 <div class="paragraph">
-<p>Something like this error will occur at <strong>compile time</strong> if the task arena is <strong>too large</strong> for the target&#8217;s RAM:</p>
+<p>如果任务 arena <strong>太大</strong>，<strong>编译时</strong>会报错：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -422,63 +419,54 @@ rust-lld: error: section '.uninit' will not fit in region 'RAM': overflowed by _
 </div>
 </div>
 <div class="paragraph">
-<p>And this message will appear at <strong>runtime</strong> if the task arena is <strong>too small</strong> for the tasks running:</p>
+<p>如果任务 arena <strong>太小</strong>，<strong>运行时</strong>会报错：</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-plain hljs" data-lang="plain">ERROR panicked at 'embassy-executor: task arena is full. You must increase the arena size, see the documentation for details: https://docs.embassy.dev/embassy-executor/'</code></pre>
 </div>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-If all tasks are spawned at startup, this panic will occur immediately.
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>注意：如果所有任务都在启动时被 spawn，这个 panic 会立刻发生。</p>
 </div>
 <div class="paragraph">
-<p>Check out <a href="https://docs.embassy.dev/embassy-executor/git/cortex-m/index.html#task-arena">Task Arena Documentation</a> for more details.</p>
+<p>更多细节见 <a href="https://docs.embassy.dev/embassy-executor/git/cortex-m/index.html#task-arena">任务 Arena 文档</a>。</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_can_i_use_manual_isrs_alongside_embassy"><a class="anchor" href="#_can_i_use_manual_isrs_alongside_embassy"></a>Can I use manual ISRs alongside Embassy?</h2>
+<h2 id="_可以和_embassy_一起用手写_isr_吗"><a class="anchor" href="#_可以和_embassy_一起用手写_isr_吗"></a>可以和 Embassy 一起用手写 ISR 吗？</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Yes! This can be useful if you need to respond to an event as fast as possible, and the latency caused by the usual “ISR, wake, return from ISR, context switch to woken task” flow is too much for your application. Simply define a <code>#[interrupt] fn INTERRUPT_NAME() {}</code> handler as you would <a href="https://docs.rust-embedded.org/book/start/interrupts.html">in any other embedded rust project</a>.</p>
+<p>可以！如果你需要尽可能快地响应事件，而常规的“ISR、唤醒、从 ISR 返回、上下文切换到被唤醒任务”流程延迟太大，可以像 <a href="https://docs.rust-embedded.org/book/start/interrupts.html">其他嵌入式 Rust 项目</a> 一样，直接定义 <code>#[interrupt] fn INTERRUPT_NAME() {}</code> 处理函数。</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_how_can_i_measure_resource_usage_cpu_ram_etc"><a class="anchor" href="#_how_can_i_measure_resource_usage_cpu_ram_etc"></a>How can I measure resource usage (CPU, RAM, etc.)?</h2>
+<h2 id="_如何测量资源使用cpuram_等"><a class="anchor" href="#_如何测量资源使用cpuram_等"></a>如何测量资源使用（CPU、RAM 等）？</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_for_cpu_usage"><a class="anchor" href="#_for_cpu_usage"></a>For CPU Usage:</h3>
+<h3 id="_cpu_使用率"><a class="anchor" href="#_cpu_使用率"></a>CPU 使用率</h3>
 <div class="paragraph">
-<p>There are a couple techniques that have been documented, generally you want to measure how long you are spending in the idle or low priority loop.</p>
+<p>有几种方法，通常是测量在 idle 或低优先级循环中花费的时间。</p>
 </div>
 <div class="paragraph">
-<p>We need to document specifically how to do this in embassy, but <a href="https://blog.japaric.io/cpu-monitor/">this older post</a> describes the general process.</p>
+<p>我们还需要补充 Embassy 的具体做法，<a href="https://blog.japaric.io/cpu-monitor/">这篇旧文</a> 介绍了通用流程。</p>
 </div>
 <div class="paragraph">
-<p>If you end up doing this, please update this section with more specific examples!</p>
+<p>如果你有实践经验，欢迎补充具体示例！</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_for_static_memory_usage"><a class="anchor" href="#_for_static_memory_usage"></a>For Static Memory Usage</h3>
+<h3 id="_静态内存使用"><a class="anchor" href="#_静态内存使用"></a>静态内存使用</h3>
 <div class="paragraph">
-<p>Tools like <code>cargo size</code> and <code>cargo nm</code> can tell you the size of any globals or other static usage. Specifically you will want to see the size of the <code>.data</code> and <code>.bss</code> sections, which together make up the total global/static memory usage.</p>
+<p><code>cargo size</code> 和 <code>cargo nm</code> 等工具可以查看全局或静态变量的大小。重点关注 <code>.data</code> 和 <code>.bss</code> 段，这两者加起来就是全局/静态内存用量。</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_for_max_stack_usage"><a class="anchor" href="#_for_max_stack_usage"></a>For Max Stack Usage</h3>
+<h3 id="_最大栈使用"><a class="anchor" href="#_最大栈使用"></a>最大栈使用</h3>
 <div class="paragraph">
-<p>Check out <a href="https://github.com/Dirbaio/cargo-call-stack/"><code>cargo-call-stack</code></a> for statically calculating worst-case stack usage. There are some caveats and inaccuracies possible with this, but this is a good way to get the general idea. See <a href="https://github.com/dirbaio/cargo-call-stack#known-limitations">the README</a> for more details.</p>
+<p>可用 <a href="https://github.com/Dirbaio/cargo-call-stack/"><code>cargo-call-stack</code></a> 静态分析最坏情况栈用量。该工具有一些已知限制，详情见 <a href="https://github.com/dirbaio/cargo-call-stack#known-limitations">README</a>。</p>
 </div>
 </div>
 </div>

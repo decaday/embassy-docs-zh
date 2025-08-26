@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>一个基础的Embassy应用 :: Embassy中文文档</title>
     <link rel="canonical" href="https://embassy.dev/book/zh/basic_application.html">
-    <meta name="generator" content="Antora 3.1.7">
+    <meta name="generator" content="Antora 3.1.12">
     <link rel="stylesheet" href="../_/css/site.css">
     <script>var uiRootPath = '../_'</script>
     <link rel="icon" href="../_/img/favicon.svg" type="image/svg+xml">
@@ -177,7 +177,8 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-rust hljs" data-lang="rust">Unresolved include directive in modules/ROOT/pages/basic_application.adoc - include::example$basic/src/main.rs[]</code></pre>
+<pre class="highlightjs highlight"><code class="language-rust hljs" data-lang="rust">#![no_std]
+#![no_main]</code></pre>
 </div>
 </div>
 </div>
@@ -188,7 +189,7 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-rust hljs" data-lang="rust">Unresolved include directive in modules/ROOT/pages/basic_application.adoc - include::example$basic/src/main.rs[]</code></pre>
+<pre class="highlightjs highlight"><code class="language-rust hljs" data-lang="rust">use {defmt_rtt as _, panic_probe as _}; // global logger</code></pre>
 </div>
 </div>
 </div>
@@ -199,7 +200,15 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-rust hljs" data-lang="rust">Unresolved include directive in modules/ROOT/pages/basic_application.adoc - include::example$basic/src/main.rs[]</code></pre>
+<pre class="highlightjs highlight"><code class="language-rust hljs" data-lang="rust">#[embassy_executor::task]
+async fn blinker(mut led: Output&lt;'static&gt;, interval: Duration) {
+    loop {
+        led.set_high();
+        Timer::after(interval).await;
+        led.set_low();
+        Timer::after(interval).await;
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -228,7 +237,13 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-rust hljs" data-lang="rust">Unresolved include directive in modules/ROOT/pages/basic_application.adoc - include::example$basic/src/main.rs[]</code></pre>
+<pre class="highlightjs highlight"><code class="language-rust hljs" data-lang="rust">#[embassy_executor::main]
+async fn main(spawner: Spawner) {
+    let p = embassy_nrf::init(Default::default());
+
+    let led = Output::new(p.P0_13, Level::Low, OutputDrive::Standard);
+    unwrap!(spawner.spawn(blinker(led, Duration::from_millis(300))));
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -261,7 +276,9 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">Unresolved include directive in modules/ROOT/pages/basic_application.adoc - include::example$basic/Cargo.toml[]</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">embassy-executor = { version = "0.8.0", path = "../../../embassy-executor", features = ["defmt", "arch-cortex-m", "executor-thread"] }
+embassy-time = { version = "0.4.0", path = "../../../embassy-time", features = ["defmt"] }
+embassy-nrf = { version = "0.6.0", path = "../../../embassy-nrf", features = ["defmt", "nrf52840", "time-driver-rtc1", "gpiote"] }</code></pre>
 </div>
 </div>
 <div class="paragraph">
