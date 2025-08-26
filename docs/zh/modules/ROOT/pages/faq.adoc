@@ -1,25 +1,25 @@
-= Frequently Asked Questions
+= 常见问题解答
 
-These are a list of unsorted, commonly asked questions and answers.
+这里是一些未排序的常见问题及解答。
 
-Please feel free to add items to link:https://github.com/embassy-rs/embassy/edit/main/docs/modules/ROOT/pages/faq.adoc[this page], especially if someone in the chat answered a question for you!
+如果你在聊天中得到了问题的答案，欢迎随时在 link:https://github.com/embassy-rs/embassy/edit/main/docs/modules/ROOT/pages/faq.adoc[此页面] 添加内容！
 
-== How to deploy to RP2040 without a debugging probe.
+== 如何在没有 debugging probe 的情况下部署到 RP2040
 
-Install link:https://github.com/JoNil/elf2uf2-rs[elf2uf2-rs] for converting the generated elf binary into a uf2 file.
+安装 link:https://github.com/JoNil/elf2uf2-rs[elf2uf2-rs]，用于将生成的 elf 二进制文件转换为 uf2 文件。
 
-Configure the runner to use this tool, add this to `.cargo/config.toml`:
+配置 runner 使用该工具，在 `.cargo/config.toml` 中添加如下内容：
 [source,toml]
 ----
 [target.'cfg(all(target_arch = "arm", target_os = "none"))']
 runner = "elf2uf2-rs --deploy --serial --verbose"
 ----
 
-The command-line parameters `--deploy` will detect your device and upload the binary, `--serial` starts a serial connection. See the documentation for more info.
+命令行参数 `--deploy` 会自动检测你的设备并上传二进制文件，`--serial` 会启动串口连接。更多信息请查阅文档。
 
-== Missing main macro
+== 缺少 main 宏
 
-If you see an error like this:
+如果你看到如下错误：
 
 [source,rust]
 ----
@@ -27,18 +27,18 @@ If you see an error like this:
 |                   ^^^^ could not find `main` in `embassy_executor`
 ----
 
-You are likely missing some features of the `embassy-executor` crate.
+你很可能缺少了 `embassy-executor` crate 的某些特性。
 
-For Cortex-M targets, check whether ALL of the following features are enabled in your `Cargo.toml` for the `embassy-executor` crate:
+对于 Cortex-M 目标，请确保在 `Cargo.toml` 的 `embassy-executor` crate 中启用了以下所有特性：
 
 * `arch-cortex-m`
 * `executor-thread`
 
-For ESP32, consider using the executors and `#[main]` macro provided by your appropriate link:https://crates.io/crates/esp-hal-common[HAL crate].
+对于 ESP32，请考虑使用对应 link:https://crates.io/crates/esp-hal-common[HAL crate] 提供的 executors 和 `#[main]` 宏。
 
-== Why is my binary so big?
+== 为什么我的二进制文件这么大？
 
-The first step to managing your binary size is to set up your link:https://doc.rust-lang.org/cargo/reference/profiles.html[profiles].
+管理二进制体积的第一步是设置 link:https://doc.rust-lang.org/cargo/reference/profiles.html[profiles]。
 
 [source,toml]
 ----
@@ -47,17 +47,17 @@ lto = true
 opt-level = "s"
 incremental = false
 codegen-units = 1
-# note: debug = true is okay - debuginfo isn't flashed to the device!
+# 注意：设置 debug = true 没问题，调试信息不会被烧录到设备！
 debug = true
 ----
 
-All of these flags are elaborated on in the Rust Book page linked above.
+这些参数的详细说明见上面链接的 Rust Book 页面。
 
-=== My binary is still big... filled with `std::fmt` stuff!
+=== 我的二进制依然很大，充满了 `std::fmt` 相关内容！
 
-This means your code is sufficiently complex that `panic!` invocation's formatting requirements could not be optimized out, despite your usage of `panic-halt` or `panic-reset`.
+这说明你的代码足够复杂，`panic!` 的格式化需求没有被优化掉，即使你用了 `panic-halt` 或 `panic-reset`。
 
-You can remedy this by adding the following to your `.cargo/config.toml`:
+你可以在 `.cargo/config.toml` 中添加如下内容来解决：
 
 [source,toml]
 ----
@@ -66,25 +66,25 @@ build-std = ["core"]
 build-std-features = ["panic_immediate_abort"]
 ----
 
-This replaces all panics with a `UDF` (undefined) instruction.
+这会将所有 panic 替换为 `UDF`（未定义）指令。
 
-Depending on your chipset, this will exhibit different behavior.
+具体行为取决于芯片型号。
 
-Refer to the spec for your chipset, but for `thumbv6m`, it results in a hardfault. Which can be configured like so:
+请查阅芯片手册，对于 `thumbv6m`，这会导致 hardfault。可以这样配置：
 
 [source,rust]
 ----
 #[exception]
 unsafe fn HardFault(_frame: &ExceptionFrame) -> ! {
-    SCB::sys_reset() // <- you could do something other than reset
+    SCB::sys_reset() // 你也可以做其他操作
 }
 ----
 
-Refer to cortex-m's link:https://docs.rs/cortex-m-rt/latest/cortex_m_rt/attr.exception.html[exception handling] for more info.
+更多信息请查阅 cortex-m 的 link:https://docs.rs/cortex-m-rt/latest/cortex_m_rt/attr.exception.html[异常处理]。
 
-== `embassy-time` throws linker errors
+== `embassy-time` 报链接错误
 
-If you see linker error like this:
+如果你看到如下链接错误：
 
 [source,text]
 ----
@@ -105,7 +105,7 @@ If you see linker error like this:
           >>>               embassy_time-846f66f1620ad42c.embassy_time.4f6a638abb75dd4c-cgu.0.rcgu.o:(embassy_time::driver::set_alarm::h530a5b1f444a6d5b) in archive Devel/Embedded/pogodyna/target/thumbv7em-none-eabihf/debug/deps/libembassy_time-846f66f1620ad42c.rlib
 ----
 
-You probably need to enable a time driver for your HAL (not in `embassy-time`!). For example with `embassy-stm32`, you might need to enable `time-driver-any`:
+你可能需要为 HAL 启用时间驱动（不是在 `embassy-time` 里！）。比如 `embassy-stm32`，你需要启用 `time-driver-any`：
 
 [source,toml]
 ----
@@ -113,29 +113,26 @@ You probably need to enable a time driver for your HAL (not in `embassy-time`!).
 version = "0.1.0"
 features = [
     # ...
-    "time-driver-any", # Add this line!
+    "time-driver-any", # 添加这一行！
     # ...
 ]
 ----
 
-If you are in the early project setup phase and not using anything from the HAL, make sure the HAL is explicitly used to prevent the linker removing it as dead code by adding this line to your source:
+如果你在项目早期阶段还没用到 HAL 的任何内容，请确保 HAL 被显式使用，防止链接器将其当作无用代码移除，在源码中加上：
 
 [source,rust]
 ----
 use embassy_stm32 as _;
 ----
 
-== Error: `Only one package in the dependency graph may specify the same links value.`
+== 错误：`Only one package in the dependency graph may specify the same links value.`
 
-You have multiple versions of the same crate in your dependency tree. This means that some of your
-embassy crates are coming from crates.io, and some from git, each of them pulling in a different set
-of dependencies.
+你的依赖树中有多个版本的同一个 crate。这意味着有些 embassy crate 来自 crates.io，有些来自 git，导致依赖不一致。
 
-To resolve this issue, make sure to only use a single source for all your embassy crates!
-To do this, you should patch your dependencies to use git sources using `[patch.crates.io]`
-and maybe `[patch.'https://github.com/embassy-rs/embassy.git']`.
+解决方法：确保所有 embassy crate 都来自同一个源！
+你可以用 `[patch.crates.io]` 和（如有需要）`[patch.'https://github.com/embassy-rs/embassy.git']` 来统一依赖。
 
-Example:
+示例：
 
 [source,toml]
 ----
@@ -145,30 +142,30 @@ embassy-time-driver = { git = "https://github.com/embassy-rs/embassy.git", rev =
 # embassy-time = { git = "https://github.com/embassy-rs/embassy.git", rev = "e5fdd35" }
 ----
 
-Note that the git revision should match any other embassy patches or git dependencies that you are using!
+注意 git 版本号要和你用的其他 embassy 依赖一致！
 
-== How can I optimize the speed of my embassy-stm32 program?
+== 如何优化我的 embassy-stm32 程序的速度？
 
-* Make sure RCC is set up to go as fast as possible
-* Make sure link:https://docs.rs/cortex-m/latest/cortex_m/peripheral/struct.SCB.html[flash cache] is enabled
-* build with `--release`
-* Set the following keys for the release profile in your `Cargo.toml`:
+* 确保 RCC 设置为最高速
+* 确保启用了 link:https://docs.rs/cortex-m/latest/cortex_m/peripheral/struct.SCB.html[flash cache]
+* 用 `--release` 构建
+* 在 `Cargo.toml` 的 release 配置中设置：
     ** `opt-level = "s"`
     ** `lto = "fat"`
-* Set the following keys in the `[unstable]` section of your `.cargo/config.toml`
+* 在 `.cargo/config.toml` 的 `[unstable]` 部分设置：
     ** `build-std = ["core"]`
     ** `build-std-features = ["panic_immediate_abort"]`
-* Enable feature `embassy-time/generic-queue`, disable feature `embassy-executor/integrated-timers`
-* When using `InterruptExecutor`:
-    ** disable `executor-thread`
-    ** make `main`` spawn everything, then enable link:https://docs.rs/cortex-m/latest/cortex_m/peripheral/struct.SCB.html#method.set_sleeponexit[SCB.SLEEPONEXIT] and `loop { cortex_m::asm::wfi() }`
-    ** *Note:*  If you need 2 priority levels, using 2 interrupt executors is better than 1 thread executor + 1 interrupt executor.
+* 启用特性 `embassy-time/generic-queue`，禁用 `embassy-executor/integrated-timers`
+* 使用 `InterruptExecutor` 时：
+    ** 禁用 `executor-thread`
+    ** 让 `main` 启动所有任务，然后启用 link:https://docs.rs/cortex-m/latest/cortex_m/peripheral/struct.SCB.html#method.set_sleeponexit[SCB.SLEEPONEXIT] 并 `loop { cortex_m::asm::wfi() }`
+    ** *注意*：如果需要 2 个优先级，建议用 2 个中断执行器，而不是 1 个线程执行器 + 1 个中断执行器。
 
-== How do I set up the task arenas on stable?
+== 如何在 stable 上配置任务 arena？
 
-When you aren't using the `nightly` feature of `embassy-executor`, the executor uses a bump allocator, which may require configuration.
+未启用 `embassy-executor` 的 `nightly` 特性时，执行器使用 bump allocator，可能需要配置。
 
-Something like this error will occur at **compile time** if the task arena is *too large* for the target's RAM:
+如果任务 arena *太大*，**编译时**会报错：
 
 [source,plain]
 ----
@@ -176,35 +173,36 @@ rust-lld: error: section '.bss' will not fit in region 'RAM': overflowed by _ by
 rust-lld: error: section '.uninit' will not fit in region 'RAM': overflowed by _ bytes
 ----
 
-And this message will appear at **runtime** if the task arena is *too small* for the tasks running:
+如果任务 arena *太小*，**运行时**会报错：
 
 [source,plain]
 ----
 ERROR panicked at 'embassy-executor: task arena is full. You must increase the arena size, see the documentation for details: https://docs.embassy.dev/embassy-executor/'
 ----
 
-NOTE: If all tasks are spawned at startup, this panic will occur immediately.
+注意：如果所有任务都在启动时被 spawn，这个 panic 会立刻发生。
 
-Check out link:https://docs.embassy.dev/embassy-executor/git/cortex-m/index.html#task-arena[Task Arena Documentation] for more details.
+更多细节见 link:https://docs.embassy.dev/embassy-executor/git/cortex-m/index.html#task-arena[任务 Arena 文档]。
 
-== Can I use manual ISRs alongside Embassy?
+== 可以和 Embassy 一起用手写 ISR 吗？
 
-Yes! This can be useful if you need to respond to an event as fast as possible, and the latency caused by the usual “ISR, wake, return from ISR, context switch to woken task” flow is too much for your application. Simply define a `#[interrupt] fn INTERRUPT_NAME() {}` handler as you would link:https://docs.rust-embedded.org/book/start/interrupts.html[in any other embedded rust project].
+可以！如果你需要尽可能快地响应事件，而常规的“ISR、唤醒、从 ISR 返回、上下文切换到被唤醒任务”流程延迟太大，可以像 link:https://docs.rust-embedded.org/book/start/interrupts.html[其他嵌入式 Rust 项目] 一样，直接定义 `#[interrupt] fn INTERRUPT_NAME() {}` 处理函数。
 
-== How can I measure resource usage (CPU, RAM, etc.)?
+== 如何测量资源使用（CPU、RAM 等）？
 
-=== For CPU Usage:
+=== CPU 使用率
 
-There are a couple techniques that have been documented, generally you want to measure how long you are spending in the idle or low priority loop.
+有几种方法，通常是测量在 idle 或低优先级循环中花费的时间。
 
-We need to document specifically how to do this in embassy, but link:https://blog.japaric.io/cpu-monitor/[this older post] describes the general process.
+我们还需要补充 Embassy 的具体做法，link:https://blog.japaric.io/cpu-monitor/[这篇旧文] 介绍了通用流程。
 
-If you end up doing this, please update this section with more specific examples!
+如果你有实践经验，欢迎补充具体示例！
 
-=== For Static Memory Usage
+=== 静态内存使用
 
-Tools like `cargo size` and `cargo nm` can tell you the size of any globals or other static usage. Specifically you will want to see the size of the `.data` and `.bss` sections, which together make up the total global/static memory usage.
+`cargo size` 和 `cargo nm` 等工具可以查看全局或静态变量的大小。重点关注 `.data` 和 `.bss` 段，这两者加起来就是全局/静态内存用量。
 
-=== For Max Stack Usage
+=== 最大栈使用
 
-Check out link:https://github.com/Dirbaio/cargo-call-stack/[`cargo-call-stack`] for statically calculating worst-case stack usage. There are some caveats and inaccuracies possible with this, but this is a good way to get the general idea. See link:https://github.com/dirbaio/cargo-call-stack#known-limitations[the README] for more details.
+可用 link:https://github.com/Dirbaio/cargo-call-stack/[`cargo-call-stack`] 静态分析最坏情况栈用量。该工具有一些已知限制，详情见 link:https://github.com/dirbaio/cargo-call-stack#known-limitations[README]。
+
